@@ -1,5 +1,5 @@
 site:
-  title:  Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle
+  title: "Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle"
   start_page: automation-portal::index.adoc
 
 content:

@@ -1,14 +1,10 @@
 name: automation-portal
-title:  Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle
+title:  "Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle"
 version: 1.0.0
 nav:
 - modules/ROOT/nav.adoc
 - modules/LABENV/nav.adoc
-
 - modules/automation-portal/nav.adoc
-
 - modules/visual-execution-environment-builder/nav.adoc
-
 - modules/centralized-content-discovery/nav.adoc
-
 - modules/appendix/nav.adoc
