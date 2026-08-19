@@ -1,0 +1,86 @@
+#  Hands-on Lab on Installing and verifying the Automation Portal on OCP
+
+= Hands-on Lab: Installing and Verifying the Automation Portal on OCP
+
+In this lab, you will deploy the Automation Portal on your OpenShift Container Platform (OCP) environment. The Automation Portal in AAP 2.7 serves as the centralized interface for the full content lifecycle, moving beyond simple execution to providing a unified experience for building, discovering, and running automation.
+
+== Prerequisites
+* Access to an OpenShift cluster (Version 4.14+ recommended).
+* `oc` CLI tool authenticated with `cluster-admin` privileges.
+* An existing AAP 2.7 operator deployment or the ability to install the AAP Operator via OperatorHub.
+
+== Task 1: Installing the Automation Portal
+
+The Automation Portal is deployed as part of the `AutomationController` or `AutomationPlatform` Custom Resource (CR). 
+
+1. **Verify the Operator is installed:**
+   Ensure the Ansible Automation Platform operator is running in your target namespace.
+   [source,bash]
+   ----
+   oc get pods -n ansible-automation-platform
+   ----
+
+2. **Configure the Automation Portal CR:**
+   Create a YAML manifest for the `AutomationPortal` resource. The portal requires connection settings to your existing Automation Hub and Controller.
+
+   [source,yaml]
+   ----
+   apiVersion: automation.ansible.com/v1beta1
+   kind: AutomationPortal
+   metadata:
+     name: aap-portal
+     namespace: ansible-automation-platform
+   spec:
+     hub_url: https://automation-hub.example.com
+     controller_url: https://automation-controller.example.com
+     ingress:
+       enabled: true
+       host: portal.example.com
+   ----
+
+3. **Apply the configuration:**
+   [source,bash]
+   ----
+   oc apply -f automation-portal.yaml
+   ----
+
+== Task 2: Verifying the Installation
+
+Once the operator reconciles the state, you must verify that the portal services are healthy and accessible.
+
+1. **Check Pod status:**
+   Ensure the portal components are in the `Running` state.
+   [source,bash]
+   ----
+   oc get pods -n ansible-automation-platform -l app=automation-portal
+   ----
+
+2. **Verify Ingress/Route:**
+   Confirm that a route has been created for the web interface.
+   [source,bash]
+   ----
+   oc get route -n ansible-automation-platform
+   ----
+
+3. **Access the Web UI:**
+   Navigate to the URL identified in the route output (e.g., `https://portal.example.com`). Log in using your OpenShift/AAP credentials to verify the dashboard loads successfully.
+
+== Task 3: Configuring Initial RBAC Navigation
+
+To reduce UI complexity for end-users, we will implement role-based menu filtering.
+
+1. **Log in as an Administrator.**
+2. Navigate to **Administration -> Access -> User Interface**.
+3. Create a "Standard User" role policy:
+   * **Target:** User Group: `Developers`
+   * **Restrict Navigation:** Select only `Templates` and `Jobs`.
+4. **Validate:**
+   * Open an incognito browser window.
+   * Log in as a user belonging to the `Developers` group.
+   * Confirm the sidebar reflects only the permitted items, successfully reducing the cognitive load for the end-user.
+
+== Troubleshooting Tips
+* **Image Pull Errors:** Ensure your OpenShift cluster has the necessary pull secrets configured for the Red Hat Registry if you are using disconnected installation methods.
+* **Service Connectivity:** If the portal cannot sync with the Hub or Controller, check the network policies in the `ansible-automation-platform` namespace to ensure egress traffic is permitted between these components.
+* **Logs:** If the UI fails to load, inspect the controller logs:
+  `oc logs deployment/aap-portal-controller -n ansible-automation-platform`

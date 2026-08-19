@@ -1,0 +1,61 @@
+#  Utilizing the step-by-step wizard for custom EE creation
+
+= Utilizing the Step-by-Step Wizard for Custom EE Creation
+
+Creating Execution Environments (EEs) traditionally required manual management of `execution-environment.yml` files, complex dependency resolution, and deep knowledge of container build contexts. The Visual Execution Environment Builder within the Automation Portal abstracts this complexity, providing a guided, wizard-driven interface to ensure standardized, error-free images.
+
+== Overview of the Wizard Workflow
+
+The wizard workflow is designed to move from high-level intent to a concrete container definition. By leveraging Red Hat-supported presets, the wizard minimizes the "guesswork" involved in selecting base images and dependency formats.
+
+The process follows a logical progression:
+1. **Definition Naming and Scoping:** Defining the EE purpose and metadata.
+2. **Base Image Selection:** Choosing from Red Hat-optimized, pre-validated base images (e.g., `ee-minimal-rhel9`, `ee-supported-rhel9`).
+3. **Dependency Injection:** Declarative selection of Ansible Content Collections, Python packages (`requirements.txt`), and system-level libraries (`bindep.txt`).
+4. **Build Customization:** Defining pre-build and post-build shell commands to handle non-standard configuration tasks.
+5. **Review and Validation:** Real-time generation of the underlying YAML definition.
+
+== Integrating Presets and Dependencies
+
+The wizard leverages Red Hat domain-specific presets to ensure security and compliance. When you select a base image, the wizard automatically pulls the relevant metadata, preventing common version mismatches between the OS layer and the Ansible Automation Platform engine.
+
+*   **Ansible Content Collections:** Users can search and select collections directly from the catalog. The wizard manages the `requirements.yml` structure, ensuring all dependencies are pinned correctly.
+*   **System Libraries:** Rather than manually crafting complex `Dockerfile` layers, users add system packages via a simple list interface, which the wizard translates into an optimized `bindep.txt` configuration.
+
+[NOTE]
+====
+The EE definition workflow generates a reusable Backstage software template (e.g., `<ee-name>-template.yaml`). This allows organizations to move from one-off EE creation to a "Golden Image" catalog, where team members can provision standardized environments based on pre-approved templates.
+====
+
+== Hands-on Lab: Reviewing the Generated Definition
+
+In this exercise, we will examine the output of the EE Builder to understand how the GUI translates user input into machine-readable automation code.
+
+=== Prerequisites
+* Access to the Automation Portal on OpenShift.
+* An active session within the Visual EE Builder wizard.
+
+=== Steps
+
+1. **Navigate to the Review Screen**
+   Complete the input fields for your desired EE (Base image, collections, and dependencies). Proceed to the final step of the wizard labeled "Review."
+
+2. **Examine the Generated YAML**
+   Observe the auto-generated YAML manifest. Verify the following:
+   * **Base image:** Confirm it matches the selected RHEL-based image.
+   * **Dependency declarations:** Check that your selected collections and Python packages are accurately represented in the `dependencies` block.
+   * **Syntax integrity:** Note the automatic handling of indentation and list structure, which prevents common "whitespace" errors associated with manual YAML authoring.
+
+3. **Comparative Analysis**
+   Compare this generated YAML with a manual `execution-environment.yml` file. 
+   * *Self-Reflect:* How did the wizard handle the collection source references? 
+   * *Observation:* The wizard effectively handles the mapping of external Galaxy/Automation Hub URLs, abstracting the need for manual URL management.
+
+4. **Prepare for Publication**
+   [IMPORTANT]
+   Ensure your configuration is correct, but **do not click "Publish" yet**. In the next lab section, we will integrate this definition with Git and trigger the automated CI pipeline.
+
+== Best Practices for Wizard Usage
+* **Use Version Pinning:** Always specify versions for collections and Python packages within the wizard to ensure reproducible builds.
+* **Leverage Post-Build Steps:** Use the post-build section for cleanup tasks or custom environment variable injection rather than manual Dockerfile modifications.
+* **Catalog Early:** Once your EE definition is stable, export the generated Backstage template to your private catalog to enable self-service consumption by other developers.

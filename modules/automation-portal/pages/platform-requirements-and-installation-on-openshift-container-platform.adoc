@@ -1,0 +1,65 @@
+#  Platform requirements and installation on OpenShift Container Platform
+
+= Platform Requirements and Installation on OpenShift Container Platform
+
+The Automation Portal for Ansible Automation Platform (AAP) 2.7 provides a centralized interface for managing automation workflows, visual environment building, and content discovery. When deploying on OpenShift Container Platform (OCP), the Automation Portal leverages the Kubernetes-native architecture to ensure scalability, high availability, and seamless integration with existing AAP controller components.
+
+== Prerequisites and Requirements
+
+Before initiating the deployment, ensure your environment meets the following technical requirements:
+
+*   **Platform Subscription:** Valid Red Hat Ansible Automation Platform subscription.
+*   **Existing AAP Infrastructure:** An active instance of AAP 2.6+ to facilitate authentication and integration.
+*   **OpenShift Environment:** Access to an OpenShift Container Platform cluster (version 4.12–4.17+).
+*   **Permissions:** Cluster-level permissions to create OAuth applications within the target project.
+*   **CLI Tools:** 
+    *   `oc` CLI tool for OpenShift management.
+    *   `helm` (version 3.10 or newer) for package deployment.
+
+== Installation Overview
+
+For OpenShift-based installations, the **AAP Operator** manages the lifecycle of the Automation Portal, automatically handling OpenShift routes and underlying infrastructure requirements. 
+
+=== Pre-Installation Checklist
+
+Before deploying the Helm chart, ensure the following configuration steps are completed:
+
+1.  **SCM Integration:** If your environment requires Source Control Management (SCM) synchronization, create the `secrets-scm` Kubernetes secret.
+2.  **OCI Delivery:** Generate `auth.json` and create the `registry-auth` secret to allow the portal to pull and push container images.
+3.  **OAuth Setup:** Navigate to your AAP controller to create an OAuth application, ensuring you note the Client ID and Secret for the deployment configuration.
+
+== Hands-on Lab: Installing and Verifying the Automation Portal
+
+This lab guides you through the deployment process using the Helm chart method on OCP.
+
+=== Step 1: Deploying via Helm
+
+Execute the deployment by applying the Helm chart from the OpenShift catalog or via the CLI:
+
+[source,bash]
+----
+# Ensure you are logged into your OCP cluster
+oc login <cluster-url> -u <username>
+
+# Deploy the Automation Portal Helm chart
+helm install automation-portal ./charts/automation-portal \
+  --set clusterRouterBase=<your-cluster-domain> \
+  --set pluginMode=enabled \
+  --set imageTagInfo=latest \
+  --namespace aap-portal
+----
+
+=== Step 2: Post-Installation Configuration
+
+Once the pods are initialized, you must finalize the connectivity and access policies.
+
+1.  **Update OAuth:** In the AAP controller, update the OAuth Application Redirect URI to match the actual external URL of your deployed Automation Portal.
+2.  **Verify Deployment:**
+    *   Check the **Topology view** in the OpenShift Web Console to ensure all services are connected.
+    *   Check pod status: `oc get pods -n aap-portal`.
+    *   Review initialization logs for potential errors: `oc logs <portal-pod-name> -c init-container`.
+3.  **RBAC Setup:** Log in to the portal as an administrator and configure initial roles to enable **Catalog** and **Scaffolder** permissions for your users.
+
+=== Troubleshooting Guidance
+*   **Connectivity Issues:** If the portal cannot communicate with the AAP controller, verify that the `OAuth` redirect URI matches the protocol (HTTPS) and fully qualified domain name of the portal route.
+*   **Pod CrashLoopBackOff:** Inspect the init container logs. Frequently, this is caused by missing `registry-auth` secrets or misconfigured SCM credentials.

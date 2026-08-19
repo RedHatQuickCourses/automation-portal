@@ -1,0 +1,52 @@
+#  Architecture and transition from manual CLI workflows to GUI-based building
+
+= Architecture and Transition from Manual CLI Workflows to GUI-Based Building
+
+In Ansible Automation Platform (AAP) 2.7, the shift from manual command-line interface (CLI) workflows to the Visual Execution Environment (EE) Builder represents a fundamental change in how platform engineers manage automation dependencies. This transition prioritizes repeatability, governance, and user accessibility by abstracting the complexities of container image construction.
+
+== The Architectural Shift
+
+Traditionally, building Execution Environments required a manual, multi-step CLI workflow using `ansible-builder`. This approach often involved:
+
+1.  **Manual YAML Authoring:** Creating `execution-environment.yml` definition files by hand.
+2.  **CLI Orchestration:** Executing `ansible-builder build` commands within a terminal.
+3.  **Disconnected Tooling:** Managing container registries, Git repositories, and dependency files as separate, siloed processes.
+4.  **Error-Prone Environments:** Inconsistencies in local environment configurations leading to "it works on my machine" syndromes.
+
+The new **Visual EE Builder** architecture moves these processes into the Automation Portal. It functions as an orchestration layer that interfaces directly with your container registry and version control systems. By moving the logic into the portal, AAP enforces consistent build parameters, integrates with the platform’s RBAC policies, and provides a centralized audit trail for every image built.
+
+== Benefits of the GUI-Based Approach
+
+Transitioning to a GUI-based builder offers several architectural advantages:
+
+*   **Standardization:** Instead of disparate scripts, the portal uses a guided wizard that ensures all necessary metadata (Python packages, system libraries, and collection dependencies) is captured in a standardized format.
+*   **Integrated Dependency Management:** The builder leverages the **Centralized Content Discovery** catalog. Rather than manually typing collection requirements, you browse the synced catalog, ensuring you are using verified, organizationally approved content.
+*   **Abstraction of Complexity:** Platform engineers no longer need to maintain complex `ansible-builder` logic. The portal handles the underlying container build instructions while presenting a clean, intent-based interface.
+*   **Automated CI/CD Integration:** The Visual Builder does not just build an image—it scaffolds the entire lifecycle. By publishing definitions to Git and automating pipelines via GitHub Actions, the transition moves from "manual execution" to "automated lifecycle management."
+
+== Transition Strategy: From CLI to GUI
+
+When migrating your workflows from manual CLI processes to the Visual EE Builder, follow this structured approach to ensure organizational continuity:
+
+[cols="1,2", options="header"]
+|===
+| Phase | Action
+| **Discovery** | Sync existing collections and base images into the portal using the Content Discovery feature.
+| **Mapping** | Identify existing `execution-environment.yml` files and map their contents (bindep, requirements.txt, collections) to the GUI fields in the EE Builder wizard.
+| **Scaffolding** | Use the Visual Builder to generate the initial definition, then utilize the "Export to Git" feature to establish a version-controlled source of truth.
+| **Automation** | Replace local CLI build triggers with the scaffolded CI pipeline (GitHub Actions/GitLab CI) to ensure consistent image promotion.
+|===
+
+== Hands-On: Evaluating your current EE Build process
+
+To prepare for the transition, perform the following audit of your current environment:
+
+1.  **Audit Current Definitions:** Gather all existing `execution-environment.yml` files currently used by your teams.
+2.  **Verify Content Sources:** Ensure all dependent Ansible Content Collections are available in your Private Automation Hub or connected external registry.
+3.  **Pilot Migration:** Select one non-critical Execution Environment. Open the **Visual EE Builder** in your AAP 2.7 portal and attempt to replicate the `execution-environment.yml` using the GUI wizard.
+4.  **Validate Output:** Compare the resulting container image metadata with your original CLI-built image to confirm parity in system libraries and Python dependencies.
+
+[NOTE]
+====
+By centralizing EE builds in the portal, you regain control over the "What" and "How" of your automation runtime. Every GUI-based build is tracked and gated by admin-defined access policies, effectively turning your EE creation process into a governed, transparent activity.
+====

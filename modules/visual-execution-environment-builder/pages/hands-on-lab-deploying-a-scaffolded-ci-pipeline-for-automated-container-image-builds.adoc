@@ -1,0 +1,60 @@
+#  Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds
+
+= Hands-on Lab: Deploying a Scaffolded CI Pipeline for Automated EE Builds
+
+In this lab, you will transition from manual Execution Environment (EE) construction to an automated DevOps workflow. By leveraging the Visual Execution Environment Builder, you will scaffold a GitHub repository pre-configured with a CI pipeline, enabling automated container builds and registry pushes without manual CLI intervention.
+
+== Prerequisites
+* Access to an instance of the Ansible Automation Platform 2.7 Automation Portal.
+* An active GitHub account.
+* A target container registry (e.g., Quay.io) with valid credentials.
+* A pre-defined EE configuration within the Visual Builder.
+
+== Exercise: Scaffolding a CI Pipeline
+
+This exercise demonstrates how to move from a defined EE specification to an automated delivery pipeline.
+
+=== Step 1: Select the CI Pipeline Scaffolding Option
+After you have finalized your EE configuration (dependencies, collections, and base images) within the Visual Execution Environment Builder:
+
+1. Navigate to the **Output Options** screen of the wizard.
+2. Select the option labeled **"Scaffold a GitHub repository with CI pipeline"**.
++
+[NOTE]
+====
+This option triggers the builder to generate not only the `execution-environment.yml` but also the necessary CI workflow files (e.g., `.github/workflows/build-ee.yml`) required for automated builds.
+====
+
+=== Step 2: Configure Pipeline Parameters
+The builder requires connection details to automate the push of your container image once the build succeeds.
+
+1. **Target Registry:** Enter your container registry URL (e.g., `quay.io/<your-namespace>`).
+2. **Image Name:** Specify the tag name for your environment (e.g., `network-automation-ee`).
+3. **Registry Credentials:** When prompted, provide the necessary secrets to allow GitHub Actions to authenticate with your container registry.
+4. Click **Publish/Create**.
+
+=== Step 3: Verify Repository Creation
+Once the process completes:
+
+1. Navigate to the GitHub repository URL provided by the builder.
+2. Observe the generated file structure:
+   * `execution-environment.yml`: The declarative definition of your EE.
+   * `.github/workflows/`: Contains the pre-configured GitHub Actions workflow.
+3. Open the workflow file to review the build steps:
+   * **Build Stage:** Utilizes the EE definition to build the container image.
+   * **Push Stage:** Authenticates with the registry defined in Step 2 and pushes the image.
+
+=== Step 4: Trigger and Monitor the Build
+To ensure the pipeline is functional:
+
+1. Navigate to the **Actions** tab in your newly created GitHub repository.
+2. If the build did not trigger automatically upon creation, manually trigger the workflow via the **"Run workflow"** button.
+3. Monitor the build logs to ensure the environment dependencies (Ansible Collections, Python packages) are installed correctly and the resulting image is pushed to your registry.
+
+== Troubleshooting Tips
+* **Authentication Failures:** Ensure that the secrets stored in the GitHub repository (Settings > Secrets and variables > Actions) correspond to the credentials used for your container registry.
+* **Build Timeouts:** If the build fails due to large dependency lists, check the `execution-environment.yml` for any extraneous libraries that can be optimized.
+* **Registry Visibility:** Confirm that your target registry namespace is set to public, or that the registry credentials have sufficient write permissions for the specified repository.
+
+== Summary
+By completing this lab, you have successfully moved from a manual, CLI-heavy process to a **GitOps-driven lifecycle**. Your execution environment is now version-controlled, and any future changes to your `execution-environment.yml` will automatically trigger a rebuild and push to your container registry, ensuring your automation infrastructure remains consistent and up-to-date.

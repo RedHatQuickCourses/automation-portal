@@ -1,0 +1,61 @@
+#  Integrating Red Hat domain-specific presets and base container images
+
+= Integrating Red Hat Domain-Specific Presets and Base Container Images
+
+In the Ansible Automation Platform 2.7 Visual Execution Environment (EE) Builder, selecting the correct foundation is the most critical step in ensuring security, compliance, and performance. By leveraging Red Hat’s domain-specific presets, architects can bypass the "blank slate" problem and inherit validated configurations tailored to specific operational domains.
+
+== Understanding Domain-Specific Presets
+
+Domain-specific presets are curated configuration templates provided by Red Hat. They include pre-configured collections, Python dependencies, and system-level libraries optimized for specific use cases.
+
+*   **Networking:** Includes `ansible.netcommon`, `cisco.ios`, and `arista.eos` collections, alongside system-level utilities for network device communication.
+*   **Security:** Focused on compliance auditing and vulnerability management, featuring `ansible.posix` and various security-hardened utility packages.
+*   **Cloud:** Pre-loaded with cloud-provider-specific SDKs (AWS, Azure, GCP) and the corresponding `community.cloud` or `amazon.aws` collections.
+
+Using these presets ensures that your EEs adhere to organizational standards for library versions and security patching, reducing the maintenance overhead of managing disparate `execution-environment.yml` files.
+
+== Base Container Images and Optimization
+
+The EE Builder utilizes Red Hat Universal Base Image (UBI) 9 as the foundation. When you integrate a preset, the builder automatically references the associated UBI-based image from the Red Hat Ecosystem Catalog.
+
+[IMPORTANT]
+====
+When operating in disconnected environments, ensure your local registry is mirrored correctly using `skopeo copy`. As noted in the platform documentation, the use of SHA256 digests is recommended to ensure that your custom EE builds remain immutable and consistent across development and production OCP clusters.
+====
+
+== Hands-on Activity: Creating an EE from a Domain Preset
+
+This activity walks you through creating an EE using the Visual Builder’s preset engine.
+
+### Prerequisites
+*   Access to the Automation Portal on OpenShift.
+*   `skopeo` configured to mirror images from `registry.redhat.io` if operating in a disconnected cluster.
+
+### Step 1: Initialize the Visual Builder Wizard
+1. Navigate to the **Execution Environments** tab in your Automation Portal.
+2. Click **Create New Environment**.
+3. Select **"Use a Domain-Specific Preset"** from the wizard options.
+
+### Step 2: Selecting and Configuring the Preset
+1. Choose the **Networking** preset from the available catalog.
+2. The UI will auto-populate the `execution-environment.yml` definition with:
+   *   The standard Red Hat UBI 9 base image.
+   *   Recommended networking-related Ansible Collections.
+   *   Required system libraries (e.g., `libssh`).
+3. Click **Next** to proceed to the customization stage.
+
+### Step 3: Managing Dependencies
+In the "Dependencies" pane, you can augment the preset:
+1. Under **Ansible Collections**, add any specific vendor-proprietary collections your environment requires.
+2. Under **Python Packages**, add specific `pip` requirements.
+   * *Example:* Add `netaddr` or `paramiko` if not already included in the preset base.
+3. Define **Pre-build steps** (e.g., `RUN dnf install -y my-custom-tool`) if you need to install binary dependencies not covered by the preset.
+
+### Step 4: Verification
+1. Review the generated definition file.
+2. Click **Build** to trigger the CI pipeline.
+3. Monitor the build logs via the link provided in the UI; verify that the `base_image` reference resolves to your internal registry (e.g., `mirror.example.com/ansible-automation-platform-27/ee-supported-rhel9`).
+
+== Troubleshooting
+*   **Image Pull Backoff:** If the build fails, check that your `imageRegistry` configuration in the Helm `values.yaml` is set to the registry host only, without repository paths. The builder will append the default path automatically.
+*   **Dependency Conflicts:** If custom packages conflict with the preset, prioritize using `ansible.cfg` to set `collections_path` or use the "Overrides" feature in the EE Builder to pin specific versions, overriding the preset defaults.

@@ -1,0 +1,55 @@
+#  Publishing definitions to Git and automating CI pipelines with GitHub Actions
+
+= Publishing and Automating Execution Environment (EE) Pipelines
+
+In modern automation workflows, the Execution Environment (EE) definition should not exist solely within the portal. To achieve "Automation as Code" best practices, definitions must be externalized to version control systems. This ensures auditability, allows for pull-request-based reviews, and enables automated CI/CD workflows.
+
+== Architectural Benefits of Git Integration
+By publishing EE definitions to Git, you transition from a "state-based" model within the portal to a "source-of-truth" model. This provides several key advantages:
+
+*   **Version History:** Every change to your dependencies (collections, python packages, or system libraries) is tracked via Git commits.
+*   **Pipeline Automation:** GitHub Actions can be triggered automatically upon a push, building the image and pushing it to a container registry like Quay.io.
+*   **Reproducibility:** If an EE is deleted from the portal, it can be fully reconstructed by importing the definition back from the repository.
+
+== Defining the CI/CD Pipeline
+When publishing via the Automation Portal's Visual Builder, the system doesn't just push configuration files; it scaffolds a production-ready CI pipeline. The generated pipeline typically performs the following steps:
+
+1.  **Checkout:** Pulls the EE definition files from the repository.
+2.  **Authentication:** Uses stored secrets to log into your container registry (e.g., Quay.io).
+3.  **Build:** Uses the `ansible-builder` logic to resolve dependencies and build the container image.
+4.  **Push:** Uploads the newly tagged container image to the target registry for use in your Ansible Automation Platform clusters.
+
+[#exercise-3-1-3-2]
+== Hands-on Lab: Publishing and CI Scaffolding
+
+This exercise guides you through moving your EE definition to GitHub and enabling automated builds.
+
+=== Exercise 3.1: Publish the EE Definition to GitHub
+
+1. Navigate to the **EE Builder** in the Automation Portal and select your saved EE definition.
+2. On the review/output screen, select **Publish to Git**.
+3. Configure the following Git publishing options:
+*   **Repository:** Select `Create new repository`.
+*   **Branch:** `main`.
+*   **Org/User:** Enter your `<your-github-username-or-org>`.
+*   **Repo name:** `network-automation-ee`.
+*   **Authentication:** Enter your GitHub Personal Access Token (PAT) with `repo` scope.
+4. Click **Publish**. Wait for the confirmation message verifying the repository creation and file push.
+
+=== Exercise 3.2: Scaffold a GitHub Actions CI Pipeline
+
+1. Within the publication workflow, select the option to **Include GitHub Actions workflow**.
+2. Configure the build pipeline parameters:
+*   **Target registry:** `quay.io/<your-namespace>`
+*   **Image name:** `network-automation-ee`
+*   **Registry credentials:** Provide your container registry credentials (these are stored as repository secrets in GitHub).
+3. Click **Publish** or **Create**.
+4. Once completed, navigate to your new GitHub repository. Under the **Actions** tab, you will see the scaffolded workflow ready for its first execution.
+
+[TIP]
+====
+To maintain security, ensure your `GITHUB_PAT` and `REGISTRY_CREDENTIALS` are managed as **Repository Secrets** in GitHub. Never commit plain-text credentials to your EE definition repository.
+====
+
+== Integration with Backstage Software Templates
+Once the pipeline is established, you can import the generated repository as a **Backstage Software Template**. This allows other teams in your organization to discover your validated EE definition, "fork" or "clone" it via the portal, and instantly gain a pre-configured CI pipeline. This promotes organizational standardization by ensuring every team uses the same build patterns for their network or application automation environments.

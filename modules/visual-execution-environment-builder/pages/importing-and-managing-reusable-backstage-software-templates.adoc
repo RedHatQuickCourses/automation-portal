@@ -1,0 +1,49 @@
+#  Importing and managing reusable Backstage software templates
+
+= Importing and Managing Reusable Backstage Software Templates
+
+In the Ansible Automation Platform 2.7 ecosystem, the Visual Execution Environment (EE) Builder does more than just generate container images; it facilitates organizational standardization through Backstage software templates. When an EE definition is finalized, the system generates a `<ee-name>-template.yaml` file. This file acts as a scaffold, capturing the base image, collections, and dependency requirements. 
+
+By importing these templates into the Automation Portal, administrators can transform a one-time build into a reusable baseline, allowing different teams to adopt "golden" configurations for their automation infrastructure.
+
+== Architectural Benefits of Reusable Templates
+
+*   **Standardization:** Ensures all teams build EEs using approved base images and vetted Ansible Collections.
+*   **Reduced Complexity:** New users can start with a pre-configured template rather than defining complex dependencies from scratch.
+*   **Version Control Integration:** Templates stored in Git track changes to your automation requirements over time.
+*   **Self-Service Enablement:** Enables a "browse-before-build" workflow where developers can discover and deploy existing, compliant EE configurations.
+
+== Managing Templates in the Portal
+
+Managing these templates involves a lifecycle of analysis, validation, and publication. When you import a template, the Automation Portal parses the YAML metadata to ensure it complies with your organization's security and architecture policies.
+
+=== Hands-on Lab: Importing a Reusable Template
+
+This lab assumes you have already generated an EE definition and pushed the resulting `network-automation-ee-template.yaml` to your GitHub repository.
+
+.Prerequisites
+* Access to the Automation Portal with `Administrator` or `Template Manager` permissions.
+* A valid raw URL to your `template.yaml` file hosted in a reachable GitHub repository.
+
+.Steps
+1. **Locate the Template Source:** Navigate to your GitHub repository and locate the generated file (e.g., `network-automation-ee-template.yaml`).
+2. **Retrieve the Raw URL:** Open the file in the GitHub web interface and click the **Raw** button to get the direct file URL (e.g., `https://raw.githubusercontent.com/<your-username>/network-automation-ee/main/network-automation-ee-template.yaml`).
+3. **Initiate Import:** Log in to the Automation Portal. In the top-right navigation, click **Add Template**.
+4. **Define Source:** Select the **Select URL** option from the provided methods.
+5. **Validation:** Paste the raw URL copied in step 2 and click **Analyze**.
++
+[NOTE]
+====
+The "Analyze" phase is critical. The portal validates the YAML syntax and ensures the referenced base image and collections are compatible with your current Automation Platform version.
+====
++
+6. **Review:** Inspect the parsed template data in the UI. Ensure the base image, specific Python packages, and Ansible Collections align with your team's requirements.
+7. **Finalize:** Click **Import** to register the template in the portal catalog.
+
+== Troubleshooting Template Imports
+
+If the import process fails during the "Analyze" phase, check the following:
+
+*   **Connectivity:** Ensure the GitHub repository is public or that the Automation Portal has the necessary credentials (SSH/PAT) to access private repositories.
+*   **YAML Schema:** Verify that the `template.yaml` file has not been manually edited in a way that violates the Backstage template schema required by the Automation Portal.
+*   **Dependency Resolution:** If the analysis indicates "Unresolved Dependencies," ensure that any custom collections listed in the template are available in your private Automation Hub or via the configured global Galaxy source.

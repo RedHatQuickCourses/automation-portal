@@ -1,22 +1,25 @@
-= An Example Quick Course
+=  Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle
 :navtitle: Home
 
 == Introduction
 
-Course Title: Course title FIXME
+Course Title:  Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle
 
 Description:
 Course description FIXME
 
-Duration: pass:[<span class="course-total-duration" aria-live="polite">…</span>]
+Duration: FIXME hours
 
-== Objectives
+== Topics covered in this course
 
-On completing this course, you should be able to:
 
-* Observable, measurable objective...
-* Observable, measurable objective...
-* Observable, measurable objective...
+*  Automation Portal
+
+*  Visual Execution Environment Builder
+
+*  Centralized Content Discovery
+
+
 
 == Prerequisites
 

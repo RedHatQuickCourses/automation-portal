@@ -1,0 +1,63 @@
+#  Implementing continuous synchronization and scheduling
+
+= Implementing Continuous Synchronization and Scheduling
+
+The efficiency of an automation ecosystem relies on the freshness of its content. In Ansible Automation Platform 2.7, the Centralized Content Discovery module provides robust mechanisms to ensure that automation assets—such as Ansible Content Collections—remain up-to-date across the enterprise.
+
+== Overview of Continuous Synchronization
+
+Continuous synchronization allows administrators to aggregate content from multiple sources, including GitHub, GitLab, and Private Automation Hub, into a unified catalog. By automating this process, organizations eliminate the manual overhead of updating repositories and ensure that automation engineers always have access to the latest validated modules and roles.
+
+Admins maintain complete administrative control over the timing, frequency, and source scope, ensuring that synchronization processes do not impact network bandwidth or server performance during peak hours.
+
+== Synchronization Modes
+
+The platform supports two primary modes for content updates:
+
+*   **On-Demand Sync:** Administrators can trigger an immediate synchronization process by selecting "Sync now" within the Automation Portal UI. This is ideal for urgent hotfixes or immediate deployment of newly published content.
+*   **Scheduled Sync:** Admins can configure recurring synchronization tasks based on specific time intervals or cron-style schedules. This ensures the catalog remains current without manual intervention.
+
+== Configuring Synchronization Schedules
+
+To implement an automated synchronization schedule, follow these administrative steps within the Centralized Content Discovery interface:
+
+1.  **Navigate to Sources:** Access the **Content Sources** dashboard in the Automation Portal.
+2.  **Define Source Scope:** Select the target source (e.g., a specific GitHub organization or Private Automation Hub instance).
+3.  **Configure Frequency:** Under the **Sync Settings** tab, toggle the "Enable Automated Sync" option.
+4.  **Define Interval:** Input the desired frequency (e.g., daily at 02:00 UTC or every 6 hours).
+5.  **Save and Apply:** Upon saving, the scheduler registers the task.
+
+[NOTE]
+====
+The UI provides real-time visibility into the status of these sync operations. Admins can view the success, failure, or "in-progress" state for each individual source, along with timestamps of the last successful pull.
+====
+
+== Hands-on Lab: Configuring and Monitoring Sync
+
+In this exercise, you will configure an automated sync for a repository and verify the process via the dashboard.
+
+=== Step 1: Configure an Automated Source Sync
+1. Log in to the Automation Portal as an administrator.
+2. Navigate to **Content Discovery > Sources**.
+3. Click **Add Source** and provide the credentials for a Private Automation Hub instance.
+4. Locate the **Synchronization Schedule** section.
+5. Set the schedule to `0 0 * * *` (Daily at Midnight).
+6. Click **Save**.
+
+=== Step 2: Triggering an On-Demand Sync
+1. From the **Sources** list, locate the newly created source.
+2. Click the **Actions** menu (represented by three dots).
+3. Select **Sync Now**.
+4. Observe the status indicator; it should transition from "Pending" to "Syncing" and finally to "Success."
+
+=== Step 3: Verifying Content Catalog
+1. Navigate to the **Catalog** tab.
+2. Search for a specific collection known to exist in the source you just synchronized.
+3. Confirm that the version displayed reflects the latest version retrieved from the remote source.
+
+== Troubleshooting Synchronization
+If a synchronization task fails, consult the following:
+
+*   **Credential Validation:** Ensure that the API tokens or service account credentials provided for the source have the necessary read permissions.
+*   **RBAC Permissions:** Verify that your current user role includes the `sync_content` permission scope.
+*   **Log Inspection:** Check the platform logs via the OCP CLI (`oc logs <automation-portal-pod>`) to identify network timeouts or 401/403 authentication errors from the upstream source.

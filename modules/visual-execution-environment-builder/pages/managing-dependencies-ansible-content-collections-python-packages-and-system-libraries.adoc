@@ -1,0 +1,54 @@
+#  Managing dependencies: Ansible Content Collections, Python packages, and system libraries
+
+= Managing Dependencies in Execution Environments
+
+In the context of Ansible Automation Platform 2.7, managing dependencies is critical for ensuring that Execution Environments (EEs) are portable, predictable, and secure. The Visual Execution Environment Builder simplifies this process by replacing error-prone manual CLI workflows with a declarative, GUI-based dependency management interface.
+
+== Understanding EE Dependency Architecture
+
+An Execution Environment is a container image that packages the Ansible Core engine, Python interpreter, Ansible Content Collections, and necessary system-level libraries. To maintain a "single source of truth," the Visual Builder categorizes dependencies into three distinct layers:
+
+*   **Ansible Content Collections:** The functional modules and plugins required for your automation tasks.
+*   **Python Packages:** The language-specific libraries required by your collections or custom scripts (e.g., `netaddr`, `jmespath`).
+*   **System Libraries (RPMs):** OS-level binaries required by the underlying container environment to support execution (e.g., `jq` for JSON processing, `openssh-clients` for connectivity).
+
+== The "Browse-Before-Build" Workflow
+
+To prevent dependency drift and redundant development, AAP 2.7 introduces a **Browse-Before-Build** pattern. Before defining an EE, developers should consult the Centralized Content Discovery catalog. This ensures that you are utilizing vetted, existing collections rather than importing duplicate or unapproved versions from external repositories.
+
+== Hands-on Lab: Configuring EE Dependencies
+
+In this activity, you will configure the dependency manifest for a custom Execution Environment using the Visual Builder.
+
+=== Prerequisites
+* Access to the Ansible Automation Platform 2.7 Web UI.
+* Permissions to create and edit Execution Environment definitions.
+
+=== Step 1: Adding Ansible Content Collections
+Collections must be sourced from your defined Content Discovery catalogs to ensure integrity.
+
+1.  Navigate to the **Visual EE Builder** and create a new definition.
+2.  In the **Collections** section, select **Add from Catalog**.
+3.  Search for the required collections (e.g., `ansible.netcommon` or `cisco.ios`).
+4.  Specify the version constraints to ensure consistency across your team's environments.
+
+=== Step 2: Defining Python and System Packages
+Once the primary collections are defined, you must satisfy their underlying dependencies.
+
+1.  Proceed to the **Dependencies** screen within the builder.
+2.  **Add Python Packages:** Add the requirements needed by your automation scripts.
+    *   Input: `netaddr`, `paramiko`, `jmespath`
+3.  **Add System Packages (RPMs):** Add the necessary Linux binaries.
+    *   Input: `jq`, `openssh-clients`
+4.  Click **Next** to validate the definition.
+
+=== Step 3: Verification
+The Visual Builder will resolve the dependency tree.
+
+*   **Expected Result:** The system validates that all requested Python and system packages are compatible with your base image. You should see a consolidated summary listing the collections, Python dependencies, and RPMs ready for the build process.
+
+== Best Practices for Dependency Management
+
+*   **Version Pinning:** Always specify exact versions for Python packages and Collections. Relying on "latest" can lead to unpredictable CI/CD pipeline failures when upstream packages release breaking changes.
+*   **Minimalism:** Only include the libraries required for the specific task. Over-bloating an EE with unnecessary system packages increases the attack surface and slows down deployment times.
+*   **CI Integration:** Once your dependencies are configured in the GUI, export the definition to Git. This allows your CI pipeline to trigger automated builds whenever the `execution-environment.yml` file is updated, ensuring the infrastructure-as-code (IaC) lifecycle is maintained.

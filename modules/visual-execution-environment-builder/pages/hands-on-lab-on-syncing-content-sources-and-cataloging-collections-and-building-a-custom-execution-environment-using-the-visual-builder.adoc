@@ -1,0 +1,50 @@
+#  Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder
+
+= Hands-on Lab: Content Discovery and Visual EE Building
+
+In this lab, you will leverage the Automation Portal to unify disparate automation sources and transition from manual image creation to a streamlined, GUI-based Execution Environment (EE) workflow.
+
+== Prerequisites
+* Access to an OpenShift Container Platform (OCP) cluster with AAP 2.7 installed.
+* An authenticated session in the Automation Portal.
+* Read/Write access to a connected Git repository.
+
+== Task 1: Syncing Content Sources and Cataloging
+Before building an EE, we must aggregate your automation assets into a unified catalog.
+
+1.  **Navigate to Discovery:** In the Portal sidebar, select **Content Discovery** > **Sources**.
+2.  **Add Sources:** Click **Add Source**.
+    *   Select `GitHub` and provide your organization URL and token.
+    *   Select `Private Automation Hub` and provide the URL and API token.
+3.  **Initiate Synchronization:** Click **Sync Now** on both entries. 
+4.  **Verify Catalog:** Navigate to the **Catalog** tab. You should see Ansible Content Collections aggregated from both GitHub and your Private Automation Hub.
+5.  **Apply Governance:** Use the **Filter** menu to apply an "Approved" tag, ensuring that only verified collections appear in your EE builder selection list.
+
+== Task 2: Building a Custom Execution Environment
+We will now use the Visual EE Builder to generate a container definition without writing a single line of YAML or `ansible-builder` configuration files.
+
+1.  **Access the Builder:** Navigate to **Execution Environments** > **Visual Builder**.
+2.  **Initialize Definition:** Click **Create New Definition**. Provide a name (e.g., `network-ops-ee`) and a base container image (e.g., `registry.redhat.io/ansible-automation-platform-27/ee-minimal-rhel9`).
+3.  **Add Collections:**
+    *   Click **Add Collection**. 
+    *   The portal will display your unified catalog from Task 1.
+    *   Search for `cisco.ios` and `arista.eos`. Select them and click **Add to Definition**.
+4.  **Inject Dependencies:** 
+    *   Click the **Dependencies** tab.
+    *   In the **Python Requirements** section, add `netmiko` and `ncclient`.
+    *   In the **System Packages** section, add `libssh-devel`.
+5.  **Define Build Steps:**
+    *   Navigate to **Custom Steps**.
+    *   Add a **Pre-build** step: Enter a shell command to verify the file system structure.
+    *   Add a **Post-build** step: Include a command to run a security scan script (e.g., `ansible-lint -v`).
+6.  **Finalize and Publish:** 
+    *   Review the generated preview.
+    *   Click **Save & Publish**. Select your GitHub repository; the builder will automatically push the `execution-environment.yml` and associated metadata to your repository.
+
+== Troubleshooting Tips
+* **Sync Failures:** If sources fail to sync, check the **Activity Log** in the Portal to verify API token permissions and network connectivity to the remote source.
+* **Dependency Conflicts:** If a collection requires a specific Python version not supported by your base image, the builder will provide a validation error. Switch to a more compatible base image (e.g., `ee-supported-rhel9`).
+* **RBAC Restrictions:** If you cannot see the Visual Builder, ensure your user account is assigned the `Automation Administrator` or `EE Builder` role.
+
+== Verification
+Verify that the build process has been triggered by navigating to your linked GitHub repository. You should see a `build/` directory populated with your definition, confirming that the Visual Builder has successfully handed off the configuration to your CI/CD pipeline.

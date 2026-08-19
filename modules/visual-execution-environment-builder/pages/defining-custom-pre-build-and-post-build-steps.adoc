@@ -1,0 +1,61 @@
+#  Defining custom pre-build and post-build steps
+
+= Defining Custom Pre-Build and Post-Build Steps
+
+In the context of the Visual Execution Environment (EE) Builder, automation engineers often require specific system-level configurations that go beyond standard Ansible Content Collection or Python package dependencies. Custom build steps allow you to inject arbitrary commands into the container image build process, ensuring your Execution Environment meets specific organizational security, compliance, or tooling requirements.
+
+== Architectural Overview
+
+Custom build steps are executed during the container build lifecycle, specifically interacting with the `ansible-builder` process under the hood. By utilizing the GUI-based Visual Builder, you can define these operations without manually editing `execution-environment.yml` files.
+
+*   **Pre-build steps:** Executed before the installation of Python packages and Ansible Collections. These are ideal for configuring system repositories, installing OS-level development headers, or preparing the file system.
+*   **Post-build steps:** Executed after the installation of dependencies. These are typically used for cleanup operations, generating metadata files (such as build timestamps or versioning logs), or running security scans/validations on the final image state.
+
+== Configuring Build Steps in the Visual Builder
+
+The Visual Builder provides an intuitive interface to insert these commands directly into the container definition.
+
+=== Best Practices for Custom Steps
+*   **Idempotency:** Ensure that your commands are idempotent and exit with a non-zero status code if a failure occurs to prevent the creation of broken container images.
+*   **Minimize Layers:** Where possible, chain commands using `&&` to reduce the number of layers in the resulting container image, which optimizes image size and build speed.
+*   **Security:** Avoid echoing sensitive credentials or environment variables in build steps, as these may be persisted in the container's history.
+
+---
+
+== Hands-on Lab: Defining Custom Build Steps
+
+In this exercise, you will inject custom metadata into your Execution Environment to track build provenance.
+
+=== Exercise 2.5: Define Custom Build Steps (Optional)
+
+[IMPORTANT]
+====
+Ensure you have completed the prerequisite setup of your project workspace within the Visual EE Builder before beginning this task.
+====
+
+. **Navigate to the Build Steps screen:** 
+   In the Visual Builder wizard, progress to the "Custom Build Steps" configuration screen.
+
+. **Define the Post-Build command:**
+   Locate the input field for "Post-build commands." Enter the following command to create a build information file:
+   
+   [source,bash]
+   ----
+   RUN echo "Network Automation EE - Built $(date)" > /etc/ee-build-info
+   ----
+
+. **Validate the definition:**
+   Observe the definition preview window. The builder will automatically format the command for inclusion in the underlying build definition files.
+
+. **Verification:**
+   Click **Next** to save your configuration. Once the image build completes, you can verify the existence of the file by running:
+   
+   [source,bash]
+   ----
+   podman run --rm <your-ee-image-name> cat /etc/ee-build-info
+   ----
+
+[TIP]
+====
+If your build fails at the custom step, review the build logs in the Automation Portal interface. The logs capture `stdout` and `stderr` from your custom commands, providing immediate troubleshooting feedback.
+====

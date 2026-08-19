@@ -1,0 +1,56 @@
+#  Workflow for browse-before-build and tracing existing automation assets
+
+= Workflow for browse-before-build and tracing existing automation assets
+
+In large-scale enterprise environments, automation content often suffers from fragmentation. Collections reside in diverse locations—private automation hubs, public Git repositories, or siloed within local team projects. This "silo effect" leads to redundant development and makes it difficult for platform engineers to maintain security standards. 
+
+The **Browse-Before-Build** workflow solves this by providing a unified catalog that acts as the single source of truth for all automation assets within the Ansible Automation Platform (AAP) 2.7.
+
+== The Browse-Before-Build Philosophy
+
+The core principle of this workflow is to maximize reuse. By shifting the developer mindset from "write new" to "discover existing," organizations can ensure that:
+
+*   **Redundancy is minimized:** Teams do not waste time recreating modules or roles that already exist.
+*   **Consistency is maintained:** Official, vetted collections are used across the enterprise.
+*   **Visibility is maximized:** Stakeholders can trace the lineage and activity of any automation asset.
+
+== Tracing and Discovering Assets
+
+The Unified Catalog architecture aggregates metadata from multiple sources, allowing users to trace assets effectively through the following lifecycle:
+
+1.  **Catalog Discovery:** Developers search the unified catalog using keywords, tags, or source metadata to identify existing Ansible Content Collections or roles.
+2.  **Asset Tracing:** Every entry in the catalog includes metadata that allows you to:
+    *   **Trace Playbooks:** View which playbooks utilize the collection.
+    *   **Track CI Activity:** See the last successful build status and recent pull requests associated with the collection.
+    *   **Access Source Links:** Navigate directly to the original repository (e.g., GitHub, GitLab) to inspect the underlying source code or documentation.
+3.  **Selection for EE Composition:** Once an asset is identified, it is selected directly from the catalog interface when configuring an Execution Environment (EE) in the Visual Builder.
+
+== Hands-on Lab: Exploring the Unified Catalog
+
+This activity demonstrates how to locate and verify an existing automation asset before attempting to build a custom environment.
+
+[IMPORTANT]
+====
+Ensure your Automation Portal has been configured with at least one external source (GitHub or Private Automation Hub) before starting this exercise.
+====
+
+=== Step 1: Searching for Collections
+1.  Navigate to the **Automation Portal** and select **Content Discovery** from the sidebar.
+2.  In the search bar, enter a keyword relevant to your target infrastructure (e.g., `networking`, `cloud`, or `security`).
+3.  Filter the results by **Source** (e.g., `Private Automation Hub`) to narrow down the scope to vetted enterprise assets.
+
+=== Step 2: Evaluating and Tracing an Asset
+1.  Click on a Collection name from the search results to open its **Detail View**.
+2.  Examine the **Lineage** tab to view the source link. Click the link to verify the original repository.
+3.  Check the **Usage** tab; here, you can see if this collection is currently being consumed by other EE definitions or local playbooks within the organization.
+
+=== Step 3: Integrating into the Visual Builder
+1.  Once you have identified a collection suitable for your project, click the **Add to EE Draft** button.
+2.  Navigate to the **Visual Execution Environment Builder**. 
+3.  Observe that the selected collection is now staged in your current working definition, bypassing the need for manual dependency management or URL input.
+
+== Troubleshooting Tips
+
+*   **Missing Content:** If an asset is not appearing, verify that the **Continuous Synchronization** schedule is active in the Portal Settings under "Content Sources."
+*   **Authentication Issues:** Ensure that the service accounts used for GitHub or GitLab integration have the necessary read-only permissions to scan the repositories.
+*   **Stale Data:** If you see an asset but the CI activity status seems outdated, trigger a manual "Sync Now" on the configured content source.

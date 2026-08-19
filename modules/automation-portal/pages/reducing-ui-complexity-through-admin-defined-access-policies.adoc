@@ -1,0 +1,73 @@
+#  Reducing UI complexity through admin-defined access policies
+
+= Reducing UI Complexity through Admin-Defined Access Policies
+
+In large-scale enterprise environments, the Automation Portal can become cluttered with administrative interfaces, repository configurations, and low-level build tools. To improve user experience and maintain security compliance, the Automation Portal allows administrators to define access policies that dynamically tailor the UI based on user roles.
+
+== The Concept of UI Minimalism through RBAC
+
+By leveraging Role-Based Access Control (RBAC), you can decouple the complexity of the platform from the needs of the consumer. Reducing UI complexity serves two primary goals:
+
+*   **Operational Efficiency:** End users are not overwhelmed by administrative overhead, reducing the cognitive load required to execute automation.
+*   **Administrative Governance:** By hiding configuration menus (like EE Definitions or Git Repositories), you prevent unauthorized changes to the underlying platform infrastructure.
+
+== Architectural Implementation
+
+The portal maps navigation visibility directly to the user's existing Ansible Automation Platform (AAP) permissions. When a user authenticates, the portal checks their associated permissions:
+
+1.  **Identity Mapping:** The portal retrieves the user's roles via their API token.
+2.  **Policy Evaluation:** The system evaluates the user's role against the defined navigation access policies.
+3.  **UI Projection:** The frontend dynamically renders only the menu items for which the user has authorized access.
+
+[NOTE]
+====
+The UI policy does not replace server-side security. The system architecture ensures that even if a UI element were exposed, the AI agent and backend services will block any action not permitted by the server-side configuration.
+====
+
+== Scenario: Role-Based Navigation Configuration
+
+To implement the requested separation of duties, follow this logical configuration structure:
+
+[cols="1,2,2", options="header"]
+|===
+| User Group | Visible Menu Items | Hidden/Restricted Items
+| *End Users* | Templates, History | EE Definitions, Collections, Git Repositories, Sync
+| *Platform Engineers* | Full Portal (All Items) | None
+|===
+
+=== Configuring the Navigation Policy
+
+To restrict navigation, administrators define access policies within the Portal settings:
+
+1.  **Define the Scope:** Identify the target Role (e.g., `cloud-team`) in the AAP RBAC system.
+2.  **Access Filtering:** Within the Automation Portal administrative settings, navigate to *UI Access Policies*.
+3.  **Map Groups to Menus:** 
+    *   Create a policy for the `cloud-team`.
+    *   Set the `Allowed Navigation Items` list to strictly include: `['Templates', 'History']`.
+    *   Verify that `System Configuration` and `Builder` menus are excluded.
+
+== Practical Exercise: Validating Access Policies
+
+This activity demonstrates how to verify that the portal successfully filters UI components based on the assigned role.
+
+=== Prerequisites
+*   Ensure you have two distinct test accounts: `user-standard` and `user-admin`.
+*   Ensure `user-standard` is assigned to a restricted role in your IdP or AAP.
+
+=== Step-by-Step Verification
+
+. **Login as Platform Engineer:**
+   Log in with the `user-admin` account. Verify that the sidebar contains the full suite of options, including *EE Definitions* and *Git Repositories*.
+
+. **Apply Administrative Filtering:**
+   Navigate to the Portal Admin panel. Select *UI Access Policies* and create a rule for the group containing `user-standard`. Select only *Templates* and *History*.
+
+. **Login as End User:**
+   Log in with the `user-standard` account. Observe that the navigation sidebar has shrunk, removing all administrative configuration tools.
+
+. **Verify Backend Protection (Optional):**
+   Attempt to access the URL for the EE Builder directly (e.g., `/portal/ee-builder`). The system should return a 403 Forbidden error, confirming that the UI policy is backed by robust server-side security.
+
+=== Troubleshooting
+*   **Cache Issues:** If menu changes do not reflect, clear your browser cache or force-refresh the session.
+*   **Role Propagation:** If a user still sees extra menus, verify that their user role in AAP was updated and their current session token has been refreshed.

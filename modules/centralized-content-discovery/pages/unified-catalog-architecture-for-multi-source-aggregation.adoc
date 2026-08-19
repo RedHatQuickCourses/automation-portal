@@ -1,0 +1,80 @@
+#  Unified catalog architecture for multi-source aggregation
+
+= Unified Catalog Architecture for Multi-Source Aggregation
+
+In modern enterprise automation, content is rarely stored in a single location. Ansible Collections are often dispersed across distributed version control systems (like GitHub or GitLab) and local distribution points (like Private Automation Hub). The **Unified Catalog Architecture** in Ansible Automation Platform 2.7 solves the "siloed content" problem by abstracting the storage layer and providing a single pane of glass for discovery.
+
+== Architectural Overview
+
+The Unified Catalog operates as a middleware layer between the automation consumer and the various content repositories. Instead of forcing developers to hunt through multiple URLs, the portal acts as a metadata aggregator.
+
+[plantuml]
+....
+@startuml
+package "Content Sources" {
+  [GitHub Organization] as GH
+  [Private Automation Hub] as PAH
+  [GitLab Instance] as GL
+}
+
+package "Automation Portal" {
+  [Sync Engine]
+  [Metadata Database]
+  [Unified API/UI]
+}
+
+GH --> [Sync Engine] : Poll/Webhook
+PAH --> [Sync Engine] : REST API
+GL --> [Sync Engine] : Poll
+[Sync Engine] --> [Metadata Database]
+[Metadata Database] --> [Unified API/UI]
+@enduml
+....
+
+=== Key Components
+
+1.  **The Sync Engine:** A background service that periodically connects to configured remote sources. It performs a lightweight metadata crawl to identify available Collections, their versions, and documentation.
+2.  **Metadata Database:** A persistent storage layer within the portal that caches the state of discovered collections. This allows for near-instant search results without needing to reach out to external APIs during every UI query.
+3.  **Abstraction Layer:** Normalizes the data structure from diverse sources (e.g., standardizing how a GitHub-hosted collection version is represented versus an Automation Hub-hosted collection).
+
+== Benefits of Aggregation
+
+*   **Reduced Discovery Friction:** Developers can search for a module or collection without needing to know the hosting infrastructure beforehand.
+*   **Version Visibility:** The catalog tracks metadata across sources, allowing users to compare if an internal, customized collection in the Private Automation Hub is newer or older than an upstream version in GitHub.
+*   **Policy-Driven Access:** By aggregating content, administrators can apply RBAC to the catalog, ensuring that users only see collections they are authorized to consume, regardless of the source.
+
+== Hands-on Activity: Configuring Multi-Source Aggregation
+
+In this activity, you will configure the Automation Portal to aggregate content from a GitHub organization and a Private Automation Hub.
+
+=== Prerequisites
+*   Access to an OCP cluster with Automation Portal installed.
+*   A GitHub Personal Access Token (PAT) with `repo` scope.
+*   The API endpoint and token for your Private Automation Hub.
+
+=== Step 1: Define Content Sources
+1. Navigate to **Content Management > Sources** in the Automation Portal.
+2. Click **Add Source**.
+3. For the **GitHub Source**:
+   *  Select `GitHub` as the source type.
+   *  Input your organization URL: `https://github.com/<your-org>`.
+   *  Provide the PAT in the credential field.
+4. For the **Private Automation Hub Source**:
+   *  Select `Private Automation Hub`.
+   *  Provide the `https://automation-hub.example.com` URL.
+   *  Provide the API token for authentication.
+
+=== Step 2: Triggering Sync
+1. Once configured, navigate to the **Sync Settings**.
+2. Set the **Sync Schedule** to every 6 hours (recommended for medium-sized environments).
+3. Click **Sync Now** to pull the initial metadata from both locations.
+
+=== Step 3: Verifying the Unified Catalog
+1. Navigate to the **Catalog** tab in the main navigation menu.
+2. Observe that collections from both GitHub and the Private Automation Hub are present.
+3. **Verification:** Select a specific collection. In the details pane, locate the **Origin** field. It should clearly display the source (e.g., `Source: Private Automation Hub` or `Source: GitHub`).
+
+[TIP]
+====
+If a collection exists in both sources, the portal will surface both versions. Use the "Default Version" settings in the portal to pin the preferred version for your automation teams.
+====

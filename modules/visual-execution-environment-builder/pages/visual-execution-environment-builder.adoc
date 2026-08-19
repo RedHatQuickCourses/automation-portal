@@ -1,0 +1,13 @@
+#  Visual Execution Environment Builder
+
+= Visual Execution Environment Builder
+
+The Visual Execution Environment (EE) Builder is a GUI-based tool that simplifies the creation of portable, reproducible automation runtime images. It replaces complex CLI-based workflows by providing a guided interface to manage the assembly of `ansible-core`, collection dependencies, Python packages, and system libraries.
+
+Key features include:
+
+*   **Guided Workflow**: Utilizes a step-by-step wizard to define custom EEs, removing the need to manually author `execution-environment.yml` files.
+*   **Integrated Discovery**: Enables users to select Ansible Content Collections directly from the centralized discovery catalog.
+*   **Definition Management**: Automatically generates complete EE definition files with options to download or publish directly to repositories.
+*   **CI/CD Integration**: Supports automated container image builds through scaffolded CI pipelines and integration with Git-based workflows.
+*   **Customization**: Allows for the definition of pre-build and post-build steps, alongside the integration of Red Hat domain-specific presets.

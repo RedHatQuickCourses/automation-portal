@@ -1,0 +1,45 @@
+#  Overview and architectural benefits of the Automation Portal
+
+= Automation Portal: Overview and Architectural Benefits
+
+The Automation Portal in Ansible Automation Platform (AAP) 2.7 represents a significant evolution in the platform's architecture. Transitioning from a simple, self-service job launcher, the portal has matured into a comprehensive **Developer Productivity Surface**. It centralizes the lifecycle of automation—from discovery and development to execution—within a single, unified interface.
+
+== The Evolution of the Portal
+In previous iterations, such as AAP 2.6, the portal functioned primarily as an execution layer. Users navigated to the interface, identified authorized job templates, populated surveys, and triggered automation. 
+
+AAP 2.7 expands this scope to support three primary pillars:
+*   **Visual Execution Environment (EE) Builder:** A GUI-driven workflow for container image creation.
+*   **Centralized Content Discovery:** A unified catalog that aggregates automation assets from multiple sources.
+*   **Platform-wide Governance:** Enhanced RBAC controls, administrative navigation policies, and AI-assisted operational workflows.
+
+== Architectural Benefits
+
+The shift toward this "Build, Discover, and Run" architecture provides several key advantages for organizations:
+
+=== 1. Unified Developer Productivity
+By integrating the EE Builder and the Content Discovery catalog directly into the portal, developers no longer need to switch context between the command line, CI/CD pipelines, and the execution interface. This reduces the "friction of automation," allowing teams to define, build, and deploy automation assets without leaving the AAP ecosystem.
+
+=== 2. Reduced Complexity via Admin-Defined RBAC
+The architectural design of the 2.7 portal emphasizes role-based navigation. Administrators can configure custom menus to match user roles:
+*   **End-Users:** May see a simplified view restricted to "Templates" and "Job History," minimizing cognitive load and accidental configuration changes.
+*   **Platform Engineers:** Retain access to the full portal, including builder tools, catalog management, and administrative policy settings.
+
+=== 3. Streamlined Governance and Discovery
+The architecture supports multi-source aggregation. By centralizing content from various repositories (GitHub, GitLab, Private Automation Hub), the portal provides a "browse-before-build" workflow. This allows teams to trace existing automation assets, preventing the duplication of effort and ensuring that teams are using approved, organization-wide standards.
+
+=== 4. Extensibility and AI Readiness
+With the inclusion of an MCP (Model Context Protocol) server, the portal is architected to support AI-assisted operations. This allows for natural language interaction with the platform, enabling users to query automation status or trigger workflows through supported AI clients, further lowering the barrier to entry for non-technical stakeholders.
+
+== Summary of Architectural Shift
+
+[cols="1,2", options="header"]
+|===
+| Feature | AAP 2.6 Architecture | AAP 2.7 Architecture
+| **Primary Focus** | Job Execution | Full Automation Lifecycle
+| **EE Creation** | Manual CLI Workflows | Visual Wizard / GUI-based
+| **User Interface** | Fixed Navigation | Dynamic/RBAC-Based Menus
+| **Content Sourcing** | Isolated Sources | Unified Catalog Aggregation
+| **AI Integration** | None | Native MCP Server Support
+|===
+
+By consolidating these functions, AAP 2.7 reduces the operational overhead associated with maintaining disparate build tools and content repositories, ensuring that automation scaling remains consistent with enterprise security and governance policies.
