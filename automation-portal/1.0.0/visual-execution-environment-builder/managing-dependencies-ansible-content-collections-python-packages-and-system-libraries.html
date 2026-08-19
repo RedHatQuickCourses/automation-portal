@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Managing dependencies: Ansible Content Collections, Python packages, and system libraries :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="integrating-red-hat-domain-specific-presets-and-base-container-images.html">
+    <link rel="next" href="defining-custom-pre-build-and-post-build-steps.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.12">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/collapsible.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/reading-time.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/audio-transcript.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="automation-portal" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../automation-portal/automation-portal.html">Automation Portal</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/overview-and-architectural-benefits-of-the-automation-portal.html">Overview and architectural benefits of the Automation Portal</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/platform-requirements-and-installation-on-openshift-container-platform.html">Platform requirements and installation on OpenShift Container Platform</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/configuring-ee-builder-via-helm-charts.html">Configuring EE Builder via Helm charts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/managing-rbac-based-navigation-menus-for-user-role-separation.html">Managing RBAC-based navigation menus for user role separation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/reducing-ui-complexity-through-admin-defined-access-policies.html">Reducing UI complexity through admin-defined access policies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.html">Hands-on Lab on Installing and verifying the Automation Portal on OCP</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="visual-execution-environment-builder.html">Visual Execution Environment Builder</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="architecture-and-transition-from-manual-cli-workflows-to-gui-based-building.html">Architecture and transition from manual CLI workflows to GUI-based building</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="utilizing-the-step-by-step-wizard-for-custom-ee-creation.html">Utilizing the step-by-step wizard for custom EE creation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="integrating-red-hat-domain-specific-presets-and-base-container-images.html">Integrating Red Hat domain-specific presets and base container images</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="managing-dependencies-ansible-content-collections-python-packages-and-system-libraries.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="defining-custom-pre-build-and-post-build-steps.html">Defining custom pre-build and post-build steps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="publishing-definitions-to-git-and-automating-ci-pipelines-with-github-actions.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="importing-and-managing-reusable-backstage-software-templates.html">Importing and managing reusable Backstage software templates</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="hands-on-lab-on-syncing-content-sources-and-cataloging-collections-and-building-a-custom-execution-environment-using-the-visual-builder.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="hands-on-lab-deploying-a-scaffolded-ci-pipeline-for-automated-container-image-builds.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../centralized-content-discovery/centralized-content-discovery.html">Centralized Content Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/unified-catalog-architecture-for-multi-source-aggregation.html">Unified catalog architecture for multi-source aggregation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/configuring-supported-sources-including-github-gitlab-and-private-automation-hub.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/implementing-continuous-synchronization-and-scheduling.html">Implementing continuous synchronization and scheduling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/workflow-for-browse-before-build-and-tracing-existing-automation-assets.html">Workflow for browse-before-build and tracing existing automation assets</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
+    <li><a href="visual-execution-environment-builder.html">Visual Execution Environment Builder</a></li>
+    <li><a href="managing-dependencies-ansible-content-collections-python-packages-and-system-libraries.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</h1>
+<h1 id="_managing_dependencies_in_execution_environments" class="sect0"><a class="anchor" href="#_managing_dependencies_in_execution_environments"></a>Managing Dependencies in Execution Environments</h1>
+<div class="paragraph">
+<p>In the context of Ansible Automation Platform 2.7, managing dependencies is critical for ensuring that Execution Environments (EEs) are portable, predictable, and secure. The Visual Execution Environment Builder simplifies this process by replacing error-prone manual CLI workflows with a declarative, GUI-based dependency management interface.</p>
+</div>
+<div class="sect1">
+<h2 id="_understanding_ee_dependency_architecture"><a class="anchor" href="#_understanding_ee_dependency_architecture"></a>Understanding EE Dependency Architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An Execution Environment is a container image that packages the Ansible Core engine, Python interpreter, Ansible Content Collections, and necessary system-level libraries. To maintain a "single source of truth," the Visual Builder categorizes dependencies into three distinct layers:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Ansible Content Collections:</strong> The functional modules and plugins required for your automation tasks.</p>
+</li>
+<li>
+<p><strong>Python Packages:</strong> The language-specific libraries required by your collections or custom scripts (e.g., <code>netaddr</code>, <code>jmespath</code>).</p>
+</li>
+<li>
+<p><strong>System Libraries (RPMs):</strong> OS-level binaries required by the underlying container environment to support execution (e.g., <code>jq</code> for JSON processing, <code>openssh-clients</code> for connectivity).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_browse_before_build_workflow"><a class="anchor" href="#_the_browse_before_build_workflow"></a>The "Browse-Before-Build" Workflow</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To prevent dependency drift and redundant development, AAP 2.7 introduces a <strong>Browse-Before-Build</strong> pattern. Before defining an EE, developers should consult the Centralized Content Discovery catalog. This ensures that you are utilizing vetted, existing collections rather than importing duplicate or unapproved versions from external repositories.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hands_on_lab_configuring_ee_dependencies"><a class="anchor" href="#_hands_on_lab_configuring_ee_dependencies"></a>Hands-on Lab: Configuring EE Dependencies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this activity, you will configure the dependency manifest for a custom Execution Environment using the Visual Builder.</p>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Access to the Ansible Automation Platform 2.7 Web UI.</p>
+</li>
+<li>
+<p>Permissions to create and edit Execution Environment definitions.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_1_adding_ansible_content_collections"><a class="anchor" href="#_step_1_adding_ansible_content_collections"></a>Step 1: Adding Ansible Content Collections</h3>
+<div class="paragraph">
+<p>Collections must be sourced from your defined Content Discovery catalogs to ensure integrity.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Visual EE Builder</strong> and create a new definition.</p>
+</li>
+<li>
+<p>In the <strong>Collections</strong> section, select <strong>Add from Catalog</strong>.</p>
+</li>
+<li>
+<p>Search for the required collections (e.g., <code>ansible.netcommon</code> or <code>cisco.ios</code>).</p>
+</li>
+<li>
+<p>Specify the version constraints to ensure consistency across your team&#8217;s environments.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_2_defining_python_and_system_packages"><a class="anchor" href="#_step_2_defining_python_and_system_packages"></a>Step 2: Defining Python and System Packages</h3>
+<div class="paragraph">
+<p>Once the primary collections are defined, you must satisfy their underlying dependencies.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Proceed to the <strong>Dependencies</strong> screen within the builder.</p>
+</li>
+<li>
+<p><strong>Add Python Packages:</strong> Add the requirements needed by your automation scripts.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Input: <code>netaddr</code>, <code>paramiko</code>, <code>jmespath</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Add System Packages (RPMs):</strong> Add the necessary Linux binaries.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Input: <code>jq</code>, <code>openssh-clients</code></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Next</strong> to validate the definition.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_3_verification"><a class="anchor" href="#_step_3_verification"></a>Step 3: Verification</h3>
+<div class="paragraph">
+<p>The Visual Builder will resolve the dependency tree.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Expected Result:</strong> The system validates that all requested Python and system packages are compatible with your base image. You should see a consolidated summary listing the collections, Python dependencies, and RPMs ready for the build process.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_best_practices_for_dependency_management"><a class="anchor" href="#_best_practices_for_dependency_management"></a>Best Practices for Dependency Management</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Version Pinning:</strong> Always specify exact versions for Python packages and Collections. Relying on "latest" can lead to unpredictable CI/CD pipeline failures when upstream packages release breaking changes.</p>
+</li>
+<li>
+<p><strong>Minimalism:</strong> Only include the libraries required for the specific task. Over-bloating an EE with unnecessary system packages increases the attack surface and slows down deployment times.</p>
+</li>
+<li>
+<p><strong>CI Integration:</strong> Once your dependencies are configured in the GUI, export the definition to Git. This allows your CI pipeline to trigger automated builds whenever the <code>execution-environment.yml</code> file is updated, ensuring the infrastructure-as-code (IaC) lifecycle is maintained.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="integrating-red-hat-domain-specific-presets-and-base-container-images.html">Integrating Red Hat domain-specific presets and base container images</a></span>
+  <span class="next"><a href="defining-custom-pre-build-and-post-build-steps.html">Defining custom pre-build and post-build steps</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script defer src="../../../_/js/vendor/tabs.js"></script>
+<script defer src="../../../_/js/vendor/reading-time.js"></script>
+  </body>
+</html>

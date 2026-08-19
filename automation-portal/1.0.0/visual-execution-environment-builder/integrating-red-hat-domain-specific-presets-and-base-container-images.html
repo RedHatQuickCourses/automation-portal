@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Integrating Red Hat domain-specific presets and base container images :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="utilizing-the-step-by-step-wizard-for-custom-ee-creation.html">
+    <link rel="next" href="managing-dependencies-ansible-content-collections-python-packages-and-system-libraries.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.12">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/collapsible.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/reading-time.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/audio-transcript.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="automation-portal" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../automation-portal/automation-portal.html">Automation Portal</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/overview-and-architectural-benefits-of-the-automation-portal.html">Overview and architectural benefits of the Automation Portal</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/platform-requirements-and-installation-on-openshift-container-platform.html">Platform requirements and installation on OpenShift Container Platform</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/configuring-ee-builder-via-helm-charts.html">Configuring EE Builder via Helm charts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/managing-rbac-based-navigation-menus-for-user-role-separation.html">Managing RBAC-based navigation menus for user role separation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/reducing-ui-complexity-through-admin-defined-access-policies.html">Reducing UI complexity through admin-defined access policies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.html">Hands-on Lab on Installing and verifying the Automation Portal on OCP</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="visual-execution-environment-builder.html">Visual Execution Environment Builder</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="architecture-and-transition-from-manual-cli-workflows-to-gui-based-building.html">Architecture and transition from manual CLI workflows to GUI-based building</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="utilizing-the-step-by-step-wizard-for-custom-ee-creation.html">Utilizing the step-by-step wizard for custom EE creation</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="integrating-red-hat-domain-specific-presets-and-base-container-images.html">Integrating Red Hat domain-specific presets and base container images</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="managing-dependencies-ansible-content-collections-python-packages-and-system-libraries.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="defining-custom-pre-build-and-post-build-steps.html">Defining custom pre-build and post-build steps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="publishing-definitions-to-git-and-automating-ci-pipelines-with-github-actions.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="importing-and-managing-reusable-backstage-software-templates.html">Importing and managing reusable Backstage software templates</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="hands-on-lab-on-syncing-content-sources-and-cataloging-collections-and-building-a-custom-execution-environment-using-the-visual-builder.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="hands-on-lab-deploying-a-scaffolded-ci-pipeline-for-automated-container-image-builds.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../centralized-content-discovery/centralized-content-discovery.html">Centralized Content Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/unified-catalog-architecture-for-multi-source-aggregation.html">Unified catalog architecture for multi-source aggregation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/configuring-supported-sources-including-github-gitlab-and-private-automation-hub.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/implementing-continuous-synchronization-and-scheduling.html">Implementing continuous synchronization and scheduling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/workflow-for-browse-before-build-and-tracing-existing-automation-assets.html">Workflow for browse-before-build and tracing existing automation assets</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
+    <li><a href="visual-execution-environment-builder.html">Visual Execution Environment Builder</a></li>
+    <li><a href="integrating-red-hat-domain-specific-presets-and-base-container-images.html">Integrating Red Hat domain-specific presets and base container images</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Integrating Red Hat domain-specific presets and base container images</h1>
+<h1 id="_integrating_red_hat_domain_specific_presets_and_base_container_images" class="sect0"><a class="anchor" href="#_integrating_red_hat_domain_specific_presets_and_base_container_images"></a>Integrating Red Hat Domain-Specific Presets and Base Container Images</h1>
+<div class="paragraph">
+<p>In the Ansible Automation Platform 2.7 Visual Execution Environment (EE) Builder, selecting the correct foundation is the most critical step in ensuring security, compliance, and performance. By leveraging Red Hat’s domain-specific presets, architects can bypass the "blank slate" problem and inherit validated configurations tailored to specific operational domains.</p>
+</div>
+<div class="sect1">
+<h2 id="_understanding_domain_specific_presets"><a class="anchor" href="#_understanding_domain_specific_presets"></a>Understanding Domain-Specific Presets</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Domain-specific presets are curated configuration templates provided by Red Hat. They include pre-configured collections, Python dependencies, and system-level libraries optimized for specific use cases.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Networking:</strong> Includes <code>ansible.netcommon</code>, <code>cisco.ios</code>, and <code>arista.eos</code> collections, alongside system-level utilities for network device communication.</p>
+</li>
+<li>
+<p><strong>Security:</strong> Focused on compliance auditing and vulnerability management, featuring <code>ansible.posix</code> and various security-hardened utility packages.</p>
+</li>
+<li>
+<p><strong>Cloud:</strong> Pre-loaded with cloud-provider-specific SDKs (AWS, Azure, GCP) and the corresponding <code>community.cloud</code> or <code>amazon.aws</code> collections.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Using these presets ensures that your EEs adhere to organizational standards for library versions and security patching, reducing the maintenance overhead of managing disparate <code>execution-environment.yml</code> files.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_base_container_images_and_optimization"><a class="anchor" href="#_base_container_images_and_optimization"></a>Base Container Images and Optimization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The EE Builder utilizes Red Hat Universal Base Image (UBI) 9 as the foundation. When you integrate a preset, the builder automatically references the associated UBI-based image from the Red Hat Ecosystem Catalog.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When operating in disconnected environments, ensure your local registry is mirrored correctly using <code>skopeo copy</code>. As noted in the platform documentation, the use of SHA256 digests is recommended to ensure that your custom EE builds remain immutable and consistent across development and production OCP clusters.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hands_on_activity_creating_an_ee_from_a_domain_preset"><a class="anchor" href="#_hands_on_activity_creating_an_ee_from_a_domain_preset"></a>Hands-on Activity: Creating an EE from a Domain Preset</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This activity walks you through creating an EE using the Visual Builder’s preset engine.</p>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Access to the Automation Portal on OpenShift.</p>
+</li>
+<li>
+<p><code>skopeo</code> configured to mirror images from <code>registry.redhat.io</code> if operating in a disconnected cluster.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_1_initialize_the_visual_builder_wizard"><a class="anchor" href="#_step_1_initialize_the_visual_builder_wizard"></a>Step 1: Initialize the Visual Builder Wizard</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Execution Environments</strong> tab in your Automation Portal.</p>
+</li>
+<li>
+<p>Click <strong>Create New Environment</strong>.</p>
+</li>
+<li>
+<p>Select <strong>"Use a Domain-Specific Preset"</strong> from the wizard options.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_2_selecting_and_configuring_the_preset"><a class="anchor" href="#_step_2_selecting_and_configuring_the_preset"></a>Step 2: Selecting and Configuring the Preset</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Choose the <strong>Networking</strong> preset from the available catalog.</p>
+</li>
+<li>
+<p>The UI will auto-populate the <code>execution-environment.yml</code> definition with:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The standard Red Hat UBI 9 base image.</p>
+</li>
+<li>
+<p>Recommended networking-related Ansible Collections.</p>
+</li>
+<li>
+<p>Required system libraries (e.g., <code>libssh</code>).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Next</strong> to proceed to the customization stage.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_3_managing_dependencies"><a class="anchor" href="#_step_3_managing_dependencies"></a>Step 3: Managing Dependencies</h3>
+<div class="paragraph">
+<p>In the "Dependencies" pane, you can augment the preset:
+1. Under <strong>Ansible Collections</strong>, add any specific vendor-proprietary collections your environment requires.
+2. Under <strong>Python Packages</strong>, add specific <code>pip</code> requirements.
+   * <strong>Example:</strong> Add <code>netaddr</code> or <code>paramiko</code> if not already included in the preset base.
+3. Define <strong>Pre-build steps</strong> (e.g., <code>RUN dnf install -y my-custom-tool</code>) if you need to install binary dependencies not covered by the preset.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_4_verification"><a class="anchor" href="#_step_4_verification"></a>Step 4: Verification</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Review the generated definition file.</p>
+</li>
+<li>
+<p>Click <strong>Build</strong> to trigger the CI pipeline.</p>
+</li>
+<li>
+<p>Monitor the build logs via the link provided in the UI; verify that the <code>base_image</code> reference resolves to your internal registry (e.g., <code>mirror.example.com/ansible-automation-platform-27/ee-supported-rhel9</code>).</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting"><a class="anchor" href="#_troubleshooting"></a>Troubleshooting</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Image Pull Backoff:</strong> If the build fails, check that your <code>imageRegistry</code> configuration in the Helm <code>values.yaml</code> is set to the registry host only, without repository paths. The builder will append the default path automatically.</p>
+</li>
+<li>
+<p><strong>Dependency Conflicts:</strong> If custom packages conflict with the preset, prioritize using <code>ansible.cfg</code> to set <code>collections_path</code> or use the "Overrides" feature in the EE Builder to pin specific versions, overriding the preset defaults.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="utilizing-the-step-by-step-wizard-for-custom-ee-creation.html">Utilizing the step-by-step wizard for custom EE creation</a></span>
+  <span class="next"><a href="managing-dependencies-ansible-content-collections-python-packages-and-system-libraries.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script defer src="../../../_/js/vendor/tabs.js"></script>
+<script defer src="../../../_/js/vendor/reading-time.js"></script>
+  </body>
+</html>

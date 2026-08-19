@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="hands-on-lab-on-syncing-content-sources-and-cataloging-collections-and-building-a-custom-execution-environment-using-the-visual-builder.html">
+    <link rel="next" href="../centralized-content-discovery/centralized-content-discovery.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.12">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/collapsible.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/reading-time.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/audio-transcript.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="automation-portal" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../automation-portal/automation-portal.html">Automation Portal</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/overview-and-architectural-benefits-of-the-automation-portal.html">Overview and architectural benefits of the Automation Portal</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/platform-requirements-and-installation-on-openshift-container-platform.html">Platform requirements and installation on OpenShift Container Platform</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/configuring-ee-builder-via-helm-charts.html">Configuring EE Builder via Helm charts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/managing-rbac-based-navigation-menus-for-user-role-separation.html">Managing RBAC-based navigation menus for user role separation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/reducing-ui-complexity-through-admin-defined-access-policies.html">Reducing UI complexity through admin-defined access policies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.html">Hands-on Lab on Installing and verifying the Automation Portal on OCP</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="visual-execution-environment-builder.html">Visual Execution Environment Builder</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="architecture-and-transition-from-manual-cli-workflows-to-gui-based-building.html">Architecture and transition from manual CLI workflows to GUI-based building</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="utilizing-the-step-by-step-wizard-for-custom-ee-creation.html">Utilizing the step-by-step wizard for custom EE creation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="integrating-red-hat-domain-specific-presets-and-base-container-images.html">Integrating Red Hat domain-specific presets and base container images</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="managing-dependencies-ansible-content-collections-python-packages-and-system-libraries.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="defining-custom-pre-build-and-post-build-steps.html">Defining custom pre-build and post-build steps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="publishing-definitions-to-git-and-automating-ci-pipelines-with-github-actions.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="importing-and-managing-reusable-backstage-software-templates.html">Importing and managing reusable Backstage software templates</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="hands-on-lab-on-syncing-content-sources-and-cataloging-collections-and-building-a-custom-execution-environment-using-the-visual-builder.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="hands-on-lab-deploying-a-scaffolded-ci-pipeline-for-automated-container-image-builds.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../centralized-content-discovery/centralized-content-discovery.html">Centralized Content Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/unified-catalog-architecture-for-multi-source-aggregation.html">Unified catalog architecture for multi-source aggregation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/configuring-supported-sources-including-github-gitlab-and-private-automation-hub.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/implementing-continuous-synchronization-and-scheduling.html">Implementing continuous synchronization and scheduling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/workflow-for-browse-before-build-and-tracing-existing-automation-assets.html">Workflow for browse-before-build and tracing existing automation assets</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
+    <li><a href="visual-execution-environment-builder.html">Visual Execution Environment Builder</a></li>
+    <li><a href="hands-on-lab-deploying-a-scaffolded-ci-pipeline-for-automated-container-image-builds.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</h1>
+<h1 id="_hands_on_lab_deploying_a_scaffolded_ci_pipeline_for_automated_ee_builds" class="sect0"><a class="anchor" href="#_hands_on_lab_deploying_a_scaffolded_ci_pipeline_for_automated_ee_builds"></a>Hands-on Lab: Deploying a Scaffolded CI Pipeline for Automated EE Builds</h1>
+<div class="paragraph">
+<p>In this lab, you will transition from manual Execution Environment (EE) construction to an automated DevOps workflow. By leveraging the Visual Execution Environment Builder, you will scaffold a GitHub repository pre-configured with a CI pipeline, enabling automated container builds and registry pushes without manual CLI intervention.</p>
+</div>
+<div class="sect1">
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Access to an instance of the Ansible Automation Platform 2.7 Automation Portal.</p>
+</li>
+<li>
+<p>An active GitHub account.</p>
+</li>
+<li>
+<p>A target container registry (e.g., Quay.io) with valid credentials.</p>
+</li>
+<li>
+<p>A pre-defined EE configuration within the Visual Builder.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_exercise_scaffolding_a_ci_pipeline"><a class="anchor" href="#_exercise_scaffolding_a_ci_pipeline"></a>Exercise: Scaffolding a CI Pipeline</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This exercise demonstrates how to move from a defined EE specification to an automated delivery pipeline.</p>
+</div>
+<div class="sect2">
+<h3 id="_step_1_select_the_ci_pipeline_scaffolding_option"><a class="anchor" href="#_step_1_select_the_ci_pipeline_scaffolding_option"></a>Step 1: Select the CI Pipeline Scaffolding Option</h3>
+<div class="paragraph">
+<p>After you have finalized your EE configuration (dependencies, collections, and base images) within the Visual Execution Environment Builder:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Output Options</strong> screen of the wizard.</p>
+</li>
+<li>
+<p>Select the option labeled <strong>"Scaffold a GitHub repository with CI pipeline"</strong>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This option triggers the builder to generate not only the <code>execution-environment.yml</code> but also the necessary CI workflow files (e.g., <code>.github/workflows/build-ee.yml</code>) required for automated builds.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_2_configure_pipeline_parameters"><a class="anchor" href="#_step_2_configure_pipeline_parameters"></a>Step 2: Configure Pipeline Parameters</h3>
+<div class="paragraph">
+<p>The builder requires connection details to automate the push of your container image once the build succeeds.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Target Registry:</strong> Enter your container registry URL (e.g., <code>quay.io/&lt;your-namespace&gt;</code>).</p>
+</li>
+<li>
+<p><strong>Image Name:</strong> Specify the tag name for your environment (e.g., <code>network-automation-ee</code>).</p>
+</li>
+<li>
+<p><strong>Registry Credentials:</strong> When prompted, provide the necessary secrets to allow GitHub Actions to authenticate with your container registry.</p>
+</li>
+<li>
+<p>Click <strong>Publish/Create</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_3_verify_repository_creation"><a class="anchor" href="#_step_3_verify_repository_creation"></a>Step 3: Verify Repository Creation</h3>
+<div class="paragraph">
+<p>Once the process completes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the GitHub repository URL provided by the builder.</p>
+</li>
+<li>
+<p>Observe the generated file structure:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>execution-environment.yml</code>: The declarative definition of your EE.</p>
+</li>
+<li>
+<p><code>.github/workflows/</code>: Contains the pre-configured GitHub Actions workflow.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Open the workflow file to review the build steps:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Build Stage:</strong> Utilizes the EE definition to build the container image.</p>
+</li>
+<li>
+<p><strong>Push Stage:</strong> Authenticates with the registry defined in Step 2 and pushes the image.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_4_trigger_and_monitor_the_build"><a class="anchor" href="#_step_4_trigger_and_monitor_the_build"></a>Step 4: Trigger and Monitor the Build</h3>
+<div class="paragraph">
+<p>To ensure the pipeline is functional:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Actions</strong> tab in your newly created GitHub repository.</p>
+</li>
+<li>
+<p>If the build did not trigger automatically upon creation, manually trigger the workflow via the <strong>"Run workflow"</strong> button.</p>
+</li>
+<li>
+<p>Monitor the build logs to ensure the environment dependencies (Ansible Collections, Python packages) are installed correctly and the resulting image is pushed to your registry.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting_tips"><a class="anchor" href="#_troubleshooting_tips"></a>Troubleshooting Tips</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Authentication Failures:</strong> Ensure that the secrets stored in the GitHub repository (Settings &gt; Secrets and variables &gt; Actions) correspond to the credentials used for your container registry.</p>
+</li>
+<li>
+<p><strong>Build Timeouts:</strong> If the build fails due to large dependency lists, check the <code>execution-environment.yml</code> for any extraneous libraries that can be optimized.</p>
+</li>
+<li>
+<p><strong>Registry Visibility:</strong> Confirm that your target registry namespace is set to public, or that the registry credentials have sufficient write permissions for the specified repository.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_summary"><a class="anchor" href="#_summary"></a>Summary</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By completing this lab, you have successfully moved from a manual, CLI-heavy process to a <strong>GitOps-driven lifecycle</strong>. Your execution environment is now version-controlled, and any future changes to your <code>execution-environment.yml</code> will automatically trigger a rebuild and push to your container registry, ensuring your automation infrastructure remains consistent and up-to-date.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="hands-on-lab-on-syncing-content-sources-and-cataloging-collections-and-building-a-custom-execution-environment-using-the-visual-builder.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a></span>
+  <span class="next"><a href="../centralized-content-discovery/centralized-content-discovery.html">Centralized Content Discovery</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script defer src="../../../_/js/vendor/tabs.js"></script>
+<script defer src="../../../_/js/vendor/reading-time.js"></script>
+  </body>
+</html>

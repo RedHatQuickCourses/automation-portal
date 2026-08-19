@@ -1,11 +1,11 @@
 {
-  "totalSeconds": 3998,
-  "pageCount": 15,
+  "totalSeconds": 2774,
+  "pageCount": 25,
   "pages": [
     {
       "module": "ROOT",
       "page": "index.adoc",
-      "seconds": 15
+      "seconds": 14
     },
     {
       "module": "LABENV",
@@ -13,64 +13,114 @@
       "seconds": 4
     },
     {
-      "module": "chapter1",
-      "page": "index.adoc",
-      "seconds": 9
+      "module": "automation-portal",
+      "page": "automation-portal.adoc",
+      "seconds": 41
     },
     {
-      "module": "chapter1",
-      "page": "section1.adoc",
-      "seconds": 3009
+      "module": "automation-portal",
+      "page": "overview-and-architectural-benefits-of-the-automation-portal.adoc",
+      "seconds": 128
     },
     {
-      "module": "chapter1",
-      "page": "section2.adoc",
-      "seconds": 9
+      "module": "automation-portal",
+      "page": "platform-requirements-and-installation-on-openshift-container-platform.adoc",
+      "seconds": 131
     },
     {
-      "module": "chapter1",
-      "page": "section3.adoc",
-      "seconds": 9
+      "module": "automation-portal",
+      "page": "configuring-ee-builder-via-helm-charts.adoc",
+      "seconds": 137
     },
     {
-      "module": "chapter1",
-      "page": "tabs-demo.adoc",
-      "seconds": 20
+      "module": "automation-portal",
+      "page": "managing-rbac-based-navigation-menus-for-user-role-separation.adoc",
+      "seconds": 145
     },
     {
-      "module": "chapter1",
-      "page": "collapsible-demo.adoc",
-      "seconds": 36
+      "module": "automation-portal",
+      "page": "reducing-ui-complexity-through-admin-defined-access-policies.adoc",
+      "seconds": 146
     },
     {
-      "module": "chapter1",
-      "page": "images.adoc",
-      "seconds": 841
+      "module": "automation-portal",
+      "page": "hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc",
+      "seconds": 130
     },
     {
-      "module": "chapter2",
-      "page": "index.adoc",
-      "seconds": 9
+      "module": "visual-execution-environment-builder",
+      "page": "visual-execution-environment-builder.adoc",
+      "seconds": 42
     },
     {
-      "module": "chapter2",
-      "page": "section1.adoc",
-      "seconds": 9
+      "module": "visual-execution-environment-builder",
+      "page": "architecture-and-transition-from-manual-cli-workflows-to-gui-based-building.adoc",
+      "seconds": 157
     },
     {
-      "module": "chapter3",
-      "page": "index.adoc",
-      "seconds": 9
+      "module": "visual-execution-environment-builder",
+      "page": "utilizing-the-step-by-step-wizard-for-custom-ee-creation.adoc",
+      "seconds": 156
     },
     {
-      "module": "chapter3",
-      "page": "section1.adoc",
-      "seconds": 9
+      "module": "visual-execution-environment-builder",
+      "page": "integrating-red-hat-domain-specific-presets-and-base-container-images.adoc",
+      "seconds": 147
     },
     {
-      "module": "chapter3",
-      "page": "section2.adoc",
-      "seconds": 9
+      "module": "visual-execution-environment-builder",
+      "page": "managing-dependencies-ansible-content-collections-python-packages-and-system-libraries.adoc",
+      "seconds": 143
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "defining-custom-pre-build-and-post-build-steps.adoc",
+      "seconds": 107
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "publishing-definitions-to-git-and-automating-ci-pipelines-with-github-actions.adoc",
+      "seconds": 137
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "importing-and-managing-reusable-backstage-software-templates.adoc",
+      "seconds": 108
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "hands-on-lab-on-syncing-content-sources-and-cataloging-collections-and-building-a-custom-execution-environment-using-the-visual-builder.adoc",
+      "seconds": 147
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "hands-on-lab-deploying-a-scaffolded-ci-pipeline-for-automated-container-image-builds.adoc",
+      "seconds": 142
+    },
+    {
+      "module": "centralized-content-discovery",
+      "page": "centralized-content-discovery.adoc",
+      "seconds": 31
+    },
+    {
+      "module": "centralized-content-discovery",
+      "page": "unified-catalog-architecture-for-multi-source-aggregation.adoc",
+      "seconds": 159
+    },
+    {
+      "module": "centralized-content-discovery",
+      "page": "configuring-supported-sources-including-github-gitlab-and-private-automation-hub.adoc",
+      "seconds": 116
+    },
+    {
+      "module": "centralized-content-discovery",
+      "page": "implementing-continuous-synchronization-and-scheduling.adoc",
+      "seconds": 147
+    },
+    {
+      "module": "centralized-content-discovery",
+      "page": "workflow-for-browse-before-build-and-tracing-existing-automation-assets.adoc",
+      "seconds": 158
     },
     {
       "module": "appendix",

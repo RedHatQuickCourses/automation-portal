@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Managing RBAC-based navigation menus for user role separation :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="configuring-ee-builder-via-helm-charts.html">
+    <link rel="next" href="reducing-ui-complexity-through-admin-defined-access-policies.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.12">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/collapsible.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/reading-time.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/audio-transcript.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="automation-portal" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="automation-portal.html">Automation Portal</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="overview-and-architectural-benefits-of-the-automation-portal.html">Overview and architectural benefits of the Automation Portal</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="platform-requirements-and-installation-on-openshift-container-platform.html">Platform requirements and installation on OpenShift Container Platform</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="configuring-ee-builder-via-helm-charts.html">Configuring EE Builder via Helm charts</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="managing-rbac-based-navigation-menus-for-user-role-separation.html">Managing RBAC-based navigation menus for user role separation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="reducing-ui-complexity-through-admin-defined-access-policies.html">Reducing UI complexity through admin-defined access policies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.html">Hands-on Lab on Installing and verifying the Automation Portal on OCP</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../visual-execution-environment-builder/visual-execution-environment-builder.html">Visual Execution Environment Builder</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/architecture-and-transition-from-manual-cli-workflows-to-gui-based-building.html">Architecture and transition from manual CLI workflows to GUI-based building</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/utilizing-the-step-by-step-wizard-for-custom-ee-creation.html">Utilizing the step-by-step wizard for custom EE creation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/integrating-red-hat-domain-specific-presets-and-base-container-images.html">Integrating Red Hat domain-specific presets and base container images</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/managing-dependencies-ansible-content-collections-python-packages-and-system-libraries.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/defining-custom-pre-build-and-post-build-steps.html">Defining custom pre-build and post-build steps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/publishing-definitions-to-git-and-automating-ci-pipelines-with-github-actions.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/importing-and-managing-reusable-backstage-software-templates.html">Importing and managing reusable Backstage software templates</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/hands-on-lab-on-syncing-content-sources-and-cataloging-collections-and-building-a-custom-execution-environment-using-the-visual-builder.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/hands-on-lab-deploying-a-scaffolded-ci-pipeline-for-automated-container-image-builds.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../centralized-content-discovery/centralized-content-discovery.html">Centralized Content Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/unified-catalog-architecture-for-multi-source-aggregation.html">Unified catalog architecture for multi-source aggregation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/configuring-supported-sources-including-github-gitlab-and-private-automation-hub.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/implementing-continuous-synchronization-and-scheduling.html">Implementing continuous synchronization and scheduling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/workflow-for-browse-before-build-and-tracing-existing-automation-assets.html">Workflow for browse-before-build and tracing existing automation assets</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
+    <li><a href="automation-portal.html">Automation Portal</a></li>
+    <li><a href="managing-rbac-based-navigation-menus-for-user-role-separation.html">Managing RBAC-based navigation menus for user role separation</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Managing RBAC-based navigation menus for user role separation</h1>
+<h1 id="_managing_rbac_based_navigation_menus_for_user_role_separation" class="sect0"><a class="anchor" href="#_managing_rbac_based_navigation_menus_for_user_role_separation"></a>Managing RBAC-based Navigation Menus for User Role Separation</h1>
+<div class="paragraph">
+<p>In modern enterprise automation, "platform sprawl" is a significant hurdle. When users are presented with a cluttered interface containing tools they don&#8217;t need—such as Execution Environment (EE) builders or Git repository management—it increases cognitive load and introduces potential security risks.</p>
+</div>
+<div class="paragraph">
+<p>The Automation Portal addresses this by providing <strong>RBAC-based navigation menus</strong>, allowing platform architects to tailor the UI experience based on the user&#8217;s specific role.</p>
+</div>
+<div class="sect1">
+<h2 id="_architectural_concept"><a class="anchor" href="#_architectural_concept"></a>Architectural Concept</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By tying navigation visibility to RBAC (Role-Based Access Control) groups, administrators can enforce a "least privilege" visual experience. This ensures that:
+* <strong>End Users:</strong> Interact only with the automation services they need (Job Templates and History), reducing complexity.
+* <strong>Platform Engineers:</strong> Retain full visibility and administrative control over the underlying infrastructure, including EE definitions, content discovery, and synchronization settings.</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hands_on_lab_configuring_menu_visibility"><a class="anchor" href="#_hands_on_lab_configuring_menu_visibility"></a>Hands-On Lab: Configuring Menu Visibility</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This lab demonstrates how to restrict the UI for standard operational teams while granting full access to the Platform Engineering group.</p>
+</div>
+<div class="sect2">
+<h3 id="_exercise_4_1_review_current_navigation_visibility"><a class="anchor" href="#_exercise_4_1_review_current_navigation_visibility"></a>Exercise 4.1: Review Current Navigation Visibility</h3>
+<div class="paragraph">
+<p>Before applying constraints, observe the default behavior of the portal.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to the Automation Portal as a user with <code>admin</code> privileges.</p>
+</li>
+<li>
+<p>Observe the sidebar; verify that all sections (Templates, History, EE Definitions, Collections, Git Repositories, Administration) are visible.</p>
+</li>
+<li>
+<p>Log out and log in as a standard user (e.g., <code>clouduser1</code>).</p>
+</li>
+<li>
+<p><strong>Verification:</strong> Note that by default, standard users may see the entire menu structure, even if they lack the underlying permissions to perform tasks within those sections.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercise_4_2_configure_navigation_menu_rbac"><a class="anchor" href="#_exercise_4_2_configure_navigation_menu_rbac"></a>Exercise 4.2: Configure Navigation Menu RBAC</h3>
+<div class="paragraph">
+<p>In this step, we map specific navigation items to user groups to clean up the UI.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Log in</strong> to the portal as an <code>admin</code>.</p>
+</li>
+<li>
+<p>Navigate to <strong>Administration &gt; RBAC &gt; Navigation Visibility</strong>.</p>
+</li>
+<li>
+<p><strong>Configure End-User Access:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Select the groups: <code>cloud-team</code>, <code>network-team</code>, and <code>rhel-team</code>.</p>
+</li>
+<li>
+<p>Enable visibility for the following items only:</p>
+</li>
+<li>
+<p><code>[x]</code> Templates</p>
+</li>
+<li>
+<p><code>[x]</code> History</p>
+</li>
+<li>
+<p>Ensure all other items (EE Definitions, Collections, Git Repositories, Synchronization) remain unchecked.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Configure Platform Engineering Access:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Select the <code>platform-team</code> group.</p>
+</li>
+<li>
+<p>Ensure all navigation items are checked, providing full access to administrative functions.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Save</strong> the changes.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercise_4_3_verification"><a class="anchor" href="#_exercise_4_3_verification"></a>Exercise 4.3: Verification</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log out as <code>admin</code>.</p>
+</li>
+<li>
+<p>Log in as a user who is a member of the <code>cloud-team</code>.</p>
+</li>
+<li>
+<p><strong>Result:</strong> The sidebar should now dynamically hide the advanced development and administration features, displaying only <strong>Templates</strong> and <strong>History</strong>.</p>
+</li>
+<li>
+<p>Log out and log in as a member of the <code>platform-team</code> to verify that all administrative menus are fully accessible.</p>
+</li>
+</ol>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting_tips"><a class="anchor" href="#_troubleshooting_tips"></a>Troubleshooting Tips</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Cache Persistence:</strong> If navigation items remain visible after updating permissions, ensure you refresh your browser cache or initiate a hard reload.</p>
+</li>
+<li>
+<p><strong>Group Membership:</strong> If a user cannot see the expected menus, verify they are correctly assigned to the intended group in the Identity Provider (IdP) or the local portal user database.</p>
+</li>
+<li>
+<p><strong>Overlapping Roles:</strong> If a user belongs to multiple groups (e.g., they are a member of both <code>cloud-team</code> and <code>platform-team</code>), the system will aggregate the permissions, granting them the union of all visible menus. Ensure user assignments are strictly managed.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="configuring-ee-builder-via-helm-charts.html">Configuring EE Builder via Helm charts</a></span>
+  <span class="next"><a href="reducing-ui-complexity-through-admin-defined-access-policies.html">Reducing UI complexity through admin-defined access policies</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script defer src="../../../_/js/vendor/tabs.js"></script>
+<script defer src="../../../_/js/vendor/reading-time.js"></script>
+  </body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Utilizing the step-by-step wizard for custom EE creation :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="architecture-and-transition-from-manual-cli-workflows-to-gui-based-building.html">
+    <link rel="next" href="integrating-red-hat-domain-specific-presets-and-base-container-images.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.12">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/collapsible.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/reading-time.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/audio-transcript.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="automation-portal" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../automation-portal/automation-portal.html">Automation Portal</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/overview-and-architectural-benefits-of-the-automation-portal.html">Overview and architectural benefits of the Automation Portal</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/platform-requirements-and-installation-on-openshift-container-platform.html">Platform requirements and installation on OpenShift Container Platform</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/configuring-ee-builder-via-helm-charts.html">Configuring EE Builder via Helm charts</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/managing-rbac-based-navigation-menus-for-user-role-separation.html">Managing RBAC-based navigation menus for user role separation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/reducing-ui-complexity-through-admin-defined-access-policies.html">Reducing UI complexity through admin-defined access policies</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../automation-portal/hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.html">Hands-on Lab on Installing and verifying the Automation Portal on OCP</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="visual-execution-environment-builder.html">Visual Execution Environment Builder</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="architecture-and-transition-from-manual-cli-workflows-to-gui-based-building.html">Architecture and transition from manual CLI workflows to GUI-based building</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="utilizing-the-step-by-step-wizard-for-custom-ee-creation.html">Utilizing the step-by-step wizard for custom EE creation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="integrating-red-hat-domain-specific-presets-and-base-container-images.html">Integrating Red Hat domain-specific presets and base container images</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="managing-dependencies-ansible-content-collections-python-packages-and-system-libraries.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="defining-custom-pre-build-and-post-build-steps.html">Defining custom pre-build and post-build steps</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="publishing-definitions-to-git-and-automating-ci-pipelines-with-github-actions.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="importing-and-managing-reusable-backstage-software-templates.html">Importing and managing reusable Backstage software templates</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="hands-on-lab-on-syncing-content-sources-and-cataloging-collections-and-building-a-custom-execution-environment-using-the-visual-builder.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="hands-on-lab-deploying-a-scaffolded-ci-pipeline-for-automated-container-image-builds.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../centralized-content-discovery/centralized-content-discovery.html">Centralized Content Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/unified-catalog-architecture-for-multi-source-aggregation.html">Unified catalog architecture for multi-source aggregation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/configuring-supported-sources-including-github-gitlab-and-private-automation-hub.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/implementing-continuous-synchronization-and-scheduling.html">Implementing continuous synchronization and scheduling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/workflow-for-browse-before-build-and-tracing-existing-automation-assets.html">Workflow for browse-before-build and tracing existing automation assets</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
+    <li><a href="visual-execution-environment-builder.html">Visual Execution Environment Builder</a></li>
+    <li><a href="utilizing-the-step-by-step-wizard-for-custom-ee-creation.html">Utilizing the step-by-step wizard for custom EE creation</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Utilizing the step-by-step wizard for custom EE creation</h1>
+<h1 id="_utilizing_the_step_by_step_wizard_for_custom_ee_creation" class="sect0"><a class="anchor" href="#_utilizing_the_step_by_step_wizard_for_custom_ee_creation"></a>Utilizing the Step-by-Step Wizard for Custom EE Creation</h1>
+<div class="paragraph">
+<p>Creating Execution Environments (EEs) traditionally required manual management of <code>execution-environment.yml</code> files, complex dependency resolution, and deep knowledge of container build contexts. The Visual Execution Environment Builder within the Automation Portal abstracts this complexity, providing a guided, wizard-driven interface to ensure standardized, error-free images.</p>
+</div>
+<div class="sect1">
+<h2 id="_overview_of_the_wizard_workflow"><a class="anchor" href="#_overview_of_the_wizard_workflow"></a>Overview of the Wizard Workflow</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The wizard workflow is designed to move from high-level intent to a concrete container definition. By leveraging Red Hat-supported presets, the wizard minimizes the "guesswork" involved in selecting base images and dependency formats.</p>
+</div>
+<div class="paragraph">
+<p>The process follows a logical progression:
+1. <strong>Definition Naming and Scoping:</strong> Defining the EE purpose and metadata.
+2. <strong>Base Image Selection:</strong> Choosing from Red Hat-optimized, pre-validated base images (e.g., <code>ee-minimal-rhel9</code>, <code>ee-supported-rhel9</code>).
+3. <strong>Dependency Injection:</strong> Declarative selection of Ansible Content Collections, Python packages (<code>requirements.txt</code>), and system-level libraries (<code>bindep.txt</code>).
+4. <strong>Build Customization:</strong> Defining pre-build and post-build shell commands to handle non-standard configuration tasks.
+5. <strong>Review and Validation:</strong> Real-time generation of the underlying YAML definition.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_integrating_presets_and_dependencies"><a class="anchor" href="#_integrating_presets_and_dependencies"></a>Integrating Presets and Dependencies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The wizard leverages Red Hat domain-specific presets to ensure security and compliance. When you select a base image, the wizard automatically pulls the relevant metadata, preventing common version mismatches between the OS layer and the Ansible Automation Platform engine.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Ansible Content Collections:</strong> Users can search and select collections directly from the catalog. The wizard manages the <code>requirements.yml</code> structure, ensuring all dependencies are pinned correctly.</p>
+</li>
+<li>
+<p><strong>System Libraries:</strong> Rather than manually crafting complex <code>Dockerfile</code> layers, users add system packages via a simple list interface, which the wizard translates into an optimized <code>bindep.txt</code> configuration.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The EE definition workflow generates a reusable Backstage software template (e.g., <code>&lt;ee-name&gt;-template.yaml</code>). This allows organizations to move from one-off EE creation to a "Golden Image" catalog, where team members can provision standardized environments based on pre-approved templates.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hands_on_lab_reviewing_the_generated_definition"><a class="anchor" href="#_hands_on_lab_reviewing_the_generated_definition"></a>Hands-on Lab: Reviewing the Generated Definition</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this exercise, we will examine the output of the EE Builder to understand how the GUI translates user input into machine-readable automation code.</p>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Access to the Automation Portal on OpenShift.</p>
+</li>
+<li>
+<p>An active session within the Visual EE Builder wizard.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_steps"><a class="anchor" href="#_steps"></a>Steps</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Navigate to the Review Screen</strong>
+Complete the input fields for your desired EE (Base image, collections, and dependencies). Proceed to the final step of the wizard labeled "Review."</p>
+</li>
+<li>
+<p><strong>Examine the Generated YAML</strong>
+Observe the auto-generated YAML manifest. Verify the following:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Base image:</strong> Confirm it matches the selected RHEL-based image.</p>
+</li>
+<li>
+<p><strong>Dependency declarations:</strong> Check that your selected collections and Python packages are accurately represented in the <code>dependencies</code> block.</p>
+</li>
+<li>
+<p><strong>Syntax integrity:</strong> Note the automatic handling of indentation and list structure, which prevents common "whitespace" errors associated with manual YAML authoring.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Comparative Analysis</strong>
+Compare this generated YAML with a manual <code>execution-environment.yml</code> file.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Self-Reflect:</strong> How did the wizard handle the collection source references?</p>
+</li>
+<li>
+<p><strong>Observation:</strong> The wizard effectively handles the mapping of external Galaxy/Automation Hub URLs, abstracting the need for manual URL management.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Prepare for Publication</strong>
+[IMPORTANT]
+Ensure your configuration is correct, but <strong>do not click "Publish" yet</strong>. In the next lab section, we will integrate this definition with Git and trigger the automated CI pipeline.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_best_practices_for_wizard_usage"><a class="anchor" href="#_best_practices_for_wizard_usage"></a>Best Practices for Wizard Usage</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Use Version Pinning:</strong> Always specify versions for collections and Python packages within the wizard to ensure reproducible builds.</p>
+</li>
+<li>
+<p><strong>Leverage Post-Build Steps:</strong> Use the post-build section for cleanup tasks or custom environment variable injection rather than manual Dockerfile modifications.</p>
+</li>
+<li>
+<p><strong>Catalog Early:</strong> Once your EE definition is stable, export the generated Backstage template to your private catalog to enable self-service consumption by other developers.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="architecture-and-transition-from-manual-cli-workflows-to-gui-based-building.html">Architecture and transition from manual CLI workflows to GUI-based building</a></span>
+  <span class="next"><a href="integrating-red-hat-domain-specific-presets-and-base-container-images.html">Integrating Red Hat domain-specific presets and base container images</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script defer src="../../../_/js/vendor/tabs.js"></script>
+<script defer src="../../../_/js/vendor/reading-time.js"></script>
+  </body>
+</html>
