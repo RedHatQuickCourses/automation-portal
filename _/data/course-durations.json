@@ -1,5 +1,5 @@
 {
-  "totalSeconds": 2774,
+  "totalSeconds": 2697,
   "pageCount": 25,
   "pages": [
     {
@@ -10,12 +10,12 @@
     {
       "module": "LABENV",
       "page": "index.adoc",
-      "seconds": 4
+      "seconds": 47
     },
     {
       "module": "automation-portal",
       "page": "automation-portal.adoc",
-      "seconds": 41
+      "seconds": 40
     },
     {
       "module": "automation-portal",
@@ -25,27 +25,27 @@
     {
       "module": "automation-portal",
       "page": "platform-requirements-and-installation-on-openshift-container-platform.adoc",
-      "seconds": 131
-    },
-    {
-      "module": "automation-portal",
-      "page": "configuring-ee-builder-via-helm-charts.adoc",
-      "seconds": 137
-    },
-    {
-      "module": "automation-portal",
-      "page": "managing-rbac-based-navigation-menus-for-user-role-separation.adoc",
-      "seconds": 145
-    },
-    {
-      "module": "automation-portal",
-      "page": "reducing-ui-complexity-through-admin-defined-access-policies.adoc",
       "seconds": 146
     },
     {
       "module": "automation-portal",
+      "page": "managing-rbac-based-navigation-menus-for-user-role-separation.adoc",
+      "seconds": 149
+    },
+    {
+      "module": "automation-portal",
+      "page": "reducing-ui-complexity-through-admin-defined-access-policies.adoc",
+      "seconds": 151
+    },
+    {
+      "module": "automation-portal",
+      "page": "hands-on-setup-deploying-automation-portal-prerequisites.adoc",
+      "seconds": 69
+    },
+    {
+      "module": "automation-portal",
       "page": "hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc",
-      "seconds": 130
+      "seconds": 55
     },
     {
       "module": "visual-execution-environment-builder",

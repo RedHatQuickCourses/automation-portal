@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Hands-on Lab on Installing and verifying the Automation Portal on OCP :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
-    <link rel="prev" href="reducing-ui-complexity-through-admin-defined-access-policies.html">
+    <title>Hands-on Lab: Installing and Verifying the Automation Portal on OCP :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="hands-on-setup-deploying-automation-portal-prerequisites.html">
     <link rel="next" href="../visual-execution-environment-builder/visual-execution-environment-builder.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
@@ -65,19 +65,19 @@
     <a class="nav-link" href="overview-and-architectural-benefits-of-the-automation-portal.html">Overview and architectural benefits of the Automation Portal</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="platform-requirements-and-installation-on-openshift-container-platform.html">Platform requirements and installation on OpenShift Container Platform</a>
+    <a class="nav-link" href="platform-requirements-and-installation-on-openshift-container-platform.html">Platform Requirements and Installation on OpenShift Container Platform</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="configuring-ee-builder-via-helm-charts.html">Configuring EE Builder via Helm charts</a>
+    <a class="nav-link" href="managing-rbac-based-navigation-menus-for-user-role-separation.html">Managing RBAC-based Navigation Menus for User Role Separation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="managing-rbac-based-navigation-menus-for-user-role-separation.html">Managing RBAC-based navigation menus for user role separation</a>
+    <a class="nav-link" href="reducing-ui-complexity-through-admin-defined-access-policies.html">Reducing UI Complexity through Admin-Defined Access Policies</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="reducing-ui-complexity-through-admin-defined-access-policies.html">Reducing UI complexity through admin-defined access policies</a>
+    <a class="nav-link" href="hands-on-setup-deploying-automation-portal-prerequisites.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.html">Hands-on Lab on Installing and verifying the Automation Portal on OCP</a>
+    <a class="nav-link" href="hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
   </li>
 </ul>
   </li>
@@ -179,7 +179,7 @@
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
     <li><a href="automation-portal.html">Automation Portal</a></li>
-    <li><a href="hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.html">Hands-on Lab on Installing and verifying the Automation Portal on OCP</a></li>
+    <li><a href="hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a></li>
   </ul>
 </nav>
 </div>
@@ -188,113 +188,79 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Hands-on Lab on Installing and verifying the Automation Portal on OCP</h1>
-<h1 id="_hands_on_lab_installing_and_verifying_the_automation_portal_on_ocp" class="sect0"><a class="anchor" href="#_hands_on_lab_installing_and_verifying_the_automation_portal_on_ocp"></a>Hands-on Lab: Installing and Verifying the Automation Portal on OCP</h1>
-<div class="paragraph">
-<p>In this lab, you will deploy the Automation Portal on your OpenShift Container Platform (OCP) environment. The Automation Portal in AAP 2.7 serves as the centralized interface for the full content lifecycle, moving beyond simple execution to providing a unified experience for building, discovering, and running automation.</p>
-</div>
-<div class="sect1">
-<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
+<h1 class="page">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</h1>
+<div id="preamble">
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Access to an OpenShift cluster (Version 4.14+ recommended).</p>
-</li>
-<li>
-<p><code>oc</code> CLI tool authenticated with <code>cluster-admin</code> privileges.</p>
-</li>
-<li>
-<p>An existing AAP 2.7 operator deployment or the ability to install the AAP Operator via OperatorHub.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>In this lab, you will deploy the Automation Portal on your OpenShift Container Platform (OCP) environment.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_task_1_installing_the_automation_portal"><a class="anchor" href="#_task_1_installing_the_automation_portal"></a>Task 1: Installing the Automation Portal</h2>
+<h2 id="_installing_the_automation_portal"><a class="anchor" href="#_installing_the_automation_portal"></a>Installing the Automation Portal</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>The Automation Portal is deployed as part of the <code>AutomationController</code> or <code>AutomationPlatform</code> Custom Resource (CR).</p>
-</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Verify the Operator is installed:</strong>
-Ensure the Ansible Automation Platform operator is running in your target namespace.
-[source,bash]
-----
-oc get pods -n ansible-automation-platform
-----</p>
+<p>Go to Ecosystem &gt; Software Catalog in the OpenShift web console.</p>
 </li>
 <li>
-<p><strong>Configure the Automation Portal CR:</strong>
-Create a YAML manifest for the <code>AutomationPortal</code> resource. The portal requires connection settings to your existing Automation Hub and Controller.</p>
-<div class="literalblock">
+<p>Search for "Automation Portal" in the catalog and select it.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Click on <strong>Create</strong> to start the installation process.</p>
+</li>
+<li>
+<p>Change the <strong>clusterRouterBase</strong> to the correct value for your cluster. For example, if the OCP cluster url is <code><a href="https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io" class="bare">https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io</a></code> then the clusterRouterBase should be <code>apps.cluster-kstzt.dyn.redhatworkshops.io</code>.</p>
+</li>
+<li>
+<p>Change the Release Name to <code>automation-portal</code> and you can change it if you want.</p>
+</li>
+<li>
+<p>By default, it will be setting up at the Organization <strong>Default</strong> for the automaton portal the parameter is orgs if you wanted to change it.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Once the above settings are done, click on <strong>Create</strong> to start the installation process.</p>
+</div>
+<div class="exampleblock">
 <div class="content">
-<pre>[source,yaml]
-----
-apiVersion: automation.ansible.com/v1beta1
-kind: AutomationPortal
-metadata:
-  name: aap-portal
-  namespace: ansible-automation-platform
-spec:
-  hub_url: https://automation-hub.example.com
-  controller_url: https://automation-controller.example.com
-  ingress:
-    enabled: true
-    host: portal.example.com
-----</pre>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Apply the configuration:</strong>
-[source,bash]
-----
-oc apply -f automation-portal.yaml
-----</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_task_2_verifying_the_installation"><a class="anchor" href="#_task_2_verifying_the_installation"></a>Task 2: Verifying the Installation</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Once the operator reconciles the state, you must verify that the portal services are healthy and accessible.</p>
+<p>The installation process will take a few minutes. You can monitor the progress Workloads &gt; Topology in the portal project. Once the installation is complete, you will see the Automation Portal components running.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Check Pod status:</strong>
-Ensure the portal components are in the <code>Running</code> state.
-[source,bash]
-----
-oc get pods -n ansible-automation-platform -l app=automation-portal
-----</p>
+<p>Click on <strong>automation-portal-rhaap-portal</strong> resource to view the details. You will find the route URL in the <strong>Routes</strong> section. This URL is used to access the Automation Portal web interface.</p>
 </li>
 <li>
-<p><strong>Verify Ingress/Route:</strong>
-Confirm that a route has been created for the web interface.
-[source,bash]
-----
-oc get route -n ansible-automation-platform
-----</p>
+<p>Copy the route URL and go to Ansible Automation Platform &gt; Access Management &gt; OAuth Applications.</p>
 </li>
 <li>
-<p><strong>Access the Web UI:</strong>
-Navigate to the URL identified in the route output (e.g., <code><a href="https://portal.example.com" class="bare">https://portal.example.com</a></code>). Log in using your OpenShift/AAP credentials to verify the dashboard loads successfully.</p>
+<p>Edit the automation-portal OAuth application to include the route URL as a valid redirect URI and save the changes. This step is crucial for the OAuth authentication to work correctly.</p>
 </li>
 </ol>
 </div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">https://&lt;aap-portal-hostname&gt;/api/auth/rhaap/handler/frame</code></pre>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_task_3_configuring_initial_rbac_navigation"><a class="anchor" href="#_task_3_configuring_initial_rbac_navigation"></a>Task 3: Configuring Initial RBAC Navigation</h2>
-<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Access the Web UI of the Automation portal</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>== Task 3: Configuring Initial RBAC Navigation</p>
+</div>
 <div class="paragraph">
 <p>To reduce UI complexity for end-users, we will implement role-based menu filtering.</p>
 </div>
@@ -337,29 +303,19 @@ Navigate to the URL identified in the route output (e.g., <code><a href="https:/
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p>== Troubleshooting Tips
+* <strong>Image Pull Errors:</strong> Ensure your OpenShift cluster has the necessary pull secrets configured for the Red Hat Registry if you are using disconnected installation methods.
+* <strong>Service Connectivity:</strong> If the portal cannot sync with the Hub or Controller, check the network policies in the <code>ansible-automation-platform</code> namespace to ensure egress traffic is permitted between these components.
+* <strong>Logs:</strong> If the UI fails to load, inspect the controller logs:
+  <code>oc logs deployment/aap-portal-controller -n ansible-automation-platform</code></p>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_troubleshooting_tips"><a class="anchor" href="#_troubleshooting_tips"></a>Troubleshooting Tips</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Image Pull Errors:</strong> Ensure your OpenShift cluster has the necessary pull secrets configured for the Red Hat Registry if you are using disconnected installation methods.</p>
-</li>
-<li>
-<p><strong>Service Connectivity:</strong> If the portal cannot sync with the Hub or Controller, check the network policies in the <code>ansible-automation-platform</code> namespace to ensure egress traffic is permitted between these components.</p>
-</li>
-<li>
-<p><strong>Logs:</strong> If the UI fails to load, inspect the controller logs:
-<code>oc logs deployment/aap-portal-controller -n ansible-automation-platform</code></p>
-</li>
-</ul>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="reducing-ui-complexity-through-admin-defined-access-policies.html">Reducing UI complexity through admin-defined access policies</a></span>
+  <span class="prev"><a href="hands-on-setup-deploying-automation-portal-prerequisites.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a></span>
   <span class="next"><a href="../visual-execution-environment-builder/visual-execution-environment-builder.html">Visual Execution Environment Builder</a></span>
 </nav>
 </article>
