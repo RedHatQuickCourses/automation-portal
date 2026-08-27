@@ -1,11 +1,11 @@
 {
-  "totalSeconds": 2576,
+  "totalSeconds": 2588,
   "pageCount": 24,
   "pages": [
     {
       "module": "ROOT",
       "page": "index.adoc",
-      "seconds": 14
+      "seconds": 25
     },
     {
       "module": "LABENV",
@@ -15,7 +15,7 @@
     {
       "module": "automation-portal",
       "page": "automation-portal.adoc",
-      "seconds": 40
+      "seconds": 41
     },
     {
       "module": "automation-portal",
