@@ -1,5 +1,5 @@
 {
-  "totalSeconds": 866,
+  "totalSeconds": 867,
   "pageCount": 9,
   "pages": [
     {
@@ -35,7 +35,7 @@
     {
       "module": "automation-portal",
       "page": "section5.adoc",
-      "seconds": 234
+      "seconds": 235
     },
     {
       "module": "automation-portal",

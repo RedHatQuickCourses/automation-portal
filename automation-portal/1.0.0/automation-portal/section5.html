@@ -175,10 +175,10 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Login to the Openshift Cluster got to Network &#8594; Routes.</p>
+<p>Login to the Openshift Cluster and go to Network &#8594; Routes to access the Ansible Automation Platform.</p>
 </li>
 <li>
-<p>Select the project as aap and open your Ansible Automation Platform instance in a web browser.</p>
+<p>Select the project as <strong>aap</strong> and open your Ansible Automation Platform instance in a web browser.</p>
 <div class="imageblock">
 <div class="content">
 <img src="_images/5.1.png" alt="5.1">
@@ -186,7 +186,7 @@
 </div>
 </li>
 <li>
-<p>Go to Workload &#8594; Secrets &#8594; aap-admin-password and use the administrator credentials provided to you.</p>
+<p>Go to <code>Workload &#8594; Secrets &#8594; aap-admin-password</code> and use the <code>administrator</code> credentials provided to you.</p>
 <div class="imageblock">
 <div class="content">
 <img src="_images/5.2.png" alt="5.2">
@@ -205,7 +205,7 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Example AAP URL (replace with your instance)
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Example AAP URL (replace with your instance from OpenShift Route)
 https://aap.example.com</code></pre>
 </div>
 </div>
@@ -279,13 +279,22 @@ https://aap.example.com</code></pre>
 <p>Click the <strong>Create OAuth Application</strong> button.</p>
 </div>
 <div class="paragraph">
-<p>Once created, the system will display:
-* <strong>Client ID</strong> — copy this value and save it in a secure location (notepad, password manager, etc.)
-* <strong>Client Secret</strong> — this appears only once; copy and save it immediately</p>
+<p>Once created, the system will display:</p>
 </div>
-<div class="paragraph">
-<p>+
-image::5.5.png[]</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Client ID</strong> — copy this value and save it in a secure location (notepad, password manager, etc.)</p>
+</li>
+<li>
+<p><strong>Client Secret</strong> — this appears only once; copy and save it immediately</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.5.png" alt="5.5">
+</div>
+</div>
+</li>
+</ul>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -353,7 +362,7 @@ image::5.5.png[]</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Go to the API <code><a href="https://&lt;aap-hostname&gt;/api/gateway/v1/tokens/" class="bare">https://&lt;aap-hostname&gt;/api/gateway/v1/tokens/</a></code>.</p>
+<p>Go to the API <code><a href="https://&lt;aap-hostname&gt;/api/gateway/v1/tokens/" class="bare">https://&lt;aap-hostname&gt;/api/gateway/v1/tokens/</a></code> and replace the &lt;aap-hostname&gt; with the actual hostname of the Ansible Automation Platform.</p>
 <div class="imageblock">
 <div class="content">
 <img src="_images/5.6.png" alt="5.6">
@@ -362,9 +371,6 @@ image::5.5.png[]</p>
 </li>
 <li>
 <p>Configure the Token according to the screen shot and POST the Request.</p>
-</li>
-</ol>
-</div>
 <div class="paragraph">
 <p>Fill in the following fields:</p>
 </div>
@@ -383,9 +389,6 @@ image::5.5.png[]</p>
 <img src="_images/5.7.png" alt="5.7">
 </div>
 </div>
-</li>
-</ul>
-</div>
 <div class="paragraph">
 <p>Generate and Save the Token and as the system will display the generated token — copy it immediately and save it in a secure location alongside your Client ID and Client Secret from Task 1.</p>
 </div>
@@ -402,6 +405,12 @@ image::5.5.png[]</p>
 </td>
 </tr>
 </table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>Make a note of the three values you now have:</p>
@@ -437,9 +446,6 @@ image::5.5.png[]</p>
 </li>
 <li>
 <p>Once login to bastion host then login to OCP cli using the command shared in <strong>OpenShift CLI Commands</strong> section on the RHDP login page:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc login -u admin -p &lt;openshift-admin-password&gt;  https://api.cluster-kstzt.dyn.redhatworkshops.io:6443</code></pre>
@@ -450,32 +456,23 @@ image::5.5.png[]</p>
 <img src="_images/5.8.png" alt="5.8">
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>Run the following command, replacing <code>portal</code> with your preferred project name if you want a different project name(keep it lowercase with hyphens only, no underscores):</p>
-</li>
-</ol>
-</div>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-project portal</code></pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>Make sure your CLI context is set to the newly created project:</p>
-</li>
-</ol>
-</div>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc project portal</code></pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+</li>
 <li>
 <p>Build and Deploy the Plugin Registry</p>
 </li>
@@ -586,12 +583,6 @@ image::5.5.png[]</p>
 <ol class="arabic">
 <li>
 <p>Run the following command, replacing the placeholders with your actual values:</p>
-</li>
-</ol>
-</div>
-</li>
-</ul>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc create secret generic secrets-rhaap-portal \
@@ -601,6 +592,12 @@ image::5.5.png[]</p>
   --from-literal=aap-token="your-api-token-here" \
   -n portal</code></pre>
 </div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
 </div>
 <div class="admonitionblock note">
 <table>
