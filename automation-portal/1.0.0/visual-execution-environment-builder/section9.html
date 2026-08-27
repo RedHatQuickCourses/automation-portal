@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Defining custom pre-build and post-build steps :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <title>Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="section8.html">
+    <link rel="next" href="../centralized-content-discovery/section1.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -105,7 +107,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section8.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="section9.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
   </li>
 </ul>
@@ -173,7 +175,8 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="defining-custom-pre-build-and-post-build-steps.html">Defining custom pre-build and post-build steps</a></li>
+    <li><a href="section1.html">Visual Execution Environment Builder</a></li>
+    <li><a href="section9.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a></li>
   </ul>
 </nav>
 </div>
@@ -182,129 +185,180 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Defining custom pre-build and post-build steps</h1>
-<h1 id="_defining_custom_pre_build_and_post_build_steps" class="sect0"><a class="anchor" href="#_defining_custom_pre_build_and_post_build_steps"></a>Defining Custom Pre-Build and Post-Build Steps</h1>
+<h1 class="page">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</h1>
+<h1 id="_hands_on_lab_deploying_a_scaffolded_ci_pipeline_for_automated_ee_builds" class="sect0"><a class="anchor" href="#_hands_on_lab_deploying_a_scaffolded_ci_pipeline_for_automated_ee_builds"></a>Hands-on Lab: Deploying a Scaffolded CI Pipeline for Automated EE Builds</h1>
 <div class="paragraph">
-<p>In the context of the Visual Execution Environment (EE) Builder, automation engineers often require specific system-level configurations that go beyond standard Ansible Content Collection or Python package dependencies. Custom build steps allow you to inject arbitrary commands into the container image build process, ensuring your Execution Environment meets specific organizational security, compliance, or tooling requirements.</p>
+<p>In this lab, you will transition from manual Execution Environment (EE) construction to an automated DevOps workflow. By leveraging the Visual Execution Environment Builder, you will scaffold a GitHub repository pre-configured with a CI pipeline, enabling automated container builds and registry pushes without manual CLI intervention.</p>
 </div>
 <div class="sect1">
-<h2 id="_architectural_overview"><a class="anchor" href="#_architectural_overview"></a>Architectural Overview</h2>
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Custom build steps are executed during the container build lifecycle, specifically interacting with the <code>ansible-builder</code> process under the hood. By utilizing the GUI-based Visual Builder, you can define these operations without manually editing <code>execution-environment.yml</code> files.</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Pre-build steps:</strong> Executed before the installation of Python packages and Ansible Collections. These are ideal for configuring system repositories, installing OS-level development headers, or preparing the file system.</p>
+<p>Access to an instance of the Ansible Automation Platform 2.7 Automation Portal.</p>
 </li>
 <li>
-<p><strong>Post-build steps:</strong> Executed after the installation of dependencies. These are typically used for cleanup operations, generating metadata files (such as build timestamps or versioning logs), or running security scans/validations on the final image state.</p>
+<p>An active GitHub account.</p>
+</li>
+<li>
+<p>A target container registry (e.g., Quay.io) with valid credentials.</p>
+</li>
+<li>
+<p>A pre-defined EE configuration within the Visual Builder.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_build_steps_in_the_visual_builder"><a class="anchor" href="#_configuring_build_steps_in_the_visual_builder"></a>Configuring Build Steps in the Visual Builder</h2>
+<h2 id="_exercise_scaffolding_a_ci_pipeline"><a class="anchor" href="#_exercise_scaffolding_a_ci_pipeline"></a>Exercise: Scaffolding a CI Pipeline</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Visual Builder provides an intuitive interface to insert these commands directly into the container definition.</p>
+<p>This exercise demonstrates how to move from a defined EE specification to an automated delivery pipeline.</p>
 </div>
 <div class="sect2">
-<h3 id="_best_practices_for_custom_steps"><a class="anchor" href="#_best_practices_for_custom_steps"></a>Best Practices for Custom Steps</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Idempotency:</strong> Ensure that your commands are idempotent and exit with a non-zero status code if a failure occurs to prevent the creation of broken container images.</p>
-</li>
-<li>
-<p><strong>Minimize Layers:</strong> Where possible, chain commands using <code>&amp;&amp;</code> to reduce the number of layers in the resulting container image, which optimizes image size and build speed.</p>
-</li>
-<li>
-<p><strong>Security:</strong> Avoid echoing sensitive credentials or environment variables in build steps, as these may be persisted in the container&#8217;s history.</p>
-</li>
-</ul>
-</div>
-<hr>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_hands_on_lab_defining_custom_build_steps"><a class="anchor" href="#_hands_on_lab_defining_custom_build_steps"></a>Hands-on Lab: Defining Custom Build Steps</h2>
-<div class="sectionbody">
+<h3 id="_step_1_select_the_ci_pipeline_scaffolding_option"><a class="anchor" href="#_step_1_select_the_ci_pipeline_scaffolding_option"></a>Step 1: Select the CI Pipeline Scaffolding Option</h3>
 <div class="paragraph">
-<p>In this exercise, you will inject custom metadata into your Execution Environment to track build provenance.</p>
-</div>
-<div class="sect2">
-<h3 id="_exercise_2_5_define_custom_build_steps_optional"><a class="anchor" href="#_exercise_2_5_define_custom_build_steps_optional"></a>Exercise 2.5: Define Custom Build Steps (Optional)</h3>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Ensure you have completed the prerequisite setup of your project workspace within the Visual EE Builder before beginning this task.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>After you have finalized your EE configuration (dependencies, collections, and base images) within the Visual Execution Environment Builder:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Navigate to the Build Steps screen:</strong>
-In the Visual Builder wizard, progress to the "Custom Build Steps" configuration screen.</p>
+<p>Navigate to the <strong>Output Options</strong> screen of the wizard.</p>
 </li>
 <li>
-<p><strong>Define the Post-Build command:</strong>
-Locate the input field for "Post-build commands." Enter the following command to create a build information file:</p>
-<div class="literalblock">
-<div class="content">
-<pre>[source,bash]
-----
-RUN echo "Network Automation EE - Built $(date)" &gt; /etc/ee-build-info
-----</pre>
-</div>
-</div>
-</li>
-<li>
-<p><strong>Validate the definition:</strong>
-Observe the definition preview window. The builder will automatically format the command for inclusion in the underlying build definition files.</p>
-</li>
-<li>
-<p><strong>Verification:</strong>
-Click <strong>Next</strong> to save your configuration. Once the image build completes, you can verify the existence of the file by running:</p>
-<div class="literalblock">
-<div class="content">
-<pre>[source,bash]
-----
-podman run --rm &lt;your-ee-image-name&gt; cat /etc/ee-build-info
-----</pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="admonitionblock tip">
+<p>Select the option labeled <strong>"Scaffold a GitHub repository with CI pipeline"</strong>.</p>
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If your build fails at the custom step, review the build logs in the Automation Portal interface. The logs capture <code>stdout</code> and <code>stderr</code> from your custom commands, providing immediate troubleshooting feedback.</p>
+<p>This option triggers the builder to generate not only the <code>execution-environment.yml</code> but also the necessary CI workflow files (e.g., <code>.github/workflows/build-ee.yml</code>) required for automated builds.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_2_configure_pipeline_parameters"><a class="anchor" href="#_step_2_configure_pipeline_parameters"></a>Step 2: Configure Pipeline Parameters</h3>
+<div class="paragraph">
+<p>The builder requires connection details to automate the push of your container image once the build succeeds.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Target Registry:</strong> Enter your container registry URL (e.g., <code>quay.io/&lt;your-namespace&gt;</code>).</p>
+</li>
+<li>
+<p><strong>Image Name:</strong> Specify the tag name for your environment (e.g., <code>network-automation-ee</code>).</p>
+</li>
+<li>
+<p><strong>Registry Credentials:</strong> When prompted, provide the necessary secrets to allow GitHub Actions to authenticate with your container registry.</p>
+</li>
+<li>
+<p>Click <strong>Publish/Create</strong>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_3_verify_repository_creation"><a class="anchor" href="#_step_3_verify_repository_creation"></a>Step 3: Verify Repository Creation</h3>
+<div class="paragraph">
+<p>Once the process completes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the GitHub repository URL provided by the builder.</p>
+</li>
+<li>
+<p>Observe the generated file structure:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>execution-environment.yml</code>: The declarative definition of your EE.</p>
+</li>
+<li>
+<p><code>.github/workflows/</code>: Contains the pre-configured GitHub Actions workflow.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Open the workflow file to review the build steps:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Build Stage:</strong> Utilizes the EE definition to build the container image.</p>
+</li>
+<li>
+<p><strong>Push Stage:</strong> Authenticates with the registry defined in Step 2 and pushes the image.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_4_trigger_and_monitor_the_build"><a class="anchor" href="#_step_4_trigger_and_monitor_the_build"></a>Step 4: Trigger and Monitor the Build</h3>
+<div class="paragraph">
+<p>To ensure the pipeline is functional:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the <strong>Actions</strong> tab in your newly created GitHub repository.</p>
+</li>
+<li>
+<p>If the build did not trigger automatically upon creation, manually trigger the workflow via the <strong>"Run workflow"</strong> button.</p>
+</li>
+<li>
+<p>Monitor the build logs to ensure the environment dependencies (Ansible Collections, Python packages) are installed correctly and the resulting image is pushed to your registry.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting_tips"><a class="anchor" href="#_troubleshooting_tips"></a>Troubleshooting Tips</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Authentication Failures:</strong> Ensure that the secrets stored in the GitHub repository (Settings &gt; Secrets and variables &gt; Actions) correspond to the credentials used for your container registry.</p>
+</li>
+<li>
+<p><strong>Build Timeouts:</strong> If the build fails due to large dependency lists, check the <code>execution-environment.yml</code> for any extraneous libraries that can be optimized.</p>
+</li>
+<li>
+<p><strong>Registry Visibility:</strong> Confirm that your target registry namespace is set to public, or that the registry credentials have sufficient write permissions for the specified repository.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_summary"><a class="anchor" href="#_summary"></a>Summary</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By completing this lab, you have successfully moved from a manual, CLI-heavy process to a <strong>GitOps-driven lifecycle</strong>. Your execution environment is now version-controlled, and any future changes to your <code>execution-environment.yml</code> will automatically trigger a rebuild and push to your container registry, ensuring your automation infrastructure remains consistent and up-to-date.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="section8.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a></span>
+  <span class="next"><a href="../centralized-content-discovery/section1.html">Centralized Content Discovery</a></span>
+</nav>
 </article>
   </div>
 </main>

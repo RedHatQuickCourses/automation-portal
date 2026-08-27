@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Configuring EE Builder via Helm charts :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <title>Hands-on Lab: Installing and Verifying the Automation Portal on OCP :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="section5.html">
+    <link rel="next" href="../visual-execution-environment-builder/section1.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -71,7 +73,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section5.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
   </li>
 </ul>
@@ -173,7 +175,8 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="configuring-ee-builder-via-helm-charts.html">Configuring EE Builder via Helm charts</a></li>
+    <li><a href="section1.html">Automation Portal</a></li>
+    <li><a href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a></li>
   </ul>
 </nav>
 </div>
@@ -182,129 +185,96 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Configuring EE Builder via Helm charts</h1>
-<h1 id="_configuring_ee_builder_via_helm_charts" class="sect0"><a class="anchor" href="#_configuring_ee_builder_via_helm_charts"></a>Configuring EE Builder via Helm Charts</h1>
-<div class="paragraph">
-<p>The Execution Environment (EE) Builder is a core component of the Ansible Automation Platform 2.7 Automation Portal. It abstracts the complexities of <code>ansible-builder</code> by providing a GUI-driven workflow for container image creation. To enable this functionality within an OpenShift Container Platform (OCP) environment, administrators must configure the Automation Portal via its Helm chart (or the associated Operator Custom Resource).</p>
-</div>
-<div class="sect1">
-<h2 id="_architectural_overview"><a class="anchor" href="#_architectural_overview"></a>Architectural Overview</h2>
+<h1 class="page">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The EE Builder relies on the integration between the Automation Portal and the underlying OpenShift container registry and build pipelines. By configuring the Helm chart, you define the infrastructure necessary to:
-*   Provision the builder service.
-*   Define the OCI (Open Container Initiative) delivery mode for image management.
-*   Establish the trust and synchronization between the Portal and your automation content sources.</p>
+<p>In this lab, you will deploy the Automation Portal on your OpenShift Container Platform (OCP) environment.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration_prerequisites"><a class="anchor" href="#_configuration_prerequisites"></a>Configuration Prerequisites</h2>
+<h2 id="_installing_the_automation_portal"><a class="anchor" href="#_installing_the_automation_portal"></a>Installing the Automation Portal</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Before modifying your Helm chart configuration, ensure the following:
-*   <strong>OpenShift Cluster Access:</strong> Cluster-admin privileges to modify the Automation Platform Operator instance.
-*   <strong>Helm Access:</strong> Access to the deployment manifest (or the <code>AutomationPlatform</code> Custom Resource YAML if utilizing the Operator).
-*   <strong>Namespace/Project:</strong> Ensure you are working within the namespace where the Automation Portal is deployed.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuration_procedure"><a class="anchor" href="#_configuration_procedure"></a>Configuration Procedure</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To enable the EE Builder, you must edit the <code>AutomationPlatform</code> custom resource. Follow these steps:</p>
-</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Access the Portal Configuration</strong>
-Navigate to the OpenShift Web Console, select the project where AAP is installed, and edit the <code>AutomationPlatform</code> custom resource YAML.</p>
+<p>Go to Ecosystem &gt; Software Catalog in the OpenShift web console.</p>
 </li>
 <li>
-<p><strong>Define the EE Builder Block</strong>
-Locate the <code>spec</code> section. You must ensure the <code>ee_builder</code> block is defined. Replace any placeholder URLs (e.g., <code>apps.example.com</code>) with your actual ingress domain.</p>
+<p>Search for "Automation Portal" in the catalog and select it.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Click on <strong>Create</strong> to start the installation process.</p>
+</li>
+<li>
+<p>Change the Release Name to <code>automation-portal</code> and you can change it if you want.</p>
+</li>
+<li>
+<p>Change the <strong>clusterRouterBase</strong> to the correct value for your cluster. For example, if the OCP cluster url is <code><a href="https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io" class="bare">https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io</a></code> then the clusterRouterBase should be <code>apps.cluster-kstzt.dyn.redhatworkshops.io</code>.</p>
+</li>
+<li>
+<p>By default, it will be setting up at the Organization <strong>Default</strong> for the automaton portal the parameter is orgs if you wanted to change it.</p>
 </li>
 </ol>
 </div>
-<div class="listingblock">
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Once the above settings are done, click on <strong>Create</strong> to start the installation process.</p>
+</div>
+<div class="exampleblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
-  ee_builder:
-    enabled: true
-    # Configure the delivery mode for OCI-compliant images
-    pluginMode: "oci"
-    imageTagInfo: "latest"
-  # Set the AAP organization for content synchronization
-  sync:
-    organization: "Default"</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Configure Red Hat Developer Hub Integration (Optional)</strong>
-If you are utilizing the Visual Builder’s integration with Red Hat Developer Hub for templating, ensure the global configuration is set to OCI mode:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">redhat-developer-hub:
-  global:
-    pluginMode: "oci"
-    imageTagInfo: "1.2.0" # Use the appropriate plugin version</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Apply Changes</strong>
-Save the YAML. The Operator will reconcile the state, rollout the necessary pods for the EE Builder, and expose the "EE Definitions" menu in the Automation Portal navigation pane.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Once the operator has finished the rollout, verify the installation:</p>
+<p>The installation process will take a few minutes. You can monitor the progress Workloads &gt; Topology in the portal project. Once the installation is complete, you will see the Automation Portal components running.</p>
 </div>
-<div class="ulist">
-<ul>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p><strong>Navigation Check:</strong> Refresh your browser. The "EE Definitions" tab should now be visible in the left-hand navigation menu of the Automation Portal.</p>
+<p>Go to Workloads &gt; Topology in the portal project. Once the installation is complete, you will see the Automation Portal components running.</p>
 </li>
 <li>
-<p><strong>Pod Status:</strong> Execute <code>oc get pods -n &lt;your-namespace&gt;</code> and confirm that the builder-related pods are in the <code>Running</code> state.</p>
+<p>Click on <strong>automation-portal-rhaap-portal</strong> resource to view the details. You will find the route URL in the <strong>Routes</strong> section. This URL is used to access the Automation Portal web interface.</p>
 </li>
 <li>
-<p><strong>Service Readiness:</strong> Open the Automation Portal and click on "EE Definitions." If the UI loads without errors, the Helm configuration is successfully applied.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_troubleshooting_tips"><a class="anchor" href="#_troubleshooting_tips"></a>Troubleshooting Tips</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Helm Validation Failures:</strong> If the deployment fails, verify that all placeholder strings (such as <code>apps.example.com</code>) have been replaced. Helm charts often include regex validations that will reject default template strings.</p>
+<p>Copy the route URL and go to Ansible Automation Platform &gt; Access Management &gt; OAuth Applications.</p>
 </li>
 <li>
-<p><strong>Permission Denied:</strong> Ensure the ServiceAccount associated with the EE Builder has the necessary <code>image-puller</code> and <code>image-pusher</code> roles within the OpenShift namespace.</p>
+<p>Edit the automation-portal OAuth application to include the route URL as a valid redirect URI and save the changes. This step is crucial for the OAuth authentication to work correctly.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">https://&lt;aap-portal-hostname&gt;/api/auth/rhaap/handler/frame</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Access the Web UI of the Automation portal and click on the <strong>Login with Ansible Automation Platform</strong> button. You will be redirected to the AAP login page. Enter your AAP credentials to log in.</p>
 </li>
 <li>
-<p><strong>Sync Errors:</strong> If the "Content Discovery" catalog is empty, re-verify the <code>sync.organization</code> setting in your Helm chart to match the organization defined in your Automation Controller.</p>
+<p>Once logged in, you need to provide the necessary permissions. click authorize and you will see the Automation Portal dashboard.</p>
 </li>
-</ul>
+<li>
+<p>Click on the Demo Job Template and click on <strong>Launch</strong> to execute the job. You will see the job execution status and output.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This is All about setting up the Automation Portal on OCP and verifying its functionality. You can now explore the features of the Automation Portal like RBAC Control and the execution of job templates and workflows via specific users.</p>
 </div>
 </div>
 </div>
+<nav class="pagination">
+  <span class="prev"><a href="section5.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a></span>
+  <span class="next"><a href="../visual-execution-environment-builder/section1.html">Visual Execution Environment Builder</a></span>
+</nav>
 </article>
   </div>
 </main>

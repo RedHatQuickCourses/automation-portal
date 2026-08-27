@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Configuring EE Builder via Helm charts :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <title>Automation Portal :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="../LABENV/index.html">
+    <link rel="next" href="section2.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -55,7 +57,7 @@
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="section1.html">Automation Portal</a>
 <ul class="nav-list">
@@ -173,7 +175,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="configuring-ee-builder-via-helm-charts.html">Configuring EE Builder via Helm charts</a></li>
+    <li><a href="section1.html">Automation Portal</a></li>
   </ul>
 </nav>
 </div>
@@ -182,129 +184,33 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Configuring EE Builder via Helm charts</h1>
-<h1 id="_configuring_ee_builder_via_helm_charts" class="sect0"><a class="anchor" href="#_configuring_ee_builder_via_helm_charts"></a>Configuring EE Builder via Helm Charts</h1>
+<h1 class="page">Automation Portal</h1>
 <div class="paragraph">
-<p>The Execution Environment (EE) Builder is a core component of the Ansible Automation Platform 2.7 Automation Portal. It abstracts the complexities of <code>ansible-builder</code> by providing a GUI-driven workflow for container image creation. To enable this functionality within an OpenShift Container Platform (OCP) environment, administrators must configure the Automation Portal via its Helm chart (or the associated Operator Custom Resource).</p>
+<p>The Ansible Automation Portal with Ansible Automation Platform (AAP) serves as a unified interface that shifts the platform focus from simple execution to a comprehensive "build, discover, and run" experience. It simplifies enterprise automation for users of all skill levels by replacing complex CLI workflows with a streamlined, point-and-click web experience.</p>
 </div>
-<div class="sect1">
-<h2 id="_architectural_overview"><a class="anchor" href="#_architectural_overview"></a>Architectural Overview</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>The EE Builder relies on the integration between the Automation Portal and the underlying OpenShift container registry and build pipelines. By configuring the Helm chart, you define the infrastructure necessary to:
-*   Provision the builder service.
-*   Define the OCI (Open Container Initiative) delivery mode for image management.
-*   Establish the trust and synchronization between the Portal and your automation content sources.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuration_prerequisites"><a class="anchor" href="#_configuration_prerequisites"></a>Configuration Prerequisites</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Before modifying your Helm chart configuration, ensure the following:
-*   <strong>OpenShift Cluster Access:</strong> Cluster-admin privileges to modify the Automation Platform Operator instance.
-*   <strong>Helm Access:</strong> Access to the deployment manifest (or the <code>AutomationPlatform</code> Custom Resource YAML if utilizing the Operator).
-*   <strong>Namespace/Project:</strong> Ensure you are working within the namespace where the Automation Portal is deployed.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuration_procedure"><a class="anchor" href="#_configuration_procedure"></a>Configuration Procedure</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To enable the EE Builder, you must edit the <code>AutomationPlatform</code> custom resource. Follow these steps:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Access the Portal Configuration</strong>
-Navigate to the OpenShift Web Console, select the project where AAP is installed, and edit the <code>AutomationPlatform</code> custom resource YAML.</p>
-</li>
-<li>
-<p><strong>Define the EE Builder Block</strong>
-Locate the <code>spec</code> section. You must ensure the <code>ee_builder</code> block is defined. Replace any placeholder URLs (e.g., <code>apps.example.com</code>) with your actual ingress domain.</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
-  ee_builder:
-    enabled: true
-    # Configure the delivery mode for OCI-compliant images
-    pluginMode: "oci"
-    imageTagInfo: "latest"
-  # Set the AAP organization for content synchronization
-  sync:
-    organization: "Default"</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Configure Red Hat Developer Hub Integration (Optional)</strong>
-If you are utilizing the Visual Builder’s integration with Red Hat Developer Hub for templating, ensure the global configuration is set to OCI mode:</p>
-</li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">redhat-developer-hub:
-  global:
-    pluginMode: "oci"
-    imageTagInfo: "1.2.0" # Use the appropriate plugin version</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Apply Changes</strong>
-Save the YAML. The Operator will reconcile the state, rollout the necessary pods for the EE Builder, and expose the "EE Definitions" menu in the Automation Portal navigation pane.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Once the operator has finished the rollout, verify the installation:</p>
+<p>Key features include:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Navigation Check:</strong> Refresh your browser. The "EE Definitions" tab should now be visible in the left-hand navigation menu of the Automation Portal.</p>
+<p><strong>Simplified User Experience:</strong> Designed for business users, reducing the need for deep technical knowledge of Ansible playbooks.</p>
 </li>
 <li>
-<p><strong>Pod Status:</strong> Execute <code>oc get pods -n &lt;your-namespace&gt;</code> and confirm that the builder-related pods are in the <code>Running</code> state.</p>
+<p><strong>Platform Integration:</strong> Deployed on OpenShift Container Platform (OCP) with support for RBAC-based navigation, allowing administrators to reduce UI complexity through role-based access policies.</p>
 </li>
 <li>
-<p><strong>Service Readiness:</strong> Open the Automation Portal and click on "EE Definitions." If the UI loads without errors, the Helm configuration is successfully applied.</p>
+<p><strong>Role-Based Access Control:</strong> Facilitates user role separation, ensuring that users only interact with relevant automation assets.</p>
+</li>
+<li>
+<p><strong>Unified Workflow:</strong> Acts as a centralized hub for managing the full lifecycle of automation, from building Execution Environments to discovering and running pre-defined automation content.</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_troubleshooting_tips"><a class="anchor" href="#_troubleshooting_tips"></a>Troubleshooting Tips</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Helm Validation Failures:</strong> If the deployment fails, verify that all placeholder strings (such as <code>apps.example.com</code>) have been replaced. Helm charts often include regex validations that will reject default template strings.</p>
-</li>
-<li>
-<p><strong>Permission Denied:</strong> Ensure the ServiceAccount associated with the EE Builder has the necessary <code>image-puller</code> and <code>image-pusher</code> roles within the OpenShift namespace.</p>
-</li>
-<li>
-<p><strong>Sync Errors:</strong> If the "Content Discovery" catalog is empty, re-verify the <code>sync.organization</code> setting in your Helm chart to match the organization defined in your Automation Controller.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
+<nav class="pagination">
+  <span class="prev"><a href="../LABENV/index.html">Lab Environment</a></span>
+  <span class="next"><a href="section2.html">Automation Portal: Installation Overview with Architectural Benefits</a></span>
+</nav>
 </article>
   </div>
 </main>

@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Lab Environment :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <title>Centralized Content Discovery :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="../visual-execution-environment-builder/section9.html">
+    <link rel="next" href="section2.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -49,7 +51,7 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="index.html">Lab Environment</a>
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
   </li>
 </ul>
   </li>
@@ -114,21 +116,21 @@
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../centralized-content-discovery/section1.html">Centralized Content Discovery</a>
+    <a class="nav-link" href="section1.html">Centralized Content Discovery</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
+    <a class="nav-link" href="section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section3.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
+    <a class="nav-link" href="section3.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section4.html">Implementing continuous synchronization and scheduling</a>
+    <a class="nav-link" href="section4.html">Implementing continuous synchronization and scheduling</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
+    <a class="nav-link" href="section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="#section6.adoc">section6.adoc</a>
@@ -173,7 +175,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="index-lab-demo.html">Lab Environment</a></li>
+    <li><a href="section1.html">Centralized Content Discovery</a></li>
   </ul>
 </nav>
 </div>
@@ -182,80 +184,34 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Lab Environment</h1>
-<div class="sect1">
-<h2 id="_instructions_to_launch_your_lab_on_the_red_hat_demo_platform_rhdp"><a class="anchor" href="#_instructions_to_launch_your_lab_on_the_red_hat_demo_platform_rhdp"></a>Instructions to Launch Your Lab on the Red Hat Demo Platform (RHDP)</h2>
-<div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Log in</strong> to the <a href="#RHDP-Portal-Links">RHDP portal</a>.</p>
-</li>
-<li>
-<p><strong>Search</strong> for the catalog entry: <strong>FIXME Lab Catalog Name</strong>.</p>
-</li>
-<li>
-<p><strong>Click</strong> on the catalog entry in the search results.</p>
-</li>
-<li>
-<p>On the catalog page, <strong>click</strong> the <strong>Order</strong> button.</p>
-</li>
-<li>
-<p><strong>Fill out</strong> the required details in the order form.</p>
-</li>
-<li>
-<p><strong>Review the warning</strong> at the bottom of the form and <strong>check the box</strong> labeled:<br>
-<strong>“I confirm that I understand the above warnings.”</strong></p>
-</li>
-<li>
-<p><strong>Click</strong> the <strong>Order</strong> button to place your lab order.</p>
-</li>
-</ol>
+<h1 class="page">Centralized Content Discovery</h1>
+<h1 id="_centralized_content_discovery" class="sect0"><a class="anchor" href="#_centralized_content_discovery"></a>Centralized Content Discovery</h1>
+<div class="paragraph">
+<p>Centralized Content Discovery provides a unified catalog architecture designed to aggregate automation assets from distributed sources into a single, searchable interface. It eliminates manual discovery efforts by streamlining how platform engineers manage and surface Ansible Content Collections.</p>
 </div>
-<div class="sect2">
-<h3 id="_important_notes"><a class="anchor" href="#_important_notes"></a>Important Notes:</h3>
+<div class="paragraph">
+<p>Key features include:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>This lab may take approximately <strong>FIXME minutes</strong> to become ready.</p>
+<p><strong>Multi-Source Aggregation:</strong> Integrates diverse repositories, including GitHub, GitLab, and Private Automation Hub.</p>
 </li>
 <li>
-<p>You will receive an <strong>email with access details</strong> once your lab environment is ready.</p>
+<p><strong>Continuous Synchronization:</strong> Supports scheduled updates to ensure the catalog remains current with the latest automation assets.</p>
 </li>
 <li>
-<p>You can also <strong>retrieve lab access</strong> directly from the RHDP portal.</p>
+<p><strong>Controlled Visibility:</strong> Implements predefined scoping and access policies to manage how users browse and discover available collections.</p>
+</li>
+<li>
+<p><strong>Simplified Traceability:</strong> Enables a "browse-before-build" workflow, allowing developers to identify existing assets and avoid redundant development.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_how_to_access_your_lab_via_the_rhdp_portal"><a class="anchor" href="#_how_to_access_your_lab_via_the_rhdp_portal"></a>How to Access Your Lab via the RHDP Portal:</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>On the RHDP portal, <strong>click</strong> on the <strong>Services</strong> option in the left-hand menu.</p>
-</li>
-<li>
-<p><strong>Select your lab</strong> from the listings on the right-hand side of the page to view access details.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="RHDP-Portal-Links"><a class="anchor" href="#RHDP-Portal-Links"></a>RHDP Portal Links</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>RedHat associates: <a href="https://demo.redhat.com/" target="_blank" rel="noopener">https://demo.redhat.com/</a></p>
-</li>
-<li>
-<p>RedHat partners: <a href="https://partner.demo.redhat.com/" target="_blank" rel="noopener">https://partner.demo.redhat.com/</a></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
+<nav class="pagination">
+  <span class="prev"><a href="../visual-execution-environment-builder/section9.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a></span>
+  <span class="next"><a href="section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a></span>
+</nav>
 </article>
   </div>
 </main>

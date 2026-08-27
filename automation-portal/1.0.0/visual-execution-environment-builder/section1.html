@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Lab Environment :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <title>Visual Execution Environment Builder :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="../automation-portal/section6.html">
+    <link rel="next" href="section2.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -49,7 +51,7 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="index.html">Lab Environment</a>
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
   </li>
 </ul>
   </li>
@@ -80,33 +82,33 @@
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../visual-execution-environment-builder/section1.html">Visual Execution Environment Builder</a>
+    <a class="nav-link" href="section1.html">Visual Execution Environment Builder</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a>
+    <a class="nav-link" href="section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section3.html">Utilizing the step-by-step wizard for custom EE creation</a>
+    <a class="nav-link" href="section3.html">Utilizing the step-by-step wizard for custom EE creation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Integrating Red Hat domain-specific presets and base container images</a>
+    <a class="nav-link" href="section4.html">Integrating Red Hat domain-specific presets and base container images</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section5.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
+    <a class="nav-link" href="section5.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section6.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
+    <a class="nav-link" href="section6.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section7.html">Importing and managing reusable Backstage software templates</a>
+    <a class="nav-link" href="section7.html">Importing and managing reusable Backstage software templates</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section8.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
+    <a class="nav-link" href="section8.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section9.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
+    <a class="nav-link" href="section9.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
   </li>
 </ul>
   </li>
@@ -173,7 +175,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="index-lab-demo.html">Lab Environment</a></li>
+    <li><a href="section1.html">Visual Execution Environment Builder</a></li>
   </ul>
 </nav>
 </div>
@@ -182,80 +184,36 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Lab Environment</h1>
-<div class="sect1">
-<h2 id="_instructions_to_launch_your_lab_on_the_red_hat_demo_platform_rhdp"><a class="anchor" href="#_instructions_to_launch_your_lab_on_the_red_hat_demo_platform_rhdp"></a>Instructions to Launch Your Lab on the Red Hat Demo Platform (RHDP)</h2>
-<div class="sectionbody">
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Log in</strong> to the <a href="#RHDP-Portal-Links">RHDP portal</a>.</p>
-</li>
-<li>
-<p><strong>Search</strong> for the catalog entry: <strong>FIXME Lab Catalog Name</strong>.</p>
-</li>
-<li>
-<p><strong>Click</strong> on the catalog entry in the search results.</p>
-</li>
-<li>
-<p>On the catalog page, <strong>click</strong> the <strong>Order</strong> button.</p>
-</li>
-<li>
-<p><strong>Fill out</strong> the required details in the order form.</p>
-</li>
-<li>
-<p><strong>Review the warning</strong> at the bottom of the form and <strong>check the box</strong> labeled:<br>
-<strong>“I confirm that I understand the above warnings.”</strong></p>
-</li>
-<li>
-<p><strong>Click</strong> the <strong>Order</strong> button to place your lab order.</p>
-</li>
-</ol>
+<h1 class="page">Visual Execution Environment Builder</h1>
+<div class="paragraph">
+<p>The Visual Execution Environment (EE) Builder is a GUI-based tool that simplifies the creation of portable, reproducible automation runtime images. It replaces complex CLI-based workflows by providing a guided interface to manage the assembly of <code>ansible-core</code>, collection dependencies, Python packages, and system libraries.</p>
 </div>
-<div class="sect2">
-<h3 id="_important_notes"><a class="anchor" href="#_important_notes"></a>Important Notes:</h3>
+<div class="paragraph">
+<p>Key features include:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>This lab may take approximately <strong>FIXME minutes</strong> to become ready.</p>
+<p><strong>Guided Workflow</strong>: Utilizes a step-by-step wizard to define custom EEs, removing the need to manually author <code>execution-environment.yml</code> files.</p>
 </li>
 <li>
-<p>You will receive an <strong>email with access details</strong> once your lab environment is ready.</p>
+<p><strong>Integrated Discovery</strong>: Enables users to select Ansible Content Collections directly from the centralized discovery catalog.</p>
 </li>
 <li>
-<p>You can also <strong>retrieve lab access</strong> directly from the RHDP portal.</p>
+<p><strong>Definition Management</strong>: Automatically generates complete EE definition files with options to download or publish directly to repositories.</p>
+</li>
+<li>
+<p><strong>CI/CD Integration</strong>: Supports automated container image builds through scaffolded CI pipelines and integration with Git-based workflows.</p>
+</li>
+<li>
+<p><strong>Customization</strong>: Allows for the definition of pre-build and post-build steps, alongside the integration of Red Hat domain-specific presets.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_how_to_access_your_lab_via_the_rhdp_portal"><a class="anchor" href="#_how_to_access_your_lab_via_the_rhdp_portal"></a>How to Access Your Lab via the RHDP Portal:</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>On the RHDP portal, <strong>click</strong> on the <strong>Services</strong> option in the left-hand menu.</p>
-</li>
-<li>
-<p><strong>Select your lab</strong> from the listings on the right-hand side of the page to view access details.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="RHDP-Portal-Links"><a class="anchor" href="#RHDP-Portal-Links"></a>RHDP Portal Links</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>RedHat associates: <a href="https://demo.redhat.com/" target="_blank" rel="noopener">https://demo.redhat.com/</a></p>
-</li>
-<li>
-<p>RedHat partners: <a href="https://partner.demo.redhat.com/" target="_blank" rel="noopener">https://partner.demo.redhat.com/</a></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-</div>
+<nav class="pagination">
+  <span class="prev"><a href="../automation-portal/section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a></span>
+  <span class="next"><a href="section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a></span>
+</nav>
 </article>
   </div>
 </main>

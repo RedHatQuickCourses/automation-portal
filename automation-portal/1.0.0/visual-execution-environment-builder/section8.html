@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Defining custom pre-build and post-build steps :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <title>Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="section7.html">
+    <link rel="next" href="section9.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -102,7 +104,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section7.html">Importing and managing reusable Backstage software templates</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="section8.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -173,7 +175,8 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="defining-custom-pre-build-and-post-build-steps.html">Defining custom pre-build and post-build steps</a></li>
+    <li><a href="section1.html">Visual Execution Environment Builder</a></li>
+    <li><a href="section8.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a></li>
   </ul>
 </nav>
 </div>
@@ -182,129 +185,175 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Defining custom pre-build and post-build steps</h1>
-<h1 id="_defining_custom_pre_build_and_post_build_steps" class="sect0"><a class="anchor" href="#_defining_custom_pre_build_and_post_build_steps"></a>Defining Custom Pre-Build and Post-Build Steps</h1>
+<h1 class="page">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</h1>
+<h1 id="_hands_on_lab_content_discovery_and_visual_ee_building" class="sect0"><a class="anchor" href="#_hands_on_lab_content_discovery_and_visual_ee_building"></a>Hands-on Lab: Content Discovery and Visual EE Building</h1>
 <div class="paragraph">
-<p>In the context of the Visual Execution Environment (EE) Builder, automation engineers often require specific system-level configurations that go beyond standard Ansible Content Collection or Python package dependencies. Custom build steps allow you to inject arbitrary commands into the container image build process, ensuring your Execution Environment meets specific organizational security, compliance, or tooling requirements.</p>
+<p>In this lab, you will leverage the Automation Portal to unify disparate automation sources and transition from manual image creation to a streamlined, GUI-based Execution Environment (EE) workflow.</p>
 </div>
 <div class="sect1">
-<h2 id="_architectural_overview"><a class="anchor" href="#_architectural_overview"></a>Architectural Overview</h2>
+<h2 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Custom build steps are executed during the container build lifecycle, specifically interacting with the <code>ansible-builder</code> process under the hood. By utilizing the GUI-based Visual Builder, you can define these operations without manually editing <code>execution-environment.yml</code> files.</p>
-</div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Pre-build steps:</strong> Executed before the installation of Python packages and Ansible Collections. These are ideal for configuring system repositories, installing OS-level development headers, or preparing the file system.</p>
+<p>Access to an OpenShift Container Platform (OCP) cluster with AAP 2.7 installed.</p>
 </li>
 <li>
-<p><strong>Post-build steps:</strong> Executed after the installation of dependencies. These are typically used for cleanup operations, generating metadata files (such as build timestamps or versioning logs), or running security scans/validations on the final image state.</p>
+<p>An authenticated session in the Automation Portal.</p>
+</li>
+<li>
+<p>Read/Write access to a connected Git repository.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuring_build_steps_in_the_visual_builder"><a class="anchor" href="#_configuring_build_steps_in_the_visual_builder"></a>Configuring Build Steps in the Visual Builder</h2>
+<h2 id="_task_1_syncing_content_sources_and_cataloging"><a class="anchor" href="#_task_1_syncing_content_sources_and_cataloging"></a>Task 1: Syncing Content Sources and Cataloging</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Visual Builder provides an intuitive interface to insert these commands directly into the container definition.</p>
-</div>
-<div class="sect2">
-<h3 id="_best_practices_for_custom_steps"><a class="anchor" href="#_best_practices_for_custom_steps"></a>Best Practices for Custom Steps</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Idempotency:</strong> Ensure that your commands are idempotent and exit with a non-zero status code if a failure occurs to prevent the creation of broken container images.</p>
-</li>
-<li>
-<p><strong>Minimize Layers:</strong> Where possible, chain commands using <code>&amp;&amp;</code> to reduce the number of layers in the resulting container image, which optimizes image size and build speed.</p>
-</li>
-<li>
-<p><strong>Security:</strong> Avoid echoing sensitive credentials or environment variables in build steps, as these may be persisted in the container&#8217;s history.</p>
-</li>
-</ul>
-</div>
-<hr>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_hands_on_lab_defining_custom_build_steps"><a class="anchor" href="#_hands_on_lab_defining_custom_build_steps"></a>Hands-on Lab: Defining Custom Build Steps</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In this exercise, you will inject custom metadata into your Execution Environment to track build provenance.</p>
-</div>
-<div class="sect2">
-<h3 id="_exercise_2_5_define_custom_build_steps_optional"><a class="anchor" href="#_exercise_2_5_define_custom_build_steps_optional"></a>Exercise 2.5: Define Custom Build Steps (Optional)</h3>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Ensure you have completed the prerequisite setup of your project workspace within the Visual EE Builder before beginning this task.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>Before building an EE, we must aggregate your automation assets into a unified catalog.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Navigate to the Build Steps screen:</strong>
-In the Visual Builder wizard, progress to the "Custom Build Steps" configuration screen.</p>
+<p><strong>Navigate to Discovery:</strong> In the Portal sidebar, select <strong>Content Discovery</strong> &gt; <strong>Sources</strong>.</p>
 </li>
 <li>
-<p><strong>Define the Post-Build command:</strong>
-Locate the input field for "Post-build commands." Enter the following command to create a build information file:</p>
-<div class="literalblock">
-<div class="content">
-<pre>[source,bash]
-----
-RUN echo "Network Automation EE - Built $(date)" &gt; /etc/ee-build-info
-----</pre>
-</div>
+<p><strong>Add Sources:</strong> Click <strong>Add Source</strong>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Select <code>GitHub</code> and provide your organization URL and token.</p>
+</li>
+<li>
+<p>Select <code>Private Automation Hub</code> and provide the URL and API token.</p>
+</li>
+</ul>
 </div>
 </li>
 <li>
-<p><strong>Validate the definition:</strong>
-Observe the definition preview window. The builder will automatically format the command for inclusion in the underlying build definition files.</p>
+<p><strong>Initiate Synchronization:</strong> Click <strong>Sync Now</strong> on both entries.</p>
 </li>
 <li>
-<p><strong>Verification:</strong>
-Click <strong>Next</strong> to save your configuration. Once the image build completes, you can verify the existence of the file by running:</p>
-<div class="literalblock">
-<div class="content">
-<pre>[source,bash]
-----
-podman run --rm &lt;your-ee-image-name&gt; cat /etc/ee-build-info
-----</pre>
+<p><strong>Verify Catalog:</strong> Navigate to the <strong>Catalog</strong> tab. You should see Ansible Content Collections aggregated from both GitHub and your Private Automation Hub.</p>
+</li>
+<li>
+<p><strong>Apply Governance:</strong> Use the <strong>Filter</strong> menu to apply an "Approved" tag, ensuring that only verified collections appear in your EE builder selection list.</p>
+</li>
+</ol>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_task_2_building_a_custom_execution_environment"><a class="anchor" href="#_task_2_building_a_custom_execution_environment"></a>Task 2: Building a Custom Execution Environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We will now use the Visual EE Builder to generate a container definition without writing a single line of YAML or <code>ansible-builder</code> configuration files.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Access the Builder:</strong> Navigate to <strong>Execution Environments</strong> &gt; <strong>Visual Builder</strong>.</p>
+</li>
+<li>
+<p><strong>Initialize Definition:</strong> Click <strong>Create New Definition</strong>. Provide a name (e.g., <code>network-ops-ee</code>) and a base container image (e.g., <code>registry.redhat.io/ansible-automation-platform-27/ee-minimal-rhel9</code>).</p>
+</li>
+<li>
+<p><strong>Add Collections:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Add Collection</strong>.</p>
+</li>
+<li>
+<p>The portal will display your unified catalog from Task 1.</p>
+</li>
+<li>
+<p>Search for <code>cisco.ios</code> and <code>arista.eos</code>. Select them and click <strong>Add to Definition</strong>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Inject Dependencies:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Click the <strong>Dependencies</strong> tab.</p>
+</li>
+<li>
+<p>In the <strong>Python Requirements</strong> section, add <code>netmiko</code> and <code>ncclient</code>.</p>
+</li>
+<li>
+<p>In the <strong>System Packages</strong> section, add <code>libssh-devel</code>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Define Build Steps:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigate to <strong>Custom Steps</strong>.</p>
+</li>
+<li>
+<p>Add a <strong>Pre-build</strong> step: Enter a shell command to verify the file system structure.</p>
+</li>
+<li>
+<p>Add a <strong>Post-build</strong> step: Include a command to run a security scan script (e.g., <code>ansible-lint -v</code>).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Finalize and Publish:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Review the generated preview.</p>
+</li>
+<li>
+<p>Click <strong>Save &amp; Publish</strong>. Select your GitHub repository; the builder will automatically push the <code>execution-environment.yml</code> and associated metadata to your repository.</p>
+</li>
+</ul>
 </div>
 </li>
 </ol>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
+</div>
+</div>
+<div class="sect1">
+<h2 id="_troubleshooting_tips"><a class="anchor" href="#_troubleshooting_tips"></a>Troubleshooting Tips</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Sync Failures:</strong> If sources fail to sync, check the <strong>Activity Log</strong> in the Portal to verify API token permissions and network connectivity to the remote source.</p>
+</li>
+<li>
+<p><strong>Dependency Conflicts:</strong> If a collection requires a specific Python version not supported by your base image, the builder will provide a validation error. Switch to a more compatible base image (e.g., <code>ee-supported-rhel9</code>).</p>
+</li>
+<li>
+<p><strong>RBAC Restrictions:</strong> If you cannot see the Visual Builder, ensure your user account is assigned the <code>Automation Administrator</code> or <code>EE Builder</code> role.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>If your build fails at the custom step, review the build logs in the Automation Portal interface. The logs capture <code>stdout</code> and <code>stderr</code> from your custom commands, providing immediate troubleshooting feedback.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>Verify that the build process has been triggered by navigating to your linked GitHub repository. You should see a <code>build/</code> directory populated with your definition, confirming that the Visual Builder has successfully handed off the configuration to your CI/CD pipeline.</p>
 </div>
 </div>
 </div>
-</div>
+<nav class="pagination">
+  <span class="prev"><a href="section7.html">Importing and managing reusable Backstage software templates</a></span>
+  <span class="next"><a href="section9.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a></span>
+</nav>
 </article>
   </div>
 </main>

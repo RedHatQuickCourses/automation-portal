@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="section4.html">
+    <link rel="next" href="section6.html">
+    <meta name="generator" content="Antora 3.2.0-alpha.12">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/collapsible.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/reading-time.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/audio-transcript.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://www.redhat.com" target="_blank"><img src="../../../_/img/redhat-logo.png" height="40px" alt="Red Hat"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="../../..">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/RedHatQuickCourses/REPLACEREPONAME/issues" target="_blank">Report Issues</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="automation-portal" data-version="1.0.0">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../index.html">Home</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="section1.html">Automation Portal</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section2.html">Automation Portal: Installation Overview with Architectural Benefits</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section3.html">Managing RBAC-based Navigation Menus for User Role Separation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section4.html">Reducing UI Complexity through Admin-Defined Access Policies</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="section5.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../visual-execution-environment-builder/section1.html">Visual Execution Environment Builder</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section3.html">Utilizing the step-by-step wizard for custom EE creation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Integrating Red Hat domain-specific presets and base container images</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section5.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section6.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section7.html">Importing and managing reusable Backstage software templates</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section8.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section9.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../centralized-content-discovery/section1.html">Centralized Content Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/section3.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/section4.html">Implementing continuous synchronization and scheduling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#section6.adoc">section6.adoc</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</span>
+    <span class="version">1.0.0</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">1.0.0</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
+    <li><a href="section1.html">Automation Portal</a></li>
+    <li><a href="section5.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this lab, you&#8217;ll walk through the essential prerequisite steps to deploy the Ansible Automation Portal on OpenShift Container Platform. We&#8217;ll configure OAuth authentication with AAP, generate required API tokens, and prepare your OpenShift environment for the portal deployment. These steps ensure secure communication between the portal and your AAP instance.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_overview_of_what_well_do"><a class="anchor" href="#_overview_of_what_well_do"></a>Overview of What We&#8217;ll Do</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By the end of this lab, you will have:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Created an OAuth application in AAP for portal authentication</p>
+</li>
+<li>
+<p>Generated and secured API credentials</p>
+</li>
+<li>
+<p>Authenticated with your OpenShift cluster</p>
+</li>
+<li>
+<p>Created a dedicated project for the automation portal</p>
+</li>
+<li>
+<p>Prepared all necessary credentials for the Helm chart deployment</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This is the foundational work that must be completed <strong>before</strong> you deploy the Helm chart. Think of it as setting up the "communication channels" between the portal and your AAP instance.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_task_1_create_an_oauth_application_in_ansible_automation_platform"><a class="anchor" href="#_task_1_create_an_oauth_application_in_ansible_automation_platform"></a>Task 1: Create an OAuth Application in Ansible Automation Platform</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The OAuth application is how the Automation Portal will authenticate users against your AAP instance. Think of it as registering the portal as a "trusted application" within AAP.</p>
+</div>
+<div class="sect2">
+<h3 id="_step_1_1_log_in_to_aap"><a class="anchor" href="#_step_1_1_log_in_to_aap"></a>Step 1.1: Log in to AAP</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Login to the Openshift Cluster got to Network &#8594; Routes.</p>
+</li>
+<li>
+<p>Select the project as aap and open your Ansible Automation Platform instance in a web browser.</p>
+</li>
+<li>
+<p>Go to Workload &#8594; Secrets &#8594; aap-admin-password and use the administrator credentials provided to you.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Open your Ansible Automation Platform instance in a web browser and log in as an administrator.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Example AAP URL (replace with your instance)
+https://aap.example.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_1_2_navigate_to_oauth_applications"><a class="anchor" href="#_step_1_2_navigate_to_oauth_applications"></a>Step 1.2: Navigate to OAuth Applications</h3>
+<div class="paragraph">
+<p>Once logged in:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the left sidebar, click <strong>Access Management</strong></p>
+</li>
+<li>
+<p>Select <strong>OAuth Applications</strong> from the submenu</p>
+</li>
+<li>
+<p>Click the <strong>Create OAuth Application</strong> button in the upper right corner</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_1_3_configure_the_oauth_application"><a class="anchor" href="#_step_1_3_configure_the_oauth_application"></a>Step 1.3: Configure the OAuth Application</h3>
+<div class="paragraph">
+<p>Fill in the following fields with these exact values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Name:</strong> <code>automation-portal</code></p>
+</li>
+<li>
+<p><strong>Organization:</strong> Select the organization where your automation content lives (typically "Default" unless you have a multi-tenant setup)</p>
+</li>
+<li>
+<p><strong>Authorization grant type:</strong> Select <strong>Authorization code</strong></p>
+</li>
+<li>
+<p><strong>Client type:</strong> Select <strong>Confidential</strong></p>
+</li>
+<li>
+<p><strong>Redirect URIs:</strong> Enter a placeholder URL for now: <code><a href="https://example.com/api/auth/rhaap/handler/frame" class="bare">https://example.com/api/auth/rhaap/handler/frame</a></code> (we&#8217;ll update this later with the actual portal deployment URL)</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The Redirect URI is temporarily set to a placeholder because the actual portal URL won&#8217;t exist until after you deploy the Helm chart. We&#8217;ll come back and update this with the real deployment URL in a later step.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_1_4_save_and_capture_credentials"><a class="anchor" href="#_step_1_4_save_and_capture_credentials"></a>Step 1.4: Save and Capture Credentials</h3>
+<div class="paragraph">
+<p>Click the <strong>Create OAuth Application</strong> button.</p>
+</div>
+<div class="paragraph">
+<p>Once created, the system will display:
+* <strong>Client ID</strong> — copy this value and save it in a secure location (notepad, password manager, etc.)
+* <strong>Client Secret</strong> — this appears only once; copy and save it immediately</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>IMPORTANT:</strong> The Client Secret will never be displayed again. If you lose it, you&#8217;ll need to regenerate it. Save both values now before navigating away.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_task_2_enable_oauth_token_creation_for_external_users"><a class="anchor" href="#_task_2_enable_oauth_token_creation_for_external_users"></a>Task 2: Enable OAuth Token Creation for External Users</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In the AAP left sidebar, click <strong>Settings</strong></p>
+</li>
+<li>
+<p>Select <strong>Platform gateway</strong> from the submenu</p>
+</li>
+<li>
+<p>Look for the setting: <strong>Allow external users to create OAuth2 tokens</strong></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If the setting is not already enabled:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Click <strong>Edit platform gateway settings</strong></p>
+</li>
+<li>
+<p>Toggle <strong>Allow external users to create OAuth2 tokens</strong> to <strong>Enabled</strong></p>
+</li>
+<li>
+<p>Click <strong>Save platform gateway settings</strong></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Verify that the setting now shows as <strong>Enabled</strong> on the Platform gateway settings page.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This setting controls whether users logging in via external identity providers (LDAP, SAML, OAuth, etc.) can create OAuth2 tokens. The portal uses this capability for seamless authentication.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_task_3_generate_an_api_token_for_the_automation_portal"><a class="anchor" href="#_task_3_generate_an_api_token_for_the_automation_portal"></a>Task 3: Generate an API Token for the Automation Portal</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The API token is used by the Automation Portal to communicate with your AAP instance on a service-to-service basis. This token is what allows the portal to synchronize job templates, manage execution environments, and perform automation tasks.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the API <code><a href="https://&lt;aap-hostname&gt;/api/gateway/v1/tokens/" class="bare">https://&lt;aap-hostname&gt;/api/gateway/v1/tokens/</a></code>.</p>
+</li>
+<li>
+<p>Configure the Token according to the screen shot and POST the Request.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Fill in the following fields:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Description:</strong> <code>automation-portal-api-token</code> (descriptive name for your reference)</p>
+</li>
+<li>
+<p><strong>Application:</strong> Select the <strong>automation-portal</strong> OAuth application you created in Task 1</p>
+</li>
+<li>
+<p><strong>Scope:</strong> Select <strong>read</strong> (the portal needs read access to manage templates and execution environments)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Generate and Save the Token and as the system will display the generated token — copy it immediately and save it in a secure location alongside your Client ID and Client Secret from Task 1.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>IMPORTANT:</strong> Like the Client Secret, the API token is displayed only once. If you navigate away, you cannot retrieve it again without creating a new token.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Make a note of the three values you now have:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Client ID: <code><em><em></em><em></em></em><em>_</em></code></p>
+</li>
+<li>
+<p>Client Secret: <code><em><em></em><em></em></em><em>_</em></code></p>
+</li>
+<li>
+<p>API Token: <code><em><em></em><em></em></em><em>_</em></code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>These three values are critical for the next phase of setup.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_task_4_authenticate_with_your_openshift_cluster"><a class="anchor" href="#_task_4_authenticate_with_your_openshift_cluster"></a>Task 4: Authenticate with Your OpenShift Cluster</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now we shift focus to the OpenShift side of the setup. We need to connect to your OCP cluster using the CLI tool, which will be the gateway for creating the portal&#8217;s project and secrets.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Login to the bastion host using the credentials from the RHDP login page.</p>
+</li>
+<li>
+<p>Once login to bastion host then login to OCP cli using the command shared in <strong>OpenShift CLI Commands</strong> section on the RHDP login page :</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc login -u admin -p &lt;openshift-admin-password&gt;  https://api.cluster-kstzt.dyn.redhatworkshops.io:6443</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Run the following command, replacing <code>portal</code> with your preferred project name if you want a different project name(keep it lowercase with hyphens only, no underscores):</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-project portal</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Make sure your CLI context is set to the newly created project:</p>
+</li>
+</ol>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc project portal</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Build and Deploy the Plugin Registry</p>
+</li>
+<li>
+<p>Go to the <a href="https://access.redhat.com/downloads/content/480/ver=2.7/rhel---10/2.7/x86_64/product-software" target="_blank" rel="noopener">Installer</a> link and Get the installer link for <strong>Ansible automation portal Setup Bundle</strong>.</p>
+</li>
+<li>
+<p>Download the installer file to the VM:</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -O automation.tar.gz "&lt;paste-link-here taken from step 5&gt;"</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Extract the <strong>automation.tar.gz</strong> file using the following command:</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tar -xvf automation.tar.gz</code></pre>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Run the following commands to create the <code>plugin-registry</code> binary build, build the image using the dynamic plugin directory, and deploy the resulting image:</p>
+<div class="paragraph">
+<p>Where <code>$DYNAMIC_PLUGIN_ROOT_DIR</code> is the local directory containing the dynamic plugin files.</p>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export DYNAMIC_PLUGIN_ROOT_DIR=/home/lab-user</code></pre>
+</div>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-build httpd --name=plugin-registry --binary</code></pre>
+</div>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait</code></pre>
+</div>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-app --image-stream=plugin-registry</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Go to OpenShift Web Console, navigate to the <code>portal</code> project, and Then Workloads &#8594; Topology verify that the <code>plugin-registry</code> pod is running successfully.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_openshift_secrets_for_aap_authentication"><a class="anchor" href="#_create_openshift_secrets_for_aap_authentication"></a>Create OpenShift Secrets for AAP Authentication</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>OpenShift Secrets are secure, encrypted storage for sensitive data. We&#8217;ll create a secret that holds the OAuth credentials and API token you generated in Tasks 1 and 3. The Automation Portal Helm chart will reference this secret during deployment.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to  Workloads &gt; Secrets in the OpenShift console and make sure the project <code>portal</code> is selected. You should create the secret <code>secrets-rhaap-portal</code> with the below information. You can also create the secret using the <code>oc</code> command line tool.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Before running the secret creation command, gather the values from Tasks 1 and 3:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;aap-instance-url&gt;</code> — The URL of your AAP instance (e.g., <code><a href="https://aap.example.com" class="bare">https://aap.example.com</a></code>)</p>
+</li>
+<li>
+<p><code>&lt;oauth-client-id&gt;</code> — The Client ID from the previous task.</p>
+</li>
+<li>
+<p><code>&lt;oauth-client-secret&gt;</code> — The Client Secret from the previous task.</p>
+</li>
+<li>
+<p><code>&lt;aap-token&gt;</code> — The API Token from the previous task.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Run the following command, replacing the placeholders with your actual values:</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc create secret generic secrets-rhaap-portal \
+  --from-literal=aap-host-url="&lt;your-aap-url&gt;" \
+  --from-literal=oauth-client-id="your-client-id-here" \
+  --from-literal=oauth-client-secret="your-client-secret-here" \
+  --from-literal=aap-token="your-api-token-here" \
+  -n portal</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The secret name (<code>secrets-rhaap-portal</code>) is important—the Helm chart expects this exact name. If you change it, you&#8217;ll need to update your Helm values during deployment.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_verify_the_secret_was_created"><a class="anchor" href="#_verify_the_secret_was_created"></a>Verify the Secret Was Created</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Confirm the secret exists:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get secret secrets-rhaap-portal -n portal</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You should see output like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                    TYPE     DATA   AGE
+secrets-rhaap-portal    Opaque   4      10s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once the above is done. You&#8217;re now ready for the next phase: deploying the Automation Portal via Helm chart!</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="section4.html">Reducing UI Complexity through Admin-Defined Access Policies</a></span>
+  <span class="next"><a href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <img src="../../../_/img/rhl-logo-red.png" height="40px" alt="Red Hat"  href="https://redhat.com" >
+</footer><script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script defer src="../../../_/js/vendor/tabs.js"></script>
+<script defer src="../../../_/js/vendor/reading-time.js"></script>
+  </body>
+</html>

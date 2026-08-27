@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Defining custom pre-build and post-build steps :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <title>Utilizing the step-by-step wizard for custom EE creation :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="section2.html">
+    <link rel="next" href="section4.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -87,7 +89,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="section3.html">Utilizing the step-by-step wizard for custom EE creation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -173,7 +175,8 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="defining-custom-pre-build-and-post-build-steps.html">Defining custom pre-build and post-build steps</a></li>
+    <li><a href="section1.html">Visual Execution Environment Builder</a></li>
+    <li><a href="section3.html">Utilizing the step-by-step wizard for custom EE creation</a></li>
   </ul>
 </nav>
 </div>
@@ -182,129 +185,149 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Defining custom pre-build and post-build steps</h1>
-<h1 id="_defining_custom_pre_build_and_post_build_steps" class="sect0"><a class="anchor" href="#_defining_custom_pre_build_and_post_build_steps"></a>Defining Custom Pre-Build and Post-Build Steps</h1>
+<h1 class="page">Utilizing the step-by-step wizard for custom EE creation</h1>
+<h1 id="_utilizing_the_step_by_step_wizard_for_custom_ee_creation" class="sect0"><a class="anchor" href="#_utilizing_the_step_by_step_wizard_for_custom_ee_creation"></a>Utilizing the Step-by-Step Wizard for Custom EE Creation</h1>
 <div class="paragraph">
-<p>In the context of the Visual Execution Environment (EE) Builder, automation engineers often require specific system-level configurations that go beyond standard Ansible Content Collection or Python package dependencies. Custom build steps allow you to inject arbitrary commands into the container image build process, ensuring your Execution Environment meets specific organizational security, compliance, or tooling requirements.</p>
+<p>Creating Execution Environments (EEs) traditionally required manual management of <code>execution-environment.yml</code> files, complex dependency resolution, and deep knowledge of container build contexts. The Visual Execution Environment Builder within the Automation Portal abstracts this complexity, providing a guided, wizard-driven interface to ensure standardized, error-free images.</p>
 </div>
 <div class="sect1">
-<h2 id="_architectural_overview"><a class="anchor" href="#_architectural_overview"></a>Architectural Overview</h2>
+<h2 id="_overview_of_the_wizard_workflow"><a class="anchor" href="#_overview_of_the_wizard_workflow"></a>Overview of the Wizard Workflow</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Custom build steps are executed during the container build lifecycle, specifically interacting with the <code>ansible-builder</code> process under the hood. By utilizing the GUI-based Visual Builder, you can define these operations without manually editing <code>execution-environment.yml</code> files.</p>
+<p>The wizard workflow is designed to move from high-level intent to a concrete container definition. By leveraging Red Hat-supported presets, the wizard minimizes the "guesswork" involved in selecting base images and dependency formats.</p>
+</div>
+<div class="paragraph">
+<p>The process follows a logical progression:
+1. <strong>Definition Naming and Scoping:</strong> Defining the EE purpose and metadata.
+2. <strong>Base Image Selection:</strong> Choosing from Red Hat-optimized, pre-validated base images (e.g., <code>ee-minimal-rhel9</code>, <code>ee-supported-rhel9</code>).
+3. <strong>Dependency Injection:</strong> Declarative selection of Ansible Content Collections, Python packages (<code>requirements.txt</code>), and system-level libraries (<code>bindep.txt</code>).
+4. <strong>Build Customization:</strong> Defining pre-build and post-build shell commands to handle non-standard configuration tasks.
+5. <strong>Review and Validation:</strong> Real-time generation of the underlying YAML definition.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_integrating_presets_and_dependencies"><a class="anchor" href="#_integrating_presets_and_dependencies"></a>Integrating Presets and Dependencies</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The wizard leverages Red Hat domain-specific presets to ensure security and compliance. When you select a base image, the wizard automatically pulls the relevant metadata, preventing common version mismatches between the OS layer and the Ansible Automation Platform engine.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Pre-build steps:</strong> Executed before the installation of Python packages and Ansible Collections. These are ideal for configuring system repositories, installing OS-level development headers, or preparing the file system.</p>
+<p><strong>Ansible Content Collections:</strong> Users can search and select collections directly from the catalog. The wizard manages the <code>requirements.yml</code> structure, ensuring all dependencies are pinned correctly.</p>
 </li>
 <li>
-<p><strong>Post-build steps:</strong> Executed after the installation of dependencies. These are typically used for cleanup operations, generating metadata files (such as build timestamps or versioning logs), or running security scans/validations on the final image state.</p>
+<p><strong>System Libraries:</strong> Rather than manually crafting complex <code>Dockerfile</code> layers, users add system packages via a simple list interface, which the wizard translates into an optimized <code>bindep.txt</code> configuration.</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_configuring_build_steps_in_the_visual_builder"><a class="anchor" href="#_configuring_build_steps_in_the_visual_builder"></a>Configuring Build Steps in the Visual Builder</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Visual Builder provides an intuitive interface to insert these commands directly into the container definition.</p>
-</div>
-<div class="sect2">
-<h3 id="_best_practices_for_custom_steps"><a class="anchor" href="#_best_practices_for_custom_steps"></a>Best Practices for Custom Steps</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Idempotency:</strong> Ensure that your commands are idempotent and exit with a non-zero status code if a failure occurs to prevent the creation of broken container images.</p>
-</li>
-<li>
-<p><strong>Minimize Layers:</strong> Where possible, chain commands using <code>&amp;&amp;</code> to reduce the number of layers in the resulting container image, which optimizes image size and build speed.</p>
-</li>
-<li>
-<p><strong>Security:</strong> Avoid echoing sensitive credentials or environment variables in build steps, as these may be persisted in the container&#8217;s history.</p>
-</li>
-</ul>
-</div>
-<hr>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_hands_on_lab_defining_custom_build_steps"><a class="anchor" href="#_hands_on_lab_defining_custom_build_steps"></a>Hands-on Lab: Defining Custom Build Steps</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>In this exercise, you will inject custom metadata into your Execution Environment to track build provenance.</p>
-</div>
-<div class="sect2">
-<h3 id="_exercise_2_5_define_custom_build_steps_optional"><a class="anchor" href="#_exercise_2_5_define_custom_build_steps_optional"></a>Exercise 2.5: Define Custom Build Steps (Optional)</h3>
-<div class="admonitionblock important">
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-important" title="Important"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Ensure you have completed the prerequisite setup of your project workspace within the Visual EE Builder before beginning this task.</p>
+<p>The EE definition workflow generates a reusable Backstage software template (e.g., <code>&lt;ee-name&gt;-template.yaml</code>). This allows organizations to move from one-off EE creation to a "Golden Image" catalog, where team members can provision standardized environments based on pre-approved templates.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hands_on_lab_reviewing_the_generated_definition"><a class="anchor" href="#_hands_on_lab_reviewing_the_generated_definition"></a>Hands-on Lab: Reviewing the Generated Definition</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this exercise, we will examine the output of the EE Builder to understand how the GUI translates user input into machine-readable automation code.</p>
+</div>
+<div class="sect2">
+<h3 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Access to the Automation Portal on OpenShift.</p>
+</li>
+<li>
+<p>An active session within the Visual EE Builder wizard.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_steps"><a class="anchor" href="#_steps"></a>Steps</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Navigate to the Build Steps screen:</strong>
-In the Visual Builder wizard, progress to the "Custom Build Steps" configuration screen.</p>
+<p><strong>Navigate to the Review Screen</strong>
+Complete the input fields for your desired EE (Base image, collections, and dependencies). Proceed to the final step of the wizard labeled "Review."</p>
 </li>
 <li>
-<p><strong>Define the Post-Build command:</strong>
-Locate the input field for "Post-build commands." Enter the following command to create a build information file:</p>
-<div class="literalblock">
-<div class="content">
-<pre>[source,bash]
-----
-RUN echo "Network Automation EE - Built $(date)" &gt; /etc/ee-build-info
-----</pre>
-</div>
+<p><strong>Examine the Generated YAML</strong>
+Observe the auto-generated YAML manifest. Verify the following:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Base image:</strong> Confirm it matches the selected RHEL-based image.</p>
+</li>
+<li>
+<p><strong>Dependency declarations:</strong> Check that your selected collections and Python packages are accurately represented in the <code>dependencies</code> block.</p>
+</li>
+<li>
+<p><strong>Syntax integrity:</strong> Note the automatic handling of indentation and list structure, which prevents common "whitespace" errors associated with manual YAML authoring.</p>
+</li>
+</ul>
 </div>
 </li>
 <li>
-<p><strong>Validate the definition:</strong>
-Observe the definition preview window. The builder will automatically format the command for inclusion in the underlying build definition files.</p>
+<p><strong>Comparative Analysis</strong>
+Compare this generated YAML with a manual <code>execution-environment.yml</code> file.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Self-Reflect:</strong> How did the wizard handle the collection source references?</p>
 </li>
 <li>
-<p><strong>Verification:</strong>
-Click <strong>Next</strong> to save your configuration. Once the image build completes, you can verify the existence of the file by running:</p>
-<div class="literalblock">
-<div class="content">
-<pre>[source,bash]
-----
-podman run --rm &lt;your-ee-image-name&gt; cat /etc/ee-build-info
-----</pre>
+<p><strong>Observation:</strong> The wizard effectively handles the mapping of external Galaxy/Automation Hub URLs, abstracting the need for manual URL management.</p>
+</li>
+</ul>
 </div>
-</div>
+</li>
+<li>
+<p><strong>Prepare for Publication</strong>
+[IMPORTANT]
+Ensure your configuration is correct, but <strong>do not click "Publish" yet</strong>. In the next lab section, we will integrate this definition with Git and trigger the automated CI pipeline.</p>
 </li>
 </ol>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>If your build fails at the custom step, review the build logs in the Automation Portal interface. The logs capture <code>stdout</code> and <code>stderr</code> from your custom commands, providing immediate troubleshooting feedback.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_best_practices_for_wizard_usage"><a class="anchor" href="#_best_practices_for_wizard_usage"></a>Best Practices for Wizard Usage</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Use Version Pinning:</strong> Always specify versions for collections and Python packages within the wizard to ensure reproducible builds.</p>
+</li>
+<li>
+<p><strong>Leverage Post-Build Steps:</strong> Use the post-build section for cleanup tasks or custom environment variable injection rather than manual Dockerfile modifications.</p>
+</li>
+<li>
+<p><strong>Catalog Early:</strong> Once your EE definition is stable, export the generated Backstage template to your private catalog to enable self-service consumption by other developers.</p>
+</li>
+</ul>
 </div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a></span>
+  <span class="next"><a href="section4.html">Integrating Red Hat domain-specific presets and base container images</a></span>
+</nav>
 </article>
   </div>
 </main>

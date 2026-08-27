@@ -1,6 +1,6 @@
 {
-  "totalSeconds": 2588,
-  "pageCount": 24,
+  "totalSeconds": 2439,
+  "pageCount": 23,
   "pages": [
     {
       "module": "ROOT",
@@ -14,107 +14,102 @@
     },
     {
       "module": "automation-portal",
-      "page": "automation-portal.adoc",
+      "page": "section1.adoc",
       "seconds": 41
     },
     {
       "module": "automation-portal",
-      "page": "overview-and-architectural-benefits-of-the-automation-portal.adoc",
+      "page": "section2.adoc",
       "seconds": 153
     },
     {
       "module": "automation-portal",
-      "page": "managing-rbac-based-navigation-menus-for-user-role-separation.adoc",
+      "page": "section3.adoc",
       "seconds": 149
     },
     {
       "module": "automation-portal",
-      "page": "reducing-ui-complexity-through-admin-defined-access-policies.adoc",
+      "page": "section4.adoc",
       "seconds": 151
     },
     {
       "module": "automation-portal",
-      "page": "hands-on-setup-deploying-automation-portal-prerequisites.adoc",
+      "page": "section5.adoc",
       "seconds": 69
     },
     {
       "module": "automation-portal",
-      "page": "hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc",
-      "seconds": 55
+      "page": "section6.adoc",
+      "seconds": 21
     },
     {
       "module": "visual-execution-environment-builder",
-      "page": "visual-execution-environment-builder.adoc",
-      "seconds": 42
+      "page": "section1.adoc",
+      "seconds": 41
     },
     {
       "module": "visual-execution-environment-builder",
-      "page": "architecture-and-transition-from-manual-cli-workflows-to-gui-based-building.adoc",
-      "seconds": 157
+      "page": "section2.adoc",
+      "seconds": 152
     },
     {
       "module": "visual-execution-environment-builder",
-      "page": "utilizing-the-step-by-step-wizard-for-custom-ee-creation.adoc",
+      "page": "section3.adoc",
       "seconds": 156
     },
     {
       "module": "visual-execution-environment-builder",
-      "page": "integrating-red-hat-domain-specific-presets-and-base-container-images.adoc",
+      "page": "section4.adoc",
       "seconds": 147
     },
     {
       "module": "visual-execution-environment-builder",
-      "page": "managing-dependencies-ansible-content-collections-python-packages-and-system-libraries.adoc",
+      "page": "section5.adoc",
       "seconds": 143
     },
     {
       "module": "visual-execution-environment-builder",
-      "page": "defining-custom-pre-build-and-post-build-steps.adoc",
-      "seconds": 107
-    },
-    {
-      "module": "visual-execution-environment-builder",
-      "page": "publishing-definitions-to-git-and-automating-ci-pipelines-with-github-actions.adoc",
+      "page": "section6.adoc",
       "seconds": 137
     },
     {
       "module": "visual-execution-environment-builder",
-      "page": "importing-and-managing-reusable-backstage-software-templates.adoc",
+      "page": "section7.adoc",
       "seconds": 108
     },
     {
       "module": "visual-execution-environment-builder",
-      "page": "hands-on-lab-on-syncing-content-sources-and-cataloging-collections-and-building-a-custom-execution-environment-using-the-visual-builder.adoc",
+      "page": "section8.adoc",
       "seconds": 147
     },
     {
       "module": "visual-execution-environment-builder",
-      "page": "hands-on-lab-deploying-a-scaffolded-ci-pipeline-for-automated-container-image-builds.adoc",
+      "page": "section9.adoc",
       "seconds": 142
     },
     {
       "module": "centralized-content-discovery",
-      "page": "centralized-content-discovery.adoc",
+      "page": "section1.adoc",
       "seconds": 31
     },
     {
       "module": "centralized-content-discovery",
-      "page": "unified-catalog-architecture-for-multi-source-aggregation.adoc",
-      "seconds": 159
+      "page": "section2.adoc",
+      "seconds": 157
     },
     {
       "module": "centralized-content-discovery",
-      "page": "configuring-supported-sources-including-github-gitlab-and-private-automation-hub.adoc",
+      "page": "section3.adoc",
       "seconds": 116
     },
     {
       "module": "centralized-content-discovery",
-      "page": "implementing-continuous-synchronization-and-scheduling.adoc",
+      "page": "section4.adoc",
       "seconds": 147
     },
     {
       "module": "centralized-content-discovery",
-      "page": "workflow-for-browse-before-build-and-tracing-existing-automation-assets.adoc",
+      "page": "section5.adoc",
       "seconds": 158
     },
     {

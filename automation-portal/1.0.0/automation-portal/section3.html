@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Configuring EE Builder via Helm charts :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <title>Managing RBAC-based Navigation Menus for User Role Separation :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="section2.html">
+    <link rel="next" href="section4.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -62,7 +64,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section2.html">Automation Portal: Installation Overview with Architectural Benefits</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="section3.html">Managing RBAC-based Navigation Menus for User Role Separation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -173,7 +175,8 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="configuring-ee-builder-via-helm-charts.html">Configuring EE Builder via Helm charts</a></li>
+    <li><a href="section1.html">Automation Portal</a></li>
+    <li><a href="section3.html">Managing RBAC-based Navigation Menus for User Role Separation</a></li>
   </ul>
 </nav>
 </div>
@@ -182,108 +185,144 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Configuring EE Builder via Helm charts</h1>
-<h1 id="_configuring_ee_builder_via_helm_charts" class="sect0"><a class="anchor" href="#_configuring_ee_builder_via_helm_charts"></a>Configuring EE Builder via Helm Charts</h1>
-<div class="paragraph">
-<p>The Execution Environment (EE) Builder is a core component of the Ansible Automation Platform 2.7 Automation Portal. It abstracts the complexities of <code>ansible-builder</code> by providing a GUI-driven workflow for container image creation. To enable this functionality within an OpenShift Container Platform (OCP) environment, administrators must configure the Automation Portal via its Helm chart (or the associated Operator Custom Resource).</p>
-</div>
-<div class="sect1">
-<h2 id="_architectural_overview"><a class="anchor" href="#_architectural_overview"></a>Architectural Overview</h2>
+<h1 class="page">Managing RBAC-based Navigation Menus for User Role Separation</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>The EE Builder relies on the integration between the Automation Portal and the underlying OpenShift container registry and build pipelines. By configuring the Helm chart, you define the infrastructure necessary to:
-*   Provision the builder service.
-*   Define the OCI (Open Container Initiative) delivery mode for image management.
-*   Establish the trust and synchronization between the Portal and your automation content sources.</p>
+<p>In modern enterprise automation, "platform sprawl" is a significant hurdle. When users are presented with a cluttered interface containing tools they don&#8217;t need—such as Execution Environment (EE) builders or Git repository management—it increases cognitive load and introduces potential security risks.</p>
+</div>
+<div class="paragraph">
+<p>The Automation Portal addresses this by providing <strong>RBAC-based navigation menus</strong>, allowing platform architects to tailor the UI experience based on the user&#8217;s specific role.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Related Pages:</strong>
+This page focuses on controlling which menu items are visible. For more information on API-level permissions and access control, see <a href="#reducing-ui-complexity-through-admin-defined-access-policies.adoc" class="xref unresolved">reducing-ui-complexity-through-admin-defined-access-policies.adoc</a>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration_prerequisites"><a class="anchor" href="#_configuration_prerequisites"></a>Configuration Prerequisites</h2>
+<h2 id="_architectural_concept"><a class="anchor" href="#_architectural_concept"></a>Architectural Concept</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Before modifying your Helm chart configuration, ensure the following:
-*   <strong>OpenShift Cluster Access:</strong> Cluster-admin privileges to modify the Automation Platform Operator instance.
-*   <strong>Helm Access:</strong> Access to the deployment manifest (or the <code>AutomationPlatform</code> Custom Resource YAML if utilizing the Operator).
-*   <strong>Namespace/Project:</strong> Ensure you are working within the namespace where the Automation Portal is deployed.</p>
+<p>By tying navigation visibility to RBAC (Role-Based Access Control) groups, administrators can enforce a "least privilege" visual experience. This ensures that:
+* <strong>End Users:</strong> Interact only with the automation services they need (Job Templates and History), reducing complexity.
+* <strong>Platform Engineers:</strong> Retain full visibility and administrative control over the underlying infrastructure, including EE definitions, content discovery, and synchronization settings.</p>
 </div>
+<hr>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration_procedure"><a class="anchor" href="#_configuration_procedure"></a>Configuration Procedure</h2>
+<h2 id="_hands_on_lab_configuring_menu_visibility"><a class="anchor" href="#_hands_on_lab_configuring_menu_visibility"></a>Hands-On Lab: Configuring Menu Visibility</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To enable the EE Builder, you must edit the <code>AutomationPlatform</code> custom resource. Follow these steps:</p>
+<p>This lab demonstrates how to restrict the UI for standard operational teams while granting full access to the Platform Engineering group.</p>
+</div>
+<div class="sect2">
+<h3 id="_exercise_4_1_review_current_navigation_visibility"><a class="anchor" href="#_exercise_4_1_review_current_navigation_visibility"></a>Exercise 4.1: Review Current Navigation Visibility</h3>
+<div class="paragraph">
+<p>Before applying constraints, observe the default behavior of the portal.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Access the Portal Configuration</strong>
-Navigate to the OpenShift Web Console, select the project where AAP is installed, and edit the <code>AutomationPlatform</code> custom resource YAML.</p>
+<p>Log in to the Automation Portal as a user with <code>admin</code> privileges.</p>
 </li>
 <li>
-<p><strong>Define the EE Builder Block</strong>
-Locate the <code>spec</code> section. You must ensure the <code>ee_builder</code> block is defined. Replace any placeholder URLs (e.g., <code>apps.example.com</code>) with your actual ingress domain.</p>
+<p>Observe the sidebar; verify that all sections (Templates, History, EE Definitions, Collections, Git Repositories, Administration) are visible.</p>
 </li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">spec:
-  ee_builder:
-    enabled: true
-    # Configure the delivery mode for OCI-compliant images
-    pluginMode: "oci"
-    imageTagInfo: "latest"
-  # Set the AAP organization for content synchronization
-  sync:
-    organization: "Default"</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
 <li>
-<p><strong>Configure Red Hat Developer Hub Integration (Optional)</strong>
-If you are utilizing the Visual Builder’s integration with Red Hat Developer Hub for templating, ensure the global configuration is set to OCI mode:</p>
+<p>Log out and log in as a standard user (e.g., <code>clouduser1</code>).</p>
 </li>
-</ol>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">redhat-developer-hub:
-  global:
-    pluginMode: "oci"
-    imageTagInfo: "1.2.0" # Use the appropriate plugin version</code></pre>
-</div>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
 <li>
-<p><strong>Apply Changes</strong>
-Save the YAML. The Operator will reconcile the state, rollout the necessary pods for the EE Builder, and expose the "EE Definitions" menu in the Automation Portal navigation pane.</p>
+<p><strong>Verification:</strong> Note that by default, standard users may see the entire menu structure, even if they lack the underlying permissions to perform tasks within those sections.</p>
 </li>
 </ol>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_exercise_4_2_configure_navigation_menu_rbac"><a class="anchor" href="#_exercise_4_2_configure_navigation_menu_rbac"></a>Exercise 4.2: Configure Navigation Menu RBAC</h3>
 <div class="paragraph">
-<p>Once the operator has finished the rollout, verify the installation:</p>
+<p>In this step, we map specific navigation items to user groups to clean up the UI.</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Log in</strong> to the portal as an <code>admin</code>.</p>
+</li>
+<li>
+<p>Navigate to <strong>Administration &gt; RBAC &gt; Navigation Visibility</strong>.</p>
+</li>
+<li>
+<p><strong>Configure End-User Access:</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Navigation Check:</strong> Refresh your browser. The "EE Definitions" tab should now be visible in the left-hand navigation menu of the Automation Portal.</p>
+<p>Select the groups: <code>cloud-team</code>, <code>network-team</code>, and <code>rhel-team</code>.</p>
 </li>
 <li>
-<p><strong>Pod Status:</strong> Execute <code>oc get pods -n &lt;your-namespace&gt;</code> and confirm that the builder-related pods are in the <code>Running</code> state.</p>
+<p>Enable visibility for the following items only:</p>
 </li>
 <li>
-<p><strong>Service Readiness:</strong> Open the Automation Portal and click on "EE Definitions." If the UI loads without errors, the Helm configuration is successfully applied.</p>
+<p><code>[x]</code> Templates</p>
+</li>
+<li>
+<p><code>[x]</code> History</p>
+</li>
+<li>
+<p>Ensure all other items (EE Definitions, Collections, Git Repositories, Synchronization) remain unchecked.</p>
 </li>
 </ul>
+</div>
+</li>
+<li>
+<p><strong>Configure Platform Engineering Access:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Select the <code>platform-team</code> group.</p>
+</li>
+<li>
+<p>Ensure all navigation items are checked, providing full access to administrative functions.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Save</strong> the changes.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercise_4_3_verification"><a class="anchor" href="#_exercise_4_3_verification"></a>Exercise 4.3: Verification</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log out as <code>admin</code>.</p>
+</li>
+<li>
+<p>Log in as a user who is a member of the <code>cloud-team</code>.</p>
+</li>
+<li>
+<p><strong>Result:</strong> The sidebar should now dynamically hide the advanced development and administration features, displaying only <strong>Templates</strong> and <strong>History</strong>.</p>
+</li>
+<li>
+<p>Log out and log in as a member of the <code>platform-team</code> to verify that all administrative menus are fully accessible.</p>
+</li>
+</ol>
+</div>
+<hr>
 </div>
 </div>
 </div>
@@ -293,18 +332,22 @@ Save the YAML. The Operator will reconcile the state, rollout the necessary pods
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Helm Validation Failures:</strong> If the deployment fails, verify that all placeholder strings (such as <code>apps.example.com</code>) have been replaced. Helm charts often include regex validations that will reject default template strings.</p>
+<p><strong>Cache Persistence:</strong> If navigation items remain visible after updating permissions, ensure you refresh your browser cache or initiate a hard reload.</p>
 </li>
 <li>
-<p><strong>Permission Denied:</strong> Ensure the ServiceAccount associated with the EE Builder has the necessary <code>image-puller</code> and <code>image-pusher</code> roles within the OpenShift namespace.</p>
+<p><strong>Group Membership:</strong> If a user cannot see the expected menus, verify they are correctly assigned to the intended group in the Identity Provider (IdP) or the local portal user database.</p>
 </li>
 <li>
-<p><strong>Sync Errors:</strong> If the "Content Discovery" catalog is empty, re-verify the <code>sync.organization</code> setting in your Helm chart to match the organization defined in your Automation Controller.</p>
+<p><strong>Overlapping Roles:</strong> If a user belongs to multiple groups (e.g., they are a member of both <code>cloud-team</code> and <code>platform-team</code>), the system will aggregate the permissions, granting them the union of all visible menus. Ensure user assignments are strictly managed.</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
+<nav class="pagination">
+  <span class="prev"><a href="section2.html">Automation Portal: Installation Overview with Architectural Benefits</a></span>
+  <span class="next"><a href="section4.html">Reducing UI Complexity through Admin-Defined Access Policies</a></span>
+</nav>
 </article>
   </div>
 </main>
