@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Overview and architectural benefits of the Automation Portal :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <title>Automation Portal: Installation Overview with Architectural Benefits :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
     <link rel="prev" href="automation-portal.html">
-    <link rel="next" href="platform-requirements-and-installation-on-openshift-container-platform.html">
+    <link rel="next" href="managing-rbac-based-navigation-menus-for-user-role-separation.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -62,10 +62,7 @@
     <a class="nav-link" href="automation-portal.html">Automation Portal</a>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="overview-and-architectural-benefits-of-the-automation-portal.html">Overview and architectural benefits of the Automation Portal</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="platform-requirements-and-installation-on-openshift-container-platform.html">Platform Requirements and Installation on OpenShift Container Platform</a>
+    <a class="nav-link" href="overview-and-architectural-benefits-of-the-automation-portal.html">Automation Portal: Installation Overview with Architectural Benefits</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="managing-rbac-based-navigation-menus-for-user-role-separation.html">Managing RBAC-based Navigation Menus for User Role Separation</a>
@@ -179,7 +176,7 @@
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
     <li><a href="automation-portal.html">Automation Portal</a></li>
-    <li><a href="overview-and-architectural-benefits-of-the-automation-portal.html">Overview and architectural benefits of the Automation Portal</a></li>
+    <li><a href="overview-and-architectural-benefits-of-the-automation-portal.html">Automation Portal: Installation Overview with Architectural Benefits</a></li>
   </ul>
 </nav>
 </div>
@@ -188,10 +185,13 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Overview and architectural benefits of the Automation Portal</h1>
-<h1 id="_automation_portal_overview_and_architectural_benefits" class="sect0"><a class="anchor" href="#_automation_portal_overview_and_architectural_benefits"></a>Automation Portal: Overview and Architectural Benefits</h1>
+<h1 class="page">Automation Portal: Installation Overview with Architectural Benefits</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>The Automation Portal in Ansible Automation Platform (AAP) 2.7 represents a significant evolution in the platform&#8217;s architecture. Transitioning from a simple, self-service job launcher, the portal has matured into a comprehensive <strong>Developer Productivity Surface</strong>. It centralizes the lifecycle of automation—from discovery and development to execution—within a single, unified interface.</p>
+<p>The Automation Portal with Ansible Automation Platform provides a centralized interface for managing automation workflows, visual environment building, and content discovery. When deploying on OpenShift Container Platform (OCP), the Automation Portal leverages the Kubernetes-native architecture to ensure scalability, high availability, and seamless integration with existing AAP controller components.</p>
+</div>
+</div>
 </div>
 <div class="sect1">
 <h2 id="_the_evolution_of_the_portal"><a class="anchor" href="#_the_evolution_of_the_portal"></a>The Evolution of the Portal</h2>
@@ -200,7 +200,7 @@
 <p>In previous iterations, such as AAP 2.6, the portal functioned primarily as an execution layer. Users navigated to the interface, identified authorized job templates, populated surveys, and triggered automation.</p>
 </div>
 <div class="paragraph">
-<p>AAP 2.7 expands this scope to support three primary pillars:
+<p>Automation Portal 2.7 expands this scope to support three primary pillars:
 *   <strong>Visual Execution Environment (EE) Builder:</strong> A GUI-driven workflow for container image creation.
 *   <strong>Centralized Content Discovery:</strong> A unified catalog that aggregates automation assets from multiple sources.
 *   <strong>Platform-wide Governance:</strong> Enhanced RBAC controls, administrative navigation policies, and AI-assisted operational workflows.</p>
@@ -238,66 +238,83 @@
 <div class="paragraph">
 <p>With the inclusion of an MCP (Model Context Protocol) server, the portal is architected to support AI-assisted operations. This allows for natural language interaction with the platform, enabling users to query automation status or trigger workflows through supported AI clients, further lowering the barrier to entry for non-technical stakeholders.</p>
 </div>
+<div class="paragraph">
+<p>By consolidating these functions, Automation portal reduces the operational overhead associated with maintaining disparate build tools and content repositories, ensuring that automation scaling remains consistent with enterprise security and governance policies.</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_summary_of_architectural_shift"><a class="anchor" href="#_summary_of_architectural_shift"></a>Summary of Architectural Shift</h2>
+<h2 id="_prerequisites_and_requirements"><a class="anchor" href="#_prerequisites_and_requirements"></a>Prerequisites and Requirements</h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 66.6667%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Feature</th>
-<th class="tableblock halign-left valign-top">AAP 2.6 Architecture</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">AAP 2.7 Architecture</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Primary Focus</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Job Execution</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Full Automation Lifecycle</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>EE Creation</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Manual CLI Workflows</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Visual Wizard / GUI-based</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>User Interface</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Fixed Navigation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Dynamic/RBAC-Based Menus</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Content Sourcing</strong></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Isolated Sources</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Unified Catalog Aggregation</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>AI Integration</strong></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Native MCP Server Support</p></td>
-</tr>
-</tbody>
-</table>
 <div class="paragraph">
-<p>By consolidating these functions, AAP 2.7 reduces the operational overhead associated with maintaining disparate build tools and content repositories, ensuring that automation scaling remains consistent with enterprise security and governance policies.</p>
+<p>Before initiating the deployment, ensure your environment meets the following technical requirements:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Platform Subscription:</strong> Valid Red Hat Ansible Automation Platform subscription.</p>
+</li>
+<li>
+<p><strong>Existing AAP Infrastructure:</strong> An active instance of AAP 2.6+ to facilitate authentication and integration.</p>
+</li>
+<li>
+<p><strong>OpenShift Environment:</strong> Access to an OpenShift Container Platform cluster (version 4.12–4.17+).</p>
+</li>
+<li>
+<p><strong>Permissions:</strong> Cluster-level permissions to create OAuth applications within the target project.</p>
+</li>
+<li>
+<p><strong>CLI Tools:</strong></p>
+</li>
+<li>
+<p><code>oc</code> CLI tool for OpenShift management.</p>
+</li>
+<li>
+<p><code>helm</code> (version 3.10 or newer) for package deployment.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_installation_overview"><a class="anchor" href="#_installation_overview"></a>Installation Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The official deployment method uses <strong>Helm charts</strong> on OpenShift Container Platform. The Helm chart automates the deployment of the Automation Portal, handling networking, storage, and integration with your AAP instance.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><strong>Two-Phase Installation Process:</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Phase 1 - Prerequisites:</strong> Complete <a href="hands-on-setup-deploying-automation-portal-prerequisites.html" class="xref page">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a> to set up OAuth, API tokens, and OpenShift secrets.</p>
+</li>
+<li>
+<p><strong>Phase 2 - Deployment:</strong> Deploy the Helm chart using <a href="hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.html" class="xref page">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Both phases are required for a successful installation.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="automation-portal.html">Automation Portal</a></span>
-  <span class="next"><a href="platform-requirements-and-installation-on-openshift-container-platform.html">Platform Requirements and Installation on OpenShift Container Platform</a></span>
+  <span class="next"><a href="managing-rbac-based-navigation-menus-for-user-role-separation.html">Managing RBAC-based Navigation Menus for User Role Separation</a></span>
 </nav>
 </article>
   </div>

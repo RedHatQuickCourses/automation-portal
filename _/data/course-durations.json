@@ -1,6 +1,6 @@
 {
-  "totalSeconds": 2697,
-  "pageCount": 25,
+  "totalSeconds": 2576,
+  "pageCount": 24,
   "pages": [
     {
       "module": "ROOT",
@@ -20,12 +20,7 @@
     {
       "module": "automation-portal",
       "page": "overview-and-architectural-benefits-of-the-automation-portal.adoc",
-      "seconds": 128
-    },
-    {
-      "module": "automation-portal",
-      "page": "platform-requirements-and-installation-on-openshift-container-platform.adoc",
-      "seconds": 146
+      "seconds": 153
     },
     {
       "module": "automation-portal",
