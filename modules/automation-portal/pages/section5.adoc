@@ -21,10 +21,19 @@ The OAuth application is how the Automation Portal will authenticate users again
 === Step 1.1: Log in to AAP
 
 . Login to the Openshift Cluster got to Network -> Routes. 
+
 . Select the project as aap and open your Ansible Automation Platform instance in a web browser. 
++
+image::5.1.png[]
+
 . Go to Workload -> Secrets -> aap-admin-password and use the administrator credentials provided to you.
++
+image::5.2.png[]
++
+image::5.3.png[]
 
 Open your Ansible Automation Platform instance in a web browser and log in as an administrator.
+
 
 [source,bash]
 ----
@@ -49,6 +58,8 @@ Fill in the following fields with these exact values:
 * *Authorization grant type:* Select **Authorization code**
 * *Client type:* Select **Confidential**
 * *Redirect URIs:* Enter a placeholder URL for now: `https://example.com/api/auth/rhaap/handler/frame` (we'll update this later with the actual portal deployment URL)
++
+image::5.4.png[]
 
 [NOTE]
 ====
@@ -62,6 +73,8 @@ Click the **Create OAuth Application** button.
 Once created, the system will display:
 * **Client ID** — copy this value and save it in a secure location (notepad, password manager, etc.)
 * **Client Secret** — this appears only once; copy and save it immediately
++
+image::5.5.png[]
 
 [WARNING]
 ====
@@ -69,6 +82,8 @@ Once created, the system will display:
 ====
 
 == Task 2: Enable OAuth Token Creation for External Users
+
+The Below steps will be only needed if you are using an external identity provider (LDAP, SAML, OAuth, etc.) for user authentication. If your users are logging in directly with AAP credentials, you can skip this step for this lab. 
 
 1. In the AAP left sidebar, click **Settings**
 2. Select **Platform gateway** from the submenu
@@ -82,16 +97,13 @@ If the setting is not already enabled:
 
 Verify that the setting now shows as **Enabled** on the Platform gateway settings page.
 
-[TIP]
-====
-This setting controls whether users logging in via external identity providers (LDAP, SAML, OAuth, etc.) can create OAuth2 tokens. The portal uses this capability for seamless authentication.
-====
-
 == Task 3: Generate an API Token for the Automation Portal
 
 The API token is used by the Automation Portal to communicate with your AAP instance on a service-to-service basis. This token is what allows the portal to synchronize job templates, manage execution environments, and perform automation tasks.
 
 . Go to the API `https://<aap-hostname>/api/gateway/v1/tokens/`. 
++
+image::5.6.png[]
 
 .  Configure the Token according to the screen shot and POST the Request.
 
@@ -100,6 +112,8 @@ Fill in the following fields:
 * *Description:* `automation-portal-api-token` (descriptive name for your reference)
 * *Application:* Select the **automation-portal** OAuth application you created in Task 1
 * *Scope:* Select **read** (the portal needs read access to manage templates and execution environments)
++
+image::5.7.png[]
 
 Generate and Save the Token and as the system will display the generated token — copy it immediately and save it in a secure location alongside your Client ID and Client Secret from Task 1.
 
@@ -122,12 +136,14 @@ Now we shift focus to the OpenShift side of the setup. We need to connect to you
 
 . Login to the bastion host using the credentials from the RHDP login page. 
 
-. Once login to bastion host then login to OCP cli using the command shared in *OpenShift CLI Commands* section on the RHDP login page :
+. Once login to bastion host then login to OCP cli using the command shared in *OpenShift CLI Commands* section on the RHDP login page:
 
 [source,bash,role=execute]
 ----
 oc login -u admin -p <openshift-admin-password>  https://api.cluster-kstzt.dyn.redhatworkshops.io:6443
 ----
+
+image::5.8.png[]
 
 . Run the following command, replacing `portal` with your preferred project name if you want a different project name(keep it lowercase with hyphens only, no underscores):
 
@@ -146,12 +162,14 @@ oc project portal
 . Build and Deploy the Plugin Registry
 
 . Go to the https://access.redhat.com/downloads/content/480/ver=2.7/rhel---10/2.7/x86_64/product-software[Installer,window=_blank] link and Get the installer link for *Ansible automation portal Setup Bundle*. 
++
+image::5.9.png[]
 
 . Download the installer file to the VM: 
 + 
 [source,bash,role=execute]
 ---- 
-wget -O automation.tar.gz "<paste-link-here taken from step 5>"
+wget -O automation.tar.gz "<paste-link-here taken from above 5>"
 ----
 
 . Extract the *automation.tar.gz* file using the following command:
@@ -192,8 +210,14 @@ oc new-app --image-stream=plugin-registry
 OpenShift Secrets are secure, encrypted storage for sensitive data. We'll create a secret that holds the OAuth credentials and API token you generated in Tasks 1 and 3. The Automation Portal Helm chart will reference this secret during deployment.
 
 . Go to  Workloads > Secrets in the OpenShift console and make sure the project `portal` is selected. You should create the secret `secrets-rhaap-portal` with the below information. You can also create the secret using the `oc` command line tool.
++
+image::5.10.png[]
++
+image::5.11.png[]
 
-Before running the secret creation command, gather the values from Tasks 1 and 3:
+OR 
+
+You can also run the secret creation command, gather the values from Tasks 1 and 3:
 
 * `<aap-instance-url>` — The URL of your AAP instance (e.g., `https://aap.example.com`)
 * `<oauth-client-id>` — The Client ID from the previous task.

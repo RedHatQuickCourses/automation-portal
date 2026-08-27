@@ -5,11 +5,21 @@ In this lab, you will deploy the Automation Portal on your OpenShift Container P
 == Installing the Automation Portal
 
 . Go to Ecosystem > Software Catalog in the OpenShift web console.
-
 . Search for "Automation Portal" in the catalog and select it.
++
+image::6.1.png[]
+
 .. Click on *Create* to start the installation process.
++
+image::6.2.png[]
+
 .. Change the Release Name to `automation-portal` and you can change it if you want. 
 .. Change the *clusterRouterBase* to the correct value for your cluster. For example, if the OCP cluster url is `https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io` then the clusterRouterBase should be `apps.cluster-kstzt.dyn.redhatworkshops.io`.
++
+image::6.4.png[]
++
+image::6.3.png[]
+
 
 .. By default, it will be setting up at the Organization *Default* for the automaton portal the parameter is orgs if you wanted to change it.
 
@@ -23,6 +33,8 @@ The installation process will take a few minutes. You can monitor the progress W
 . Go to Workloads > Topology in the portal project. Once the installation is complete, you will see the Automation Portal components running.
 
 . Click on *automation-portal-rhaap-portal* resource to view the details. You will find the route URL in the *Routes* section. This URL is used to access the Automation Portal web interface.
++
+image::6.5.png[]
 
 . Copy the route URL and go to Ansible Automation Platform > Access Management > OAuth Applications.
 
@@ -33,11 +45,23 @@ The installation process will take a few minutes. You can monitor the progress W
 https://<aap-portal-hostname>/api/auth/rhaap/handler/frame
 ----
 
+image::6.6.png[]
+
 . Access the Web UI of the Automation portal and click on the *Login with Ansible Automation Platform* button. You will be redirected to the AAP login page. Enter your AAP credentials to log in.
++
+image::6.7.png[]
 
 . Once logged in, you need to provide the necessary permissions. click authorize and you will see the Automation Portal dashboard.
++
+image::6.8.png[]
 
 . Click on the Demo Job Template and click on *Launch* to execute the job. You will see the job execution status and output. 
++
+image::6.9.png[]
++
+image::6.10.png[]
+
+
 
 This is All about setting up the Automation Portal on OCP and verifying its functionality. You can now explore the features of the Automation Portal like RBAC Control and the execution of job templates and workflows via specific users. 
 
