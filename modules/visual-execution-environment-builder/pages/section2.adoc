@@ -1,8 +1,6 @@
-#  Architecture and transition from manual CLI workflows to GUI-based building
-
 = Architecture and Transition from Manual CLI Workflows to GUI-Based Building
 
-In Ansible Automation Platform (AAP) 2.7, the shift from manual command-line interface (CLI) workflows to the Visual Execution Environment (EE) Builder represents a fundamental change in how platform engineers manage automation dependencies. This transition prioritizes repeatability, governance, and user accessibility by abstracting the complexities of container image construction.
+The shift from manual command-line interface (CLI) workflows to the Visual Execution Environment (EE) Builder represents a fundamental change in how platform engineers manage automation dependencies. This transition prioritizes repeatability, governance, and user accessibility by abstracting the complexities of container image construction.
 
 == The Architectural Shift
 

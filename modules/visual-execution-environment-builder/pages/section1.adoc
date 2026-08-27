@@ -1,5 +1,3 @@
-#  Visual Execution Environment Builder
-
 = Visual Execution Environment Builder
 
 The Visual Execution Environment (EE) Builder is a GUI-based tool that simplifies the creation of portable, reproducible automation runtime images. It replaces complex CLI-based workflows by providing a guided interface to manage the assembly of `ansible-core`, collection dependencies, Python packages, and system libraries.

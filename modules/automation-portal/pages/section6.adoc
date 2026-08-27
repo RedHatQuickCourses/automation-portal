@@ -8,10 +8,8 @@ In this lab, you will deploy the Automation Portal on your OpenShift Container P
 
 . Search for "Automation Portal" in the catalog and select it.
 .. Click on *Create* to start the installation process.
-
-.. Change the *clusterRouterBase* to the correct value for your cluster. For example, if the OCP cluster url is `https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io` then the clusterRouterBase should be `apps.cluster-kstzt.dyn.redhatworkshops.io`.
-
 .. Change the Release Name to `automation-portal` and you can change it if you want. 
+.. Change the *clusterRouterBase* to the correct value for your cluster. For example, if the OCP cluster url is `https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io` then the clusterRouterBase should be `apps.cluster-kstzt.dyn.redhatworkshops.io`.
 
 .. By default, it will be setting up at the Organization *Default* for the automaton portal the parameter is orgs if you wanted to change it.
 
@@ -21,6 +19,8 @@ Once the above settings are done, click on *Create* to start the installation pr
 ====
 The installation process will take a few minutes. You can monitor the progress Workloads > Topology in the portal project. Once the installation is complete, you will see the Automation Portal components running. 
 ====
+
+. Go to Workloads > Topology in the portal project. Once the installation is complete, you will see the Automation Portal components running.
 
 . Click on *automation-portal-rhaap-portal* resource to view the details. You will find the route URL in the *Routes* section. This URL is used to access the Automation Portal web interface.
 
@@ -33,24 +33,11 @@ The installation process will take a few minutes. You can monitor the progress W
 https://<aap-portal-hostname>/api/auth/rhaap/handler/frame
 ----
 
-. Access the Web UI of the Automation portal
+. Access the Web UI of the Automation portal and click on the *Login with Ansible Automation Platform* button. You will be redirected to the AAP login page. Enter your AAP credentials to log in.
 
-== Task 3: Configuring Initial RBAC Navigation
+. Once logged in, you need to provide the necessary permissions. click authorize and you will see the Automation Portal dashboard.
 
-To reduce UI complexity for end-users, we will implement role-based menu filtering.
+. Click on the Demo Job Template and click on *Launch* to execute the job. You will see the job execution status and output. 
 
-1. **Log in as an Administrator.**
-2. Navigate to **Administration -> Access -> User Interface**.
-3. Create a "Standard User" role policy:
-   * **Target:** User Group: `Developers`
-   * **Restrict Navigation:** Select only `Templates` and `Jobs`.
-4. **Validate:**
-   * Open an incognito browser window.
-   * Log in as a user belonging to the `Developers` group.
-   * Confirm the sidebar reflects only the permitted items, successfully reducing the cognitive load for the end-user.
+This is All about setting up the Automation Portal on OCP and verifying its functionality. You can now explore the features of the Automation Portal like RBAC Control and the execution of job templates and workflows via specific users. 
 
-== Troubleshooting Tips
-* **Image Pull Errors:** Ensure your OpenShift cluster has the necessary pull secrets configured for the Red Hat Registry if you are using disconnected installation methods.
-* **Service Connectivity:** If the portal cannot sync with the Hub or Controller, check the network policies in the `ansible-automation-platform` namespace to ensure egress traffic is permitted between these components.
-* **Logs:** If the UI fails to load, inspect the controller logs:
-  `oc logs deployment/aap-portal-controller -n ansible-automation-platform`

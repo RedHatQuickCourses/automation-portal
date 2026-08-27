@@ -20,6 +20,10 @@ The OAuth application is how the Automation Portal will authenticate users again
 
 === Step 1.1: Log in to AAP
 
+. Login to the Openshift Cluster got to Network -> Routes. 
+. Select the project as aap and open your Ansible Automation Platform instance in a web browser. 
+. Go to Workload -> Secrets -> aap-admin-password and use the administrator credentials provided to you.
+
 Open your Ansible Automation Platform instance in a web browser and log in as an administrator.
 
 [source,bash]
@@ -87,13 +91,15 @@ This setting controls whether users logging in via external identity providers (
 
 The API token is used by the Automation Portal to communicate with your AAP instance on a service-to-service basis. This token is what allows the portal to synchronize job templates, manage execution environments, and perform automation tasks.
 
-=== Configure the Token
+. Go to the API `https://<aap-hostname>/api/gateway/v1/tokens/`. 
+
+.  Configure the Token according to the screen shot and POST the Request.
 
 Fill in the following fields:
 
 * *Description:* `automation-portal-api-token` (descriptive name for your reference)
 * *Application:* Select the **automation-portal** OAuth application you created in Task 1
-* *Scope:* Select **read** (the portal needs write access to manage templates and execution environments)
+* *Scope:* Select **read** (the portal needs read access to manage templates and execution environments)
 
 Generate and Save the Token and as the system will display the generated token — copy it immediately and save it in a secure location alongside your Client ID and Client Secret from Task 1.
 

@@ -1,5 +1,3 @@
-#  Unified catalog architecture for multi-source aggregation
-
 = Unified Catalog Architecture for Multi-Source Aggregation
 
 In modern enterprise automation, content is rarely stored in a single location. Ansible Collections are often dispersed across distributed version control systems (like GitHub or GitLab) and local distribution points (like Private Automation Hub). The **Unified Catalog Architecture** in Ansible Automation Platform 2.7 solves the "siloed content" problem by abstracting the storage layer and providing a single pane of glass for discovery.
