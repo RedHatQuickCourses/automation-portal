@@ -1,7 +1,5 @@
 * xref:automation-portal.adoc[]
 ** xref:overview-and-architectural-benefits-of-the-automation-portal.adoc[]
-** xref:platform-requirements-and-installation-on-openshift-container-platform.adoc[]
-#** xref:configuring-ee-builder-via-helm-charts.adoc[]
 ** xref:managing-rbac-based-navigation-menus-for-user-role-separation.adoc[]
 ** xref:reducing-ui-complexity-through-admin-defined-access-policies.adoc[]
 ** xref:hands-on-setup-deploying-automation-portal-prerequisites.adoc[]

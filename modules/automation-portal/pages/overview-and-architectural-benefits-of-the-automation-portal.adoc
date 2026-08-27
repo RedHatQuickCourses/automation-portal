@@ -1,13 +1,11 @@
-#  Overview and architectural benefits of the Automation Portal
+= Automation Portal: Installation Overview with Architectural Benefits
 
-= Automation Portal: Overview and Architectural Benefits
-
-The Automation Portal in Ansible Automation Platform (AAP) 2.7 represents a significant evolution in the platform's architecture. Transitioning from a simple, self-service job launcher, the portal has matured into a comprehensive **Developer Productivity Surface**. It centralizes the lifecycle of automation—from discovery and development to execution—within a single, unified interface.
+The Automation Portal with Ansible Automation Platform provides a centralized interface for managing automation workflows, visual environment building, and content discovery. When deploying on OpenShift Container Platform (OCP), the Automation Portal leverages the Kubernetes-native architecture to ensure scalability, high availability, and seamless integration with existing AAP controller components.
 
 == The Evolution of the Portal
 In previous iterations, such as AAP 2.6, the portal functioned primarily as an execution layer. Users navigated to the interface, identified authorized job templates, populated surveys, and triggered automation. 
 
-AAP 2.7 expands this scope to support three primary pillars:
+Automation Portal 2.7 expands this scope to support three primary pillars:
 *   **Visual Execution Environment (EE) Builder:** A GUI-driven workflow for container image creation.
 *   **Centralized Content Discovery:** A unified catalog that aggregates automation assets from multiple sources.
 *   **Platform-wide Governance:** Enhanced RBAC controls, administrative navigation policies, and AI-assisted operational workflows.
@@ -30,16 +28,31 @@ The architecture supports multi-source aggregation. By centralizing content from
 === 4. Extensibility and AI Readiness
 With the inclusion of an MCP (Model Context Protocol) server, the portal is architected to support AI-assisted operations. This allows for natural language interaction with the platform, enabling users to query automation status or trigger workflows through supported AI clients, further lowering the barrier to entry for non-technical stakeholders.
 
-== Summary of Architectural Shift
+By consolidating these functions, Automation portal reduces the operational overhead associated with maintaining disparate build tools and content repositories, ensuring that automation scaling remains consistent with enterprise security and governance policies.
 
-[cols="1,2", options="header"]
-|===
-| Feature | AAP 2.6 Architecture | AAP 2.7 Architecture
-| **Primary Focus** | Job Execution | Full Automation Lifecycle
-| **EE Creation** | Manual CLI Workflows | Visual Wizard / GUI-based
-| **User Interface** | Fixed Navigation | Dynamic/RBAC-Based Menus
-| **Content Sourcing** | Isolated Sources | Unified Catalog Aggregation
-| **AI Integration** | None | Native MCP Server Support
-|===
+== Prerequisites and Requirements
 
-By consolidating these functions, AAP 2.7 reduces the operational overhead associated with maintaining disparate build tools and content repositories, ensuring that automation scaling remains consistent with enterprise security and governance policies.
+Before initiating the deployment, ensure your environment meets the following technical requirements:
+
+*   **Platform Subscription:** Valid Red Hat Ansible Automation Platform subscription.
+*   **Existing AAP Infrastructure:** An active instance of AAP 2.6+ to facilitate authentication and integration.
+*   **OpenShift Environment:** Access to an OpenShift Container Platform cluster (version 4.12–4.17+).
+*   **Permissions:** Cluster-level permissions to create OAuth applications within the target project.
+*   **CLI Tools:** 
+    *   `oc` CLI tool for OpenShift management.
+    *   `helm` (version 3.10 or newer) for package deployment.
+
+== Installation Overview
+
+The official deployment method uses **Helm charts** on OpenShift Container Platform. The Helm chart automates the deployment of the Automation Portal, handling networking, storage, and integration with your AAP instance.
+
+[IMPORTANT]
+====
+**Two-Phase Installation Process:**
+
+1. **Phase 1 - Prerequisites:** Complete xref:hands-on-setup-deploying-automation-portal-prerequisites.adoc[] to set up OAuth, API tokens, and OpenShift secrets.
+2. **Phase 2 - Deployment:** Deploy the Helm chart using xref:hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc[].
+
+Both phases are required for a successful installation.
+====
+
