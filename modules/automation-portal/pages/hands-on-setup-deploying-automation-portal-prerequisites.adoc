@@ -114,7 +114,7 @@ These three values are critical for the next phase of setup.
 
 Now we shift focus to the OpenShift side of the setup. We need to connect to your OCP cluster using the CLI tool, which will be the gateway for creating the portal's project and secrets.
 
-. login to the bastion host using the credentails from the RHDP login page. 
+. Login to the bastion host using the credentials from the RHDP login page. 
 
 . Once login to bastion host then login to OCP cli using the command shared in *OpenShift CLI Commands* section on the RHDP login page :
 
@@ -138,6 +138,22 @@ oc project portal
 ----
 
 . Build and Deploy the Plugin Registry
+
+. Go to the https://access.redhat.com/downloads/content/480/ver=2.7/rhel---10/2.7/x86_64/product-software[Installer,window=_blank] link and Get the installer link for *Ansible automation portal Setup Bundle*. 
+
+. Download the installer file to the VM: 
++ 
+[source,bash,role=execute]
+---- 
+wget -O automation.tar.gz "<paste-link-here taken from step 5>"
+----
+
+. Extract the *automation.tar.gz* file using the following command:
++ 
+[source,bash,role=execute]
+---- 
+tar -xvf automation.tar.gz
+----
 
 .. Run the following commands to create the `plugin-registry` binary build, build the image using the dynamic plugin directory, and deploy the resulting image:
 +
