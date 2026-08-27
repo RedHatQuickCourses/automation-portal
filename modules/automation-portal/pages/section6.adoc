@@ -22,9 +22,9 @@ image::6.3.png[]
 
 
 .. By default, it will be setting up at the Organization *Default* for the automaton portal the parameter is orgs if you wanted to change it.
-
++
 Once the above settings are done, click on *Create* to start the installation process.
-
++
 [Note]
 ====
 The installation process will take a few minutes. You can monitor the progress Workloads > Topology in the portal project. Once the installation is complete, you will see the Automation Portal components running. 
@@ -39,12 +39,12 @@ image::6.5.png[]
 . Copy the route URL and go to Ansible Automation Platform > Access Management > OAuth Applications.
 
 . Edit the automation-portal OAuth application to include the route URL as a valid redirect URI and save the changes. This step is crucial for the OAuth authentication to work correctly.
-
++
 [source,bash,role=execute]
 ----
 https://<aap-portal-hostname>/api/auth/rhaap/handler/frame
 ----
-
++
 image::6.6.png[]
 
 . Access the Web UI of the Automation portal and click on the *Login with Ansible Automation Platform* button. You will be redirected to the AAP login page. Enter your AAP credentials to log in.

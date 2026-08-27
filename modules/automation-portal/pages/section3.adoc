@@ -11,6 +11,9 @@ This page focuses on controlling which menu items are visible.
 ====
 
 == Architectural Concept
+
 By tying navigation visibility to RBAC (Role-Based Access Control) groups, administrators can enforce a "least privilege" visual experience. This ensures that:
+
 * **End Users:** Interact only with the automation services they need (Job Templates and History), reducing complexity.
+
 * **Platform Engineers:** Retain full visibility and administrative control over the underlying infrastructure, including EE definitions, content discovery, and synchronization settings.

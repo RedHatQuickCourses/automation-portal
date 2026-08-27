@@ -20,13 +20,13 @@ The OAuth application is how the Automation Portal will authenticate users again
 
 === Step 1.1: Log in to AAP
 
-. Login to the Openshift Cluster got to Network -> Routes. 
+. Login to the Openshift Cluster and go to Network -> Routes to access the Ansible Automation Platform. 
 
-. Select the project as aap and open your Ansible Automation Platform instance in a web browser. 
+. Select the project as *aap* and open your Ansible Automation Platform instance in a web browser. 
 +
 image::5.1.png[]
 
-. Go to Workload -> Secrets -> aap-admin-password and use the administrator credentials provided to you.
+. Go to `Workload -> Secrets -> aap-admin-password` and use the `administrator` credentials provided to you.
 +
 image::5.2.png[]
 +
@@ -34,10 +34,9 @@ image::5.3.png[]
 
 Open your Ansible Automation Platform instance in a web browser and log in as an administrator.
 
-
 [source,bash]
 ----
-# Example AAP URL (replace with your instance)
+# Example AAP URL (replace with your instance from OpenShift Route)
 https://aap.example.com
 ----
 
@@ -71,6 +70,7 @@ The Redirect URI is temporarily set to a placeholder because the actual portal U
 Click the **Create OAuth Application** button.
 
 Once created, the system will display:
+
 * **Client ID** — copy this value and save it in a secure location (notepad, password manager, etc.)
 * **Client Secret** — this appears only once; copy and save it immediately
 +
@@ -101,12 +101,12 @@ Verify that the setting now shows as **Enabled** on the Platform gateway setting
 
 The API token is used by the Automation Portal to communicate with your AAP instance on a service-to-service basis. This token is what allows the portal to synchronize job templates, manage execution environments, and perform automation tasks.
 
-. Go to the API `https://<aap-hostname>/api/gateway/v1/tokens/`. 
+. Go to the API `https://<aap-hostname>/api/gateway/v1/tokens/` and replace the <aap-hostname> with the actual hostname of the Ansible Automation Platform. 
 +
 image::5.6.png[]
 
 .  Configure the Token according to the screen shot and POST the Request.
-
++
 Fill in the following fields:
 
 * *Description:* `automation-portal-api-token` (descriptive name for your reference)
@@ -114,9 +114,9 @@ Fill in the following fields:
 * *Scope:* Select **read** (the portal needs read access to manage templates and execution environments)
 +
 image::5.7.png[]
-
++
 Generate and Save the Token and as the system will display the generated token — copy it immediately and save it in a secure location alongside your Client ID and Client Secret from Task 1.
-
++
 [WARNING]
 ====
 **IMPORTANT:** Like the Client Secret, the API token is displayed only once. If you navigate away, you cannot retrieve it again without creating a new token.
@@ -137,23 +137,23 @@ Now we shift focus to the OpenShift side of the setup. We need to connect to you
 . Login to the bastion host using the credentials from the RHDP login page. 
 
 . Once login to bastion host then login to OCP cli using the command shared in *OpenShift CLI Commands* section on the RHDP login page:
-
++
 [source,bash,role=execute]
 ----
 oc login -u admin -p <openshift-admin-password>  https://api.cluster-kstzt.dyn.redhatworkshops.io:6443
 ----
-
++
 image::5.8.png[]
 
 . Run the following command, replacing `portal` with your preferred project name if you want a different project name(keep it lowercase with hyphens only, no underscores):
-
++
 [source,bash,role=execute]
 ----
 oc new-project portal
 ----
 
 . Make sure your CLI context is set to the newly created project:
-
++
 [source,bash,role=execute]
 ----
 oc project portal
@@ -225,7 +225,7 @@ You can also run the secret creation command, gather the values from Tasks 1 and
 * `<aap-token>` — The API Token from the previous task.
 
 . Run the following command, replacing the placeholders with your actual values:
-
++
 [source,bash]
 ----
 oc create secret generic secrets-rhaap-portal \
