@@ -7,53 +7,10 @@ The Automation Portal addresses this by providing **RBAC-based navigation menus*
 [NOTE]
 ====
 **Related Pages:**
-This page focuses on controlling which menu items are visible. For more information on API-level permissions and access control, see xref:reducing-ui-complexity-through-admin-defined-access-policies.adoc[].
+This page focuses on controlling which menu items are visible.
 ====
 
 == Architectural Concept
 By tying navigation visibility to RBAC (Role-Based Access Control) groups, administrators can enforce a "least privilege" visual experience. This ensures that:
 * **End Users:** Interact only with the automation services they need (Job Templates and History), reducing complexity.
 * **Platform Engineers:** Retain full visibility and administrative control over the underlying infrastructure, including EE definitions, content discovery, and synchronization settings.
-
----
-
-== Hands-On Lab: Configuring Menu Visibility
-
-This lab demonstrates how to restrict the UI for standard operational teams while granting full access to the Platform Engineering group.
-
-=== Exercise 4.1: Review Current Navigation Visibility
-Before applying constraints, observe the default behavior of the portal.
-
-1. Log in to the Automation Portal as a user with `admin` privileges.
-2. Observe the sidebar; verify that all sections (Templates, History, EE Definitions, Collections, Git Repositories, Administration) are visible.
-3. Log out and log in as a standard user (e.g., `clouduser1`).
-4. **Verification:** Note that by default, standard users may see the entire menu structure, even if they lack the underlying permissions to perform tasks within those sections.
-
-=== Exercise 4.2: Configure Navigation Menu RBAC
-In this step, we map specific navigation items to user groups to clean up the UI.
-
-1. **Log in** to the portal as an `admin`.
-2. Navigate to **Administration > RBAC > Navigation Visibility**.
-3. **Configure End-User Access:**
-   * Select the groups: `cloud-team`, `network-team`, and `rhel-team`.
-   * Enable visibility for the following items only:
-     * `[x]` Templates
-     * `[x]` History
-   * Ensure all other items (EE Definitions, Collections, Git Repositories, Synchronization) remain unchecked.
-4. **Configure Platform Engineering Access:**
-   * Select the `platform-team` group.
-   * Ensure all navigation items are checked, providing full access to administrative functions.
-5. **Save** the changes.
-
-=== Exercise 4.3: Verification
-1. Log out as `admin`.
-2. Log in as a user who is a member of the `cloud-team`.
-3. **Result:** The sidebar should now dynamically hide the advanced development and administration features, displaying only **Templates** and **History**.
-4. Log out and log in as a member of the `platform-team` to verify that all administrative menus are fully accessible.
-
----
-
-== Troubleshooting Tips
-* **Cache Persistence:** If navigation items remain visible after updating permissions, ensure you refresh your browser cache or initiate a hard reload.
-* **Group Membership:** If a user cannot see the expected menus, verify they are correctly assigned to the intended group in the Identity Provider (IdP) or the local portal user database.
-* **Overlapping Roles:** If a user belongs to multiple groups (e.g., they are a member of both `cloud-team` and `platform-team`), the system will aggregate the permissions, granting them the union of all visible menus. Ensure user assignments are strictly managed.

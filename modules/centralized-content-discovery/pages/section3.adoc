@@ -1,6 +1,4 @@
-#  Configuring supported sources including GitHub, GitLab, and Private Automation Hub
-
-= Configuring Supported Sources
+= Configuring Supported Sources including GitHub, GitLab, and Private Automation Hub
 
 In the Ansible Automation Platform 2.7 architecture, Centralized Content Discovery acts as a unified catalog, aggregating automation assets from disparate locations into a single, searchable interface. By configuring external sources, administrators ensure that developers and operators have immediate access to validated collections and roles without manual intervention.
 

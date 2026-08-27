@@ -11,10 +11,6 @@ Duration: 1 hours
 
 *  Automation Portal
 
-*  Visual Execution Environment Builder
-
-*  Centralized Content Discovery
-
 == Prerequisites
 
 This course assumes that you have the following prior experience:

@@ -1,5 +1,3 @@
-#  Workflow for browse-before-build and tracing existing automation assets
-
 = Workflow for browse-before-build and tracing existing automation assets
 
 In large-scale enterprise environments, automation content often suffers from fragmentation. Collections reside in diverse locations—private automation hubs, public Git repositories, or siloed within local team projects. This "silo effect" leads to redundant development and makes it difficult for platform engineers to maintain security standards. 

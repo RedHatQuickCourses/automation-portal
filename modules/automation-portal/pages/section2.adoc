@@ -3,7 +3,7 @@
 The Automation Portal with Ansible Automation Platform provides a centralized interface for managing automation workflows, visual environment building, and content discovery. When deploying on OpenShift Container Platform (OCP), the Automation Portal leverages the Kubernetes-native architecture to ensure scalability, high availability, and seamless integration with existing AAP controller components.
 
 == The Evolution of the Portal
-In previous iterations, such as AAP 2.6, the portal functioned primarily as an execution layer. Users navigated to the interface, identified authorized job templates, populated surveys, and triggered automation. 
+In previous iterations, such as AAP 2.6/7, the portal functioned primarily as an execution layer. Users navigated to the interface, identified authorized job templates, populated surveys, and triggered automation. 
 
 Automation Portal 2.7 expands this scope to support three primary pillars:
 *   **Visual Execution Environment (EE) Builder:** A GUI-driven workflow for container image creation.
@@ -50,8 +50,8 @@ The official deployment method uses **Helm charts** on OpenShift Container Platf
 ====
 **Two-Phase Installation Process:**
 
-1. **Phase 1 - Prerequisites:** Complete xref:hands-on-setup-deploying-automation-portal-prerequisites.adoc[] to set up OAuth, API tokens, and OpenShift secrets.
-2. **Phase 2 - Deployment:** Deploy the Helm chart using xref:hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc[].
+1. **Phase 1 - Prerequisites:** Complete set up OAuth, API tokens,OC cli and OpenShift secrets configuration.
+2. **Phase 2 - Deployment:** Deploy the Automation Portal via Helm chart, configure the necessary environment variables, and validate the installation.
 
 Both phases are required for a successful installation.
 ====

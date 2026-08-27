@@ -5,7 +5,7 @@ In large-scale enterprise environments, the Automation Portal can become clutter
 [NOTE]
 ====
 **Related Pages:**
-This page focuses on API-level permissions and access control. For information on controlling which menu items are visible to users, see xref:managing-rbac-based-navigation-menus-for-user-role-separation.adoc[].
+This page focuses on API-level permissions and access control. For information on controlling which menu items are visible to users is based on how the RBAC-based setup is done. 
 ====
 
 == The Concept of UI Minimalism through RBAC

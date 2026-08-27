@@ -5,6 +5,6 @@ nav:
 - modules/ROOT/nav.adoc
 - modules/LABENV/nav.adoc
 - modules/automation-portal/nav.adoc
-- modules/visual-execution-environment-builder/nav.adoc
-- modules/centralized-content-discovery/nav.adoc
+#- modules/visual-execution-environment-builder/nav.adoc
+#- modules/centralized-content-discovery/nav.adoc
 - modules/appendix/nav.adoc

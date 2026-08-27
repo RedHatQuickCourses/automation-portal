@@ -61,7 +61,5 @@ image::6.9.png[]
 +
 image::6.10.png[]
 
-
-
 This is All about setting up the Automation Portal on OCP and verifying its functionality. You can now explore the features of the Automation Portal like RBAC Control and the execution of job templates and workflows via specific users. 
 

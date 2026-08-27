@@ -1,5 +1,3 @@
-#  Centralized Content Discovery
-
 = Centralized Content Discovery
 
 Centralized Content Discovery provides a unified catalog architecture designed to aggregate automation assets from distributed sources into a single, searchable interface. It eliminates manual discovery efforts by streamlining how platform engineers manage and surface Ansible Content Collections.
