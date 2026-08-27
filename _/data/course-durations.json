@@ -1,11 +1,11 @@
 {
-  "totalSeconds": 2754,
-  "pageCount": 23,
+  "totalSeconds": 866,
+  "pageCount": 9,
   "pages": [
     {
       "module": "ROOT",
       "page": "index.adoc",
-      "seconds": 25
+      "seconds": 23
     },
     {
       "module": "LABENV",
@@ -20,17 +20,17 @@
     {
       "module": "automation-portal",
       "page": "section2.adoc",
-      "seconds": 153
+      "seconds": 156
     },
     {
       "module": "automation-portal",
       "page": "section3.adoc",
-      "seconds": 149
+      "seconds": 40
     },
     {
       "module": "automation-portal",
       "page": "section4.adoc",
-      "seconds": 151
+      "seconds": 153
     },
     {
       "module": "automation-portal",
@@ -41,76 +41,6 @@
       "module": "automation-portal",
       "page": "section6.adoc",
       "seconds": 171
-    },
-    {
-      "module": "visual-execution-environment-builder",
-      "page": "section1.adoc",
-      "seconds": 41
-    },
-    {
-      "module": "visual-execution-environment-builder",
-      "page": "section2.adoc",
-      "seconds": 152
-    },
-    {
-      "module": "visual-execution-environment-builder",
-      "page": "section3.adoc",
-      "seconds": 156
-    },
-    {
-      "module": "visual-execution-environment-builder",
-      "page": "section4.adoc",
-      "seconds": 147
-    },
-    {
-      "module": "visual-execution-environment-builder",
-      "page": "section5.adoc",
-      "seconds": 143
-    },
-    {
-      "module": "visual-execution-environment-builder",
-      "page": "section6.adoc",
-      "seconds": 137
-    },
-    {
-      "module": "visual-execution-environment-builder",
-      "page": "section7.adoc",
-      "seconds": 108
-    },
-    {
-      "module": "visual-execution-environment-builder",
-      "page": "section8.adoc",
-      "seconds": 147
-    },
-    {
-      "module": "visual-execution-environment-builder",
-      "page": "section9.adoc",
-      "seconds": 142
-    },
-    {
-      "module": "centralized-content-discovery",
-      "page": "section1.adoc",
-      "seconds": 31
-    },
-    {
-      "module": "centralized-content-discovery",
-      "page": "section2.adoc",
-      "seconds": 157
-    },
-    {
-      "module": "centralized-content-discovery",
-      "page": "section3.adoc",
-      "seconds": 116
-    },
-    {
-      "module": "centralized-content-discovery",
-      "page": "section4.adoc",
-      "seconds": 147
-    },
-    {
-      "module": "centralized-content-discovery",
-      "page": "section5.adoc",
-      "seconds": 158
     },
     {
       "module": "appendix",

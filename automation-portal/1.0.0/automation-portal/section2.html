@@ -83,65 +83,6 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../visual-execution-environment-builder/section1.html">Visual Execution Environment Builder</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section3.html">Utilizing the step-by-step wizard for custom EE creation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Integrating Red Hat domain-specific presets and base container images</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section5.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section6.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section7.html">Importing and managing reusable Backstage software templates</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section8.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section9.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../centralized-content-discovery/section1.html">Centralized Content Discovery</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section3.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section4.html">Implementing continuous synchronization and scheduling</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#section6.adoc">section6.adoc</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
   </li>
 </ul>
@@ -197,7 +138,7 @@
 <h2 id="_the_evolution_of_the_portal"><a class="anchor" href="#_the_evolution_of_the_portal"></a>The Evolution of the Portal</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In previous iterations, such as AAP 2.6, the portal functioned primarily as an execution layer. Users navigated to the interface, identified authorized job templates, populated surveys, and triggered automation.</p>
+<p>In previous iterations, such as AAP 2.6/7, the portal functioned primarily as an execution layer. Users navigated to the interface, identified authorized job templates, populated surveys, and triggered automation.</p>
 </div>
 <div class="paragraph">
 <p>Automation Portal 2.7 expands this scope to support three primary pillars:
@@ -296,10 +237,10 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Phase 1 - Prerequisites:</strong> Complete <a href="#hands-on-setup-deploying-automation-portal-prerequisites.adoc" class="xref unresolved">hands-on-setup-deploying-automation-portal-prerequisites.adoc</a> to set up OAuth, API tokens, and OpenShift secrets.</p>
+<p><strong>Phase 1 - Prerequisites:</strong> Complete set up OAuth, API tokens,OC cli and OpenShift secrets configuration.</p>
 </li>
 <li>
-<p><strong>Phase 2 - Deployment:</strong> Deploy the Helm chart using <a href="#hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc" class="xref unresolved">hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc</a>.</p>
+<p><strong>Phase 2 - Deployment:</strong> Deploy the Automation Portal via Helm chart, configure the necessary environment variables, and validate the installation.</p>
 </li>
 </ol>
 </div>

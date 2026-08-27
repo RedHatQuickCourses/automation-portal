@@ -83,65 +83,6 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../visual-execution-environment-builder/section1.html">Visual Execution Environment Builder</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section3.html">Utilizing the step-by-step wizard for custom EE creation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Integrating Red Hat domain-specific presets and base container images</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section5.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section6.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section7.html">Importing and managing reusable Backstage software templates</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section8.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section9.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../centralized-content-discovery/section1.html">Centralized Content Discovery</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section3.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section4.html">Implementing continuous synchronization and scheduling</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#section6.adoc">section6.adoc</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
   </li>
 </ul>
@@ -203,7 +144,7 @@
 <td class="content">
 <div class="paragraph">
 <p><strong>Related Pages:</strong>
-This page focuses on controlling which menu items are visible. For more information on API-level permissions and access control, see <a href="#reducing-ui-complexity-through-admin-defined-access-policies.adoc" class="xref unresolved">reducing-ui-complexity-through-admin-defined-access-policies.adoc</a>.</p>
+This page focuses on controlling which menu items are visible.</p>
 </div>
 </td>
 </tr>
@@ -218,129 +159,6 @@ This page focuses on controlling which menu items are visible. For more informat
 <p>By tying navigation visibility to RBAC (Role-Based Access Control) groups, administrators can enforce a "least privilege" visual experience. This ensures that:
 * <strong>End Users:</strong> Interact only with the automation services they need (Job Templates and History), reducing complexity.
 * <strong>Platform Engineers:</strong> Retain full visibility and administrative control over the underlying infrastructure, including EE definitions, content discovery, and synchronization settings.</p>
-</div>
-<hr>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_hands_on_lab_configuring_menu_visibility"><a class="anchor" href="#_hands_on_lab_configuring_menu_visibility"></a>Hands-On Lab: Configuring Menu Visibility</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>This lab demonstrates how to restrict the UI for standard operational teams while granting full access to the Platform Engineering group.</p>
-</div>
-<div class="sect2">
-<h3 id="_exercise_4_1_review_current_navigation_visibility"><a class="anchor" href="#_exercise_4_1_review_current_navigation_visibility"></a>Exercise 4.1: Review Current Navigation Visibility</h3>
-<div class="paragraph">
-<p>Before applying constraints, observe the default behavior of the portal.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Log in to the Automation Portal as a user with <code>admin</code> privileges.</p>
-</li>
-<li>
-<p>Observe the sidebar; verify that all sections (Templates, History, EE Definitions, Collections, Git Repositories, Administration) are visible.</p>
-</li>
-<li>
-<p>Log out and log in as a standard user (e.g., <code>clouduser1</code>).</p>
-</li>
-<li>
-<p><strong>Verification:</strong> Note that by default, standard users may see the entire menu structure, even if they lack the underlying permissions to perform tasks within those sections.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_exercise_4_2_configure_navigation_menu_rbac"><a class="anchor" href="#_exercise_4_2_configure_navigation_menu_rbac"></a>Exercise 4.2: Configure Navigation Menu RBAC</h3>
-<div class="paragraph">
-<p>In this step, we map specific navigation items to user groups to clean up the UI.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p><strong>Log in</strong> to the portal as an <code>admin</code>.</p>
-</li>
-<li>
-<p>Navigate to <strong>Administration &gt; RBAC &gt; Navigation Visibility</strong>.</p>
-</li>
-<li>
-<p><strong>Configure End-User Access:</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Select the groups: <code>cloud-team</code>, <code>network-team</code>, and <code>rhel-team</code>.</p>
-</li>
-<li>
-<p>Enable visibility for the following items only:</p>
-</li>
-<li>
-<p><code>[x]</code> Templates</p>
-</li>
-<li>
-<p><code>[x]</code> History</p>
-</li>
-<li>
-<p>Ensure all other items (EE Definitions, Collections, Git Repositories, Synchronization) remain unchecked.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Configure Platform Engineering Access:</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Select the <code>platform-team</code> group.</p>
-</li>
-<li>
-<p>Ensure all navigation items are checked, providing full access to administrative functions.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Save</strong> the changes.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_exercise_4_3_verification"><a class="anchor" href="#_exercise_4_3_verification"></a>Exercise 4.3: Verification</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Log out as <code>admin</code>.</p>
-</li>
-<li>
-<p>Log in as a user who is a member of the <code>cloud-team</code>.</p>
-</li>
-<li>
-<p><strong>Result:</strong> The sidebar should now dynamically hide the advanced development and administration features, displaying only <strong>Templates</strong> and <strong>History</strong>.</p>
-</li>
-<li>
-<p>Log out and log in as a member of the <code>platform-team</code> to verify that all administrative menus are fully accessible.</p>
-</li>
-</ol>
-</div>
-<hr>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_troubleshooting_tips"><a class="anchor" href="#_troubleshooting_tips"></a>Troubleshooting Tips</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Cache Persistence:</strong> If navigation items remain visible after updating permissions, ensure you refresh your browser cache or initiate a hard reload.</p>
-</li>
-<li>
-<p><strong>Group Membership:</strong> If a user cannot see the expected menus, verify they are correctly assigned to the intended group in the Identity Provider (IdP) or the local portal user database.</p>
-</li>
-<li>
-<p><strong>Overlapping Roles:</strong> If a user belongs to multiple groups (e.g., they are a member of both <code>cloud-team</code> and <code>platform-team</code>), the system will aggregate the permissions, granting them the union of all visible menus. Ensure user assignments are strictly managed.</p>
-</li>
-</ul>
 </div>
 </div>
 </div>

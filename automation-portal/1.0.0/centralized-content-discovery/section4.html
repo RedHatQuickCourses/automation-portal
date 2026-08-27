@@ -3,9 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Implementing continuous synchronization and scheduling :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
-    <link rel="prev" href="section3.html">
-    <link rel="next" href="section5.html">
+    <title>Implementing Continuous Synchronization and Scheduling :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -83,65 +81,6 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../visual-execution-environment-builder/section1.html">Visual Execution Environment Builder</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section3.html">Utilizing the step-by-step wizard for custom EE creation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Integrating Red Hat domain-specific presets and base container images</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section5.html">Managing dependencies: Ansible Content Collections, Python packages, and system libraries</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section6.html">Publishing definitions to Git and automating CI pipelines with GitHub Actions</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section7.html">Importing and managing reusable Backstage software templates</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section8.html">Hands-on Lab on Syncing content sources and cataloging collections and Building a custom Execution Environment using the Visual Builder</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section9.html">Hands-on Lab Deploying a scaffolded CI pipeline for automated container image builds</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="section1.html">Centralized Content Discovery</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section3.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="section4.html">Implementing continuous synchronization and scheduling</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#section6.adoc">section6.adoc</a>
-  </li>
-</ul>
-  </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
-  <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../appendix/appendix.html">Appendix</a>
   </li>
 </ul>
@@ -175,8 +114,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="section1.html">Centralized Content Discovery</a></li>
-    <li><a href="section4.html">Implementing continuous synchronization and scheduling</a></li>
+    <li><a href="section4.html">Implementing Continuous Synchronization and Scheduling</a></li>
   </ul>
 </nav>
 </div>
@@ -185,10 +123,13 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Implementing continuous synchronization and scheduling</h1>
-<h1 id="_implementing_continuous_synchronization_and_scheduling" class="sect0"><a class="anchor" href="#_implementing_continuous_synchronization_and_scheduling"></a>Implementing Continuous Synchronization and Scheduling</h1>
+<h1 class="page">Implementing Continuous Synchronization and Scheduling</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>The efficiency of an automation ecosystem relies on the freshness of its content. In Ansible Automation Platform 2.7, the Centralized Content Discovery module provides robust mechanisms to ensure that automation assets—such as Ansible Content Collections—remain up-to-date across the enterprise.</p>
+</div>
+</div>
 </div>
 <div class="sect1">
 <h2 id="_overview_of_continuous_synchronization"><a class="anchor" href="#_overview_of_continuous_synchronization"></a>Overview of Continuous Synchronization</h2>
@@ -325,12 +266,8 @@
 </li>
 </ol>
 </div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_troubleshooting_synchronization"><a class="anchor" href="#_troubleshooting_synchronization"></a>Troubleshooting Synchronization</h2>
-<div class="sectionbody">
+<div class="exampleblock">
+<div class="content">
 <div class="paragraph">
 <p>If a synchronization task fails, consult the following:</p>
 </div>
@@ -349,10 +286,9 @@
 </div>
 </div>
 </div>
-<nav class="pagination">
-  <span class="prev"><a href="section3.html">Configuring supported sources including GitHub, GitLab, and Private Automation Hub</a></span>
-  <span class="next"><a href="section5.html">Workflow for browse-before-build and tracing existing automation assets</a></span>
-</nav>
+</div>
+</div>
+</div>
 </article>
   </div>
 </main>
