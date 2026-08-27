@@ -20,6 +20,7 @@ Once the above settings are done, click on *Create* to start the installation pr
 [Note]
 ====
 The installation process will take a few minutes. You can monitor the progress Workloads > Topology in the portal project. Once the installation is complete, you will see the Automation Portal components running. 
+====
 
 . Click on *automation-portal-rhaap-portal* resource to view the details. You will find the route URL in the *Routes* section. This URL is used to access the Automation Portal web interface.
 

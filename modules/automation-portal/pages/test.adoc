@@ -1,0 +1,5 @@
+== Troubleshooting Tips
+* **Image Pull Errors:** Ensure your OpenShift cluster has the necessary pull secrets configured for the Red Hat Registry if you are using disconnected installation methods.
+* **Service Connectivity:** If the portal cannot sync with the Hub or Controller, check the network policies in the `ansible-automation-platform` namespace to ensure egress traffic is permitted between these components.
+* **Logs:** If the UI fails to load, inspect the controller logs:
+  `oc logs deployment/aap-portal-controller -n ansible-automation-platform`

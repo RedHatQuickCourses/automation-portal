@@ -1,6 +1,6 @@
 = Automation Portal
 
-The Ansible Automation Portal in AAP 2.7 serves as a unified interface that shifts the platform focus from simple execution to a comprehensive "build, discover, and run" experience. It simplifies enterprise automation for users of all skill levels by replacing complex CLI workflows with a streamlined, point-and-click web experience.
+The Ansible Automation Portal with Ansible Automation Platform (AAP) serves as a unified interface that shifts the platform focus from simple execution to a comprehensive "build, discover, and run" experience. It simplifies enterprise automation for users of all skill levels by replacing complex CLI workflows with a streamlined, point-and-click web experience.
 
 Key features include:
 

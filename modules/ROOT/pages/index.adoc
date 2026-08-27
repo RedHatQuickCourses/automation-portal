@@ -3,15 +3,11 @@
 
 == Introduction
 
-Course Title:  Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle
+The Ansible Automation Portal with Ansible Automation Platform (AAP) serves as a unified interface that shifts the platform focus from simple execution to a comprehensive "build, discover, and run" experience. It simplifies enterprise automation for users of all skill levels by replacing complex CLI workflows with a streamlined, point-and-click web experience.
 
-Description:
-Course description FIXME
-
-Duration: FIXME hours
+Duration: 1 hours
 
 == Topics covered in this course
-
 
 *  Automation Portal
 
@@ -19,12 +15,8 @@ Duration: FIXME hours
 
 *  Centralized Content Discovery
 
-
-
 == Prerequisites
 
 This course assumes that you have the following prior experience:
 
-* Course or experience...
-* Course or experience...
-* Course or experience...
+* Basic understanding of Ansible Automation Platform and OpenShift Container Platform (OCP). 
