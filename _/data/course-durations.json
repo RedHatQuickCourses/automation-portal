@@ -1,5 +1,5 @@
 {
-  "totalSeconds": 2439,
+  "totalSeconds": 2754,
   "pageCount": 23,
   "pages": [
     {
@@ -35,12 +35,12 @@
     {
       "module": "automation-portal",
       "page": "section5.adoc",
-      "seconds": 69
+      "seconds": 234
     },
     {
       "module": "automation-portal",
       "page": "section6.adoc",
-      "seconds": 21
+      "seconds": 171
     },
     {
       "module": "visual-execution-environment-builder",

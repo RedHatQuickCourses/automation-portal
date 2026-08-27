@@ -238,9 +238,24 @@
 </li>
 <li>
 <p>Select the project as aap and open your Ansible Automation Platform instance in a web browser.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.1.png" alt="5.1">
+</div>
+</div>
 </li>
 <li>
 <p>Go to Workload &#8594; Secrets &#8594; aap-admin-password and use the administrator credentials provided to you.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.2.png" alt="5.2">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.3.png" alt="5.3">
+</div>
+</div>
 </li>
 </ol>
 </div>
@@ -294,6 +309,11 @@ https://aap.example.com</code></pre>
 </li>
 <li>
 <p><strong>Redirect URIs:</strong> Enter a placeholder URL for now: <code><a href="https://example.com/api/auth/rhaap/handler/frame" class="bare">https://example.com/api/auth/rhaap/handler/frame</a></code> (we&#8217;ll update this later with the actual portal deployment URL)</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.4.png" alt="5.4">
+</div>
+</div>
 </li>
 </ul>
 </div>
@@ -322,6 +342,10 @@ https://aap.example.com</code></pre>
 * <strong>Client ID</strong> — copy this value and save it in a secure location (notepad, password manager, etc.)
 * <strong>Client Secret</strong> — this appears only once; copy and save it immediately</p>
 </div>
+<div class="paragraph">
+<p>+
+image::5.5.png[]</p>
+</div>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -342,6 +366,9 @@ https://aap.example.com</code></pre>
 <div class="sect1">
 <h2 id="_task_2_enable_oauth_token_creation_for_external_users"><a class="anchor" href="#_task_2_enable_oauth_token_creation_for_external_users"></a>Task 2: Enable OAuth Token Creation for External Users</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The Below steps will be only needed if you are using an external identity provider (LDAP, SAML, OAuth, etc.) for user authentication. If your users are logging in directly with AAP credentials, you can skip this step for this lab.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -374,20 +401,6 @@ https://aap.example.com</code></pre>
 <div class="paragraph">
 <p>Verify that the setting now shows as <strong>Enabled</strong> on the Platform gateway settings page.</p>
 </div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This setting controls whether users logging in via external identity providers (LDAP, SAML, OAuth, etc.) can create OAuth2 tokens. The portal uses this capability for seamless authentication.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -400,6 +413,11 @@ https://aap.example.com</code></pre>
 <ol class="arabic">
 <li>
 <p>Go to the API <code><a href="https://&lt;aap-hostname&gt;/api/gateway/v1/tokens/" class="bare">https://&lt;aap-hostname&gt;/api/gateway/v1/tokens/</a></code>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.6.png" alt="5.6">
+</div>
+</div>
 </li>
 <li>
 <p>Configure the Token according to the screen shot and POST the Request.</p>
@@ -419,6 +437,11 @@ https://aap.example.com</code></pre>
 </li>
 <li>
 <p><strong>Scope:</strong> Select <strong>read</strong> (the portal needs read access to manage templates and execution environments)</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.7.png" alt="5.7">
+</div>
+</div>
 </li>
 </ul>
 </div>
@@ -472,13 +495,18 @@ https://aap.example.com</code></pre>
 <p>Login to the bastion host using the credentials from the RHDP login page.</p>
 </li>
 <li>
-<p>Once login to bastion host then login to OCP cli using the command shared in <strong>OpenShift CLI Commands</strong> section on the RHDP login page :</p>
+<p>Once login to bastion host then login to OCP cli using the command shared in <strong>OpenShift CLI Commands</strong> section on the RHDP login page:</p>
 </li>
 </ol>
 </div>
 <div class="listingblock execute">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc login -u admin -p &lt;openshift-admin-password&gt;  https://api.cluster-kstzt.dyn.redhatworkshops.io:6443</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.8.png" alt="5.8">
 </div>
 </div>
 <div class="olist arabic">
@@ -512,12 +540,17 @@ https://aap.example.com</code></pre>
 </li>
 <li>
 <p>Go to the <a href="https://access.redhat.com/downloads/content/480/ver=2.7/rhel---10/2.7/x86_64/product-software" target="_blank" rel="noopener">Installer</a> link and Get the installer link for <strong>Ansible automation portal Setup Bundle</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.9.png" alt="5.9">
+</div>
+</div>
 </li>
 <li>
 <p>Download the installer file to the VM:</p>
 <div class="listingblock execute">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -O automation.tar.gz "&lt;paste-link-here taken from step 5&gt;"</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">wget -O automation.tar.gz "&lt;paste-link-here taken from above 5&gt;"</code></pre>
 </div>
 </div>
 </li>
@@ -576,11 +609,24 @@ https://aap.example.com</code></pre>
 <ol class="arabic">
 <li>
 <p>Go to  Workloads &gt; Secrets in the OpenShift console and make sure the project <code>portal</code> is selected. You should create the secret <code>secrets-rhaap-portal</code> with the below information. You can also create the secret using the <code>oc</code> command line tool.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.10.png" alt="5.10">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.11.png" alt="5.11">
+</div>
+</div>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>Before running the secret creation command, gather the values from Tasks 1 and 3:</p>
+<p>OR</p>
+</div>
+<div class="paragraph">
+<p>You can also run the secret creation command, gather the values from Tasks 1 and 3:</p>
 </div>
 <div class="ulist">
 <ul>

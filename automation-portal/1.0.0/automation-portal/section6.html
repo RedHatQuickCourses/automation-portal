@@ -203,16 +203,36 @@
 </li>
 <li>
 <p>Search for "Automation Portal" in the catalog and select it.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.1.png" alt="6.1">
+</div>
+</div>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
 <p>Click on <strong>Create</strong> to start the installation process.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.2.png" alt="6.2">
+</div>
+</div>
 </li>
 <li>
 <p>Change the Release Name to <code>automation-portal</code> and you can change it if you want.</p>
 </li>
 <li>
 <p>Change the <strong>clusterRouterBase</strong> to the correct value for your cluster. For example, if the OCP cluster url is <code><a href="https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io" class="bare">https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io</a></code> then the clusterRouterBase should be <code>apps.cluster-kstzt.dyn.redhatworkshops.io</code>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.4.png" alt="6.4">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.3.png" alt="6.3">
+</div>
+</div>
 </li>
 <li>
 <p>By default, it will be setting up at the Organization <strong>Default</strong> for the automaton portal the parameter is orgs if you wanted to change it.</p>
@@ -239,6 +259,11 @@
 </li>
 <li>
 <p>Click on <strong>automation-portal-rhaap-portal</strong> resource to view the details. You will find the route URL in the <strong>Routes</strong> section. This URL is used to access the Automation Portal web interface.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.5.png" alt="6.5">
+</div>
+</div>
 </li>
 <li>
 <p>Copy the route URL and go to Ansible Automation Platform &gt; Access Management &gt; OAuth Applications.</p>
@@ -253,16 +278,41 @@
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">https://&lt;aap-portal-hostname&gt;/api/auth/rhaap/handler/frame</code></pre>
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.6.png" alt="6.6">
+</div>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
 <p>Access the Web UI of the Automation portal and click on the <strong>Login with Ansible Automation Platform</strong> button. You will be redirected to the AAP login page. Enter your AAP credentials to log in.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.7.png" alt="6.7">
+</div>
+</div>
 </li>
 <li>
 <p>Once logged in, you need to provide the necessary permissions. click authorize and you will see the Automation Portal dashboard.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.8.png" alt="6.8">
+</div>
+</div>
 </li>
 <li>
 <p>Click on the Demo Job Template and click on <strong>Launch</strong> to execute the job. You will see the job execution status and output.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.9.png" alt="6.9">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.10.png" alt="6.10">
+</div>
+</div>
 </li>
 </ol>
 </div>
