@@ -1,5 +1,3 @@
-#  Platform requirements and installation on OpenShift Container Platform
-
 = Platform Requirements and Installation on OpenShift Container Platform
 
 The Automation Portal for Ansible Automation Platform (AAP) 2.7 provides a centralized interface for managing automation workflows, visual environment building, and content discovery. When deploying on OpenShift Container Platform (OCP), the Automation Portal leverages the Kubernetes-native architecture to ensure scalability, high availability, and seamless integration with existing AAP controller components.
@@ -18,48 +16,86 @@ Before initiating the deployment, ensure your environment meets the following te
 
 == Installation Overview
 
-For OpenShift-based installations, the **AAP Operator** manages the lifecycle of the Automation Portal, automatically handling OpenShift routes and underlying infrastructure requirements. 
+The official deployment method uses **Helm charts** on OpenShift Container Platform. The Helm chart automates the deployment of the Automation Portal, handling networking, storage, and integration with your AAP instance.
+
+[IMPORTANT]
+====
+**Two-Phase Installation Process:**
+
+1. **Phase 1 - Prerequisites:** Complete xref:hands-on-setup-deploying-automation-portal-prerequisites.adoc[] to set up OAuth, API tokens, and OpenShift secrets.
+2. **Phase 2 - Deployment:** Deploy the Helm chart using xref:hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc[].
+
+Both phases are required for a successful installation.
+====
 
 === Pre-Installation Checklist
 
 Before deploying the Helm chart, ensure the following configuration steps are completed:
 
-1.  **SCM Integration:** If your environment requires Source Control Management (SCM) synchronization, create the `secrets-scm` Kubernetes secret.
-2.  **OCI Delivery:** Generate `auth.json` and create the `registry-auth` secret to allow the portal to pull and push container images.
-3.  **OAuth Setup:** Navigate to your AAP controller to create an OAuth application, ensuring you note the Client ID and Secret for the deployment configuration.
+[cols="1,2,1"]
+|===
+| Step | Required | Where
+| Create OAuth application in AAP | ✓ Required | xref:hands-on-setup-deploying-automation-portal-prerequisites.adoc#task-1[Task 1]
+| Generate API token in AAP | ✓ Required | xref:hands-on-setup-deploying-automation-portal-prerequisites.adoc#task-3[Task 3]
+| Create OpenShift secrets | ✓ Required | xref:hands-on-setup-deploying-automation-portal-prerequisites.adoc#task-6[Task 6]
+| Create OpenShift project | ✓ Required | xref:hands-on-setup-deploying-automation-portal-prerequisites.adoc#task-5[Task 5]
+| SCM integration (GitHub/GitLab) | ○ Optional | Source Control Management section
+| Private registry auth | ○ Optional | For disconnected environments
+|===
 
-== Hands-on Lab: Installing and Verifying the Automation Portal
+== Next Steps: Deployment and Configuration
 
-This lab guides you through the deployment process using the Helm chart method on OCP.
+Once you've completed the prerequisites, proceed with the actual deployment:
 
-=== Step 1: Deploying via Helm
+=== Step 1: Deploy via Helm Chart
 
-Execute the deployment by applying the Helm chart from the OpenShift catalog or via the CLI:
+Follow the detailed step-by-step guide in xref:hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc[], which covers:
 
-[source,bash]
-----
-# Ensure you are logged into your OCP cluster
-oc login <cluster-url> -u <username>
-
-# Deploy the Automation Portal Helm chart
-helm install automation-portal ./charts/automation-portal \
-  --set clusterRouterBase=<your-cluster-domain> \
-  --set pluginMode=enabled \
-  --set imageTagInfo=latest \
-  --namespace aap-portal
-----
+1. Verifying your environment and secrets (Task 1)
+2. Deploying the Helm chart from the OpenShift repository (Task 2)
+3. Monitoring the deployment (Task 2, Step 2.4)
+4. Verifying the deployment health (Task 3)
 
 === Step 2: Post-Installation Configuration
 
-Once the pods are initialized, you must finalize the connectivity and access policies.
+After the deployment is complete, complete the critical post-installation steps in xref:hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc[]:
 
-1.  **Update OAuth:** In the AAP controller, update the OAuth Application Redirect URI to match the actual external URL of your deployed Automation Portal.
-2.  **Verify Deployment:**
-    *   Check the **Topology view** in the OpenShift Web Console to ensure all services are connected.
-    *   Check pod status: `oc get pods -n aap-portal`.
-    *   Review initialization logs for potential errors: `oc logs <portal-pod-name> -c init-container`.
-3.  **RBAC Setup:** Log in to the portal as an administrator and configure initial roles to enable **Catalog** and **Scaffolder** permissions for your users.
+1. **Update OAuth Redirect URI** (Task 4) — This is essential for authentication to work
+2. **Access the Web Interface** (Task 5) — Verify you can log in successfully
+3. **Configure RBAC** (Task 6, optional) — Set up role-based access policies
 
-=== Troubleshooting Guidance
-*   **Connectivity Issues:** If the portal cannot communicate with the AAP controller, verify that the `OAuth` redirect URI matches the protocol (HTTPS) and fully qualified domain name of the portal route.
-*   **Pod CrashLoopBackOff:** Inspect the init container logs. Frequently, this is caused by missing `registry-auth` secrets or misconfigured SCM credentials.
+=== Step 3: Configure Advanced Features (Optional)
+
+After the basic deployment is working, you can:
+
+1. **Configure EE Builder:** See xref:configuring-ee-builder-via-helm-charts.adoc[]
+2. **Set up Navigation Menus:** See xref:managing-rbac-based-navigation-menus-for-user-role-separation.adoc[]
+3. **Implement UI Policies:** See xref:reducing-ui-complexity-through-admin-defined-access-policies.adoc[]
+
+== Troubleshooting Guidance
+
+=== Secrets Not Found Error
+
+**Problem:** Deployment fails with "secrets-rhaap-portal not found"
+
+**Solution:** Go back and complete the xref:hands-on-setup-deploying-automation-portal-prerequisites.adoc[] lab to create the required OpenShift secrets.
+
+=== Connectivity Issues
+
+**Problem:** Portal cannot communicate with your AAP instance.
+
+**Solution:**
+1. Verify the `aap-host-url` in the `secrets-rhaap-portal` secret is correct
+2. Test connectivity from the OpenShift cluster to your AAP instance
+3. Check that the AAP instance is reachable on the network
+
+=== Pod CrashLoopBackOff
+
+**Problem:** The portal pod keeps restarting.
+
+**Solution:**
+1. Check the init container logs: `oc logs <pod-name> -c install-dynamic-plugins -n portal`
+2. Verify that all secrets were created correctly
+3. Check that image pull secrets are configured if using a private registry
+
+For more detailed troubleshooting, see xref:hands-on-lab-on-installing-and-verifying-the-automation-portal-on-ocp.adoc#_troubleshooting_guide[]

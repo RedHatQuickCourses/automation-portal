@@ -1,0 +1,215 @@
+= Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration
+
+In this lab, you'll walk through the essential prerequisite steps to deploy the Ansible Automation Portal on OpenShift Container Platform. We'll configure OAuth authentication with AAP, generate required API tokens, and prepare your OpenShift environment for the portal deployment. These steps ensure secure communication between the portal and your AAP instance.
+
+== Overview of What We'll Do
+
+By the end of this lab, you will have:
+
+* Created an OAuth application in AAP for portal authentication
+* Generated and secured API credentials
+* Authenticated with your OpenShift cluster
+* Created a dedicated project for the automation portal
+* Prepared all necessary credentials for the Helm chart deployment
+
+This is the foundational work that must be completed *before* you deploy the Helm chart. Think of it as setting up the "communication channels" between the portal and your AAP instance.
+
+== Task 1: Create an OAuth Application in Ansible Automation Platform
+
+The OAuth application is how the Automation Portal will authenticate users against your AAP instance. Think of it as registering the portal as a "trusted application" within AAP.
+
+=== Step 1.1: Log in to AAP
+
+Open your Ansible Automation Platform instance in a web browser and log in as an administrator.
+
+[source,bash]
+----
+# Example AAP URL (replace with your instance)
+https://aap.example.com
+----
+
+=== Step 1.2: Navigate to OAuth Applications
+
+Once logged in:
+
+1. In the left sidebar, click **Access Management**
+2. Select **OAuth Applications** from the submenu
+3. Click the **Create OAuth Application** button in the upper right corner
+
+=== Step 1.3: Configure the OAuth Application
+
+Fill in the following fields with these exact values:
+
+* *Name:* `automation-portal`
+* *Organization:* Select the organization where your automation content lives (typically "Default" unless you have a multi-tenant setup)
+* *Authorization grant type:* Select **Authorization code**
+* *Client type:* Select **Confidential**
+* *Redirect URIs:* Enter a placeholder URL for now: `https://example.com/api/auth/rhaap/handler/frame` (we'll update this later with the actual portal deployment URL)
+
+[NOTE]
+====
+The Redirect URI is temporarily set to a placeholder because the actual portal URL won't exist until after you deploy the Helm chart. We'll come back and update this with the real deployment URL in a later step.
+====
+
+=== Step 1.4: Save and Capture Credentials
+
+Click the **Create OAuth Application** button.
+
+Once created, the system will display:
+* **Client ID** — copy this value and save it in a secure location (notepad, password manager, etc.)
+* **Client Secret** — this appears only once; copy and save it immediately
+
+[WARNING]
+====
+**IMPORTANT:** The Client Secret will never be displayed again. If you lose it, you'll need to regenerate it. Save both values now before navigating away.
+====
+
+== Task 2: Enable OAuth Token Creation for External Users
+
+1. In the AAP left sidebar, click **Settings**
+2. Select **Platform gateway** from the submenu
+3. Look for the setting: **Allow external users to create OAuth2 tokens**
+
+If the setting is not already enabled:
+
+1. Click **Edit platform gateway settings**
+2. Toggle **Allow external users to create OAuth2 tokens** to **Enabled**
+3. Click **Save platform gateway settings**
+
+Verify that the setting now shows as **Enabled** on the Platform gateway settings page.
+
+[TIP]
+====
+This setting controls whether users logging in via external identity providers (LDAP, SAML, OAuth, etc.) can create OAuth2 tokens. The portal uses this capability for seamless authentication.
+====
+
+== Task 3: Generate an API Token for the Automation Portal
+
+The API token is used by the Automation Portal to communicate with your AAP instance on a service-to-service basis. This token is what allows the portal to synchronize job templates, manage execution environments, and perform automation tasks.
+
+=== Configure the Token
+
+Fill in the following fields:
+
+* *Description:* `automation-portal-api-token` (descriptive name for your reference)
+* *Application:* Select the **automation-portal** OAuth application you created in Task 1
+* *Scope:* Select **read** (the portal needs write access to manage templates and execution environments)
+
+Generate and Save the Token and as the system will display the generated token — copy it immediately and save it in a secure location alongside your Client ID and Client Secret from Task 1.
+
+[WARNING]
+====
+**IMPORTANT:** Like the Client Secret, the API token is displayed only once. If you navigate away, you cannot retrieve it again without creating a new token.
+====
+
+Make a note of the three values you now have:
+
+* Client ID: `_______________`
+* Client Secret: `_______________`
+* API Token: `_______________`
+
+These three values are critical for the next phase of setup.
+
+== Task 4: Authenticate with Your OpenShift Cluster
+
+Now we shift focus to the OpenShift side of the setup. We need to connect to your OCP cluster using the CLI tool, which will be the gateway for creating the portal's project and secrets.
+
+. login to the bastion host using the credentails from the RHDP login page. 
+
+. Once login to bastion host then login to OCP cli using the command shared in *OpenShift CLI Commands* section on the RHDP login page :
+
+[source,bash,role=execute]
+----
+oc login -u admin -p <openshift-admin-password>  https://api.cluster-kstzt.dyn.redhatworkshops.io:6443
+----
+
+. Run the following command, replacing `portal` with your preferred project name if you want a different project name(keep it lowercase with hyphens only, no underscores):
+
+[source,bash,role=execute]
+----
+oc new-project portal
+----
+
+. Make sure your CLI context is set to the newly created project:
+
+[source,bash,role=execute]
+----
+oc project portal
+----
+
+. Build and Deploy the Plugin Registry
+
+.. Run the following commands to create the `plugin-registry` binary build, build the image using the dynamic plugin directory, and deploy the resulting image:
++
+Where `$DYNAMIC_PLUGIN_ROOT_DIR` is the local directory containing the dynamic plugin files.
++
+[source,bash,role=execute]
+----
+export DYNAMIC_PLUGIN_ROOT_DIR=/home/lab-user
+---- 
++
+[source,bash,role=execute]
+----
+oc new-build httpd --name=plugin-registry --binary
+---- 
++
+[source,bash,role=execute]
+----
+oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait
+---- 
++
+[source,bash,role=execute]
+----
+oc new-app --image-stream=plugin-registry
+---- 
+
+.. Go to OpenShift Web Console, navigate to the `portal` project, and Then Workloads -> Topology verify that the `plugin-registry` pod is running successfully.
+
+== Create OpenShift Secrets for AAP Authentication
+
+OpenShift Secrets are secure, encrypted storage for sensitive data. We'll create a secret that holds the OAuth credentials and API token you generated in Tasks 1 and 3. The Automation Portal Helm chart will reference this secret during deployment.
+
+. Go to  Workloads > Secrets in the OpenShift console and make sure the project `portal` is selected. You should create the secret `secrets-rhaap-portal` with the below information. You can also create the secret using the `oc` command line tool.
+
+Before running the secret creation command, gather the values from Tasks 1 and 3:
+
+* `<aap-instance-url>` — The URL of your AAP instance (e.g., `https://aap.example.com`)
+* `<oauth-client-id>` — The Client ID from the previous task.
+* `<oauth-client-secret>` — The Client Secret from the previous task.
+* `<aap-token>` — The API Token from the previous task.
+
+. Run the following command, replacing the placeholders with your actual values:
+
+[source,bash]
+----
+oc create secret generic secrets-rhaap-portal \
+  --from-literal=aap-host-url="<your-aap-url>" \
+  --from-literal=oauth-client-id="your-client-id-here" \
+  --from-literal=oauth-client-secret="your-client-secret-here" \
+  --from-literal=aap-token="your-api-token-here" \
+  -n portal
+----
+
+[NOTE]
+====
+The secret name (`secrets-rhaap-portal`) is important—the Helm chart expects this exact name. If you change it, you'll need to update your Helm values during deployment.
+====
+
+== Verify the Secret Was Created
+
+Confirm the secret exists:
+
+[source,bash]
+----
+oc get secret secrets-rhaap-portal -n portal
+----
+
+You should see output like:
+
+[source,bash]
+----
+NAME                    TYPE     DATA   AGE
+secrets-rhaap-portal    Opaque   4      10s
+----
+
+Once the above is done. You're now ready for the next phase: deploying the Automation Portal via Helm chart!

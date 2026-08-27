@@ -1,10 +1,14 @@
-#  Managing RBAC-based navigation menus for user role separation
-
 = Managing RBAC-based Navigation Menus for User Role Separation
 
-In modern enterprise automation, "platform sprawl" is a significant hurdle. When users are presented with a cluttered interface containing tools they don't need—such as Execution Environment (EE) builders or Git repository management—it increases cognitive load and introduces potential security risks. 
+In modern enterprise automation, "platform sprawl" is a significant hurdle. When users are presented with a cluttered interface containing tools they don't need—such as Execution Environment (EE) builders or Git repository management—it increases cognitive load and introduces potential security risks.
 
 The Automation Portal addresses this by providing **RBAC-based navigation menus**, allowing platform architects to tailor the UI experience based on the user's specific role.
+
+[NOTE]
+====
+**Related Pages:**
+This page focuses on controlling which menu items are visible. For more information on API-level permissions and access control, see xref:reducing-ui-complexity-through-admin-defined-access-policies.adoc[].
+====
 
 == Architectural Concept
 By tying navigation visibility to RBAC (Role-Based Access Control) groups, administrators can enforce a "least privilege" visual experience. This ensures that:

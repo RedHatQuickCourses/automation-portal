@@ -1,69 +1,38 @@
-#  Hands-on Lab on Installing and verifying the Automation Portal on OCP
-
 = Hands-on Lab: Installing and Verifying the Automation Portal on OCP
 
-In this lab, you will deploy the Automation Portal on your OpenShift Container Platform (OCP) environment. The Automation Portal in AAP 2.7 serves as the centralized interface for the full content lifecycle, moving beyond simple execution to providing a unified experience for building, discovering, and running automation.
+In this lab, you will deploy the Automation Portal on your OpenShift Container Platform (OCP) environment. 
 
-== Prerequisites
-* Access to an OpenShift cluster (Version 4.14+ recommended).
-* `oc` CLI tool authenticated with `cluster-admin` privileges.
-* An existing AAP 2.7 operator deployment or the ability to install the AAP Operator via OperatorHub.
+== Installing the Automation Portal
 
-== Task 1: Installing the Automation Portal
+. Go to Ecosystem > Software Catalog in the OpenShift web console.
 
-The Automation Portal is deployed as part of the `AutomationController` or `AutomationPlatform` Custom Resource (CR). 
+. Search for "Automation Portal" in the catalog and select it.
+.. Click on *Create* to start the installation process.
 
-1. **Verify the Operator is installed:**
-   Ensure the Ansible Automation Platform operator is running in your target namespace.
-   [source,bash]
-   ----
-   oc get pods -n ansible-automation-platform
-   ----
+.. Change the *clusterRouterBase* to the correct value for your cluster. For example, if the OCP cluster url is `https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io` then the clusterRouterBase should be `apps.cluster-kstzt.dyn.redhatworkshops.io`.
 
-2. **Configure the Automation Portal CR:**
-   Create a YAML manifest for the `AutomationPortal` resource. The portal requires connection settings to your existing Automation Hub and Controller.
+.. Change the Release Name to `automation-portal` and you can change it if you want. 
 
-   [source,yaml]
-   ----
-   apiVersion: automation.ansible.com/v1beta1
-   kind: AutomationPortal
-   metadata:
-     name: aap-portal
-     namespace: ansible-automation-platform
-   spec:
-     hub_url: https://automation-hub.example.com
-     controller_url: https://automation-controller.example.com
-     ingress:
-       enabled: true
-       host: portal.example.com
-   ----
+.. By default, it will be setting up at the Organization *Default* for the automaton portal the parameter is orgs if you wanted to change it.
 
-3. **Apply the configuration:**
-   [source,bash]
-   ----
-   oc apply -f automation-portal.yaml
-   ----
+Once the above settings are done, click on *Create* to start the installation process.
 
-== Task 2: Verifying the Installation
+[Note]
+====
+The installation process will take a few minutes. You can monitor the progress Workloads > Topology in the portal project. Once the installation is complete, you will see the Automation Portal components running. 
 
-Once the operator reconciles the state, you must verify that the portal services are healthy and accessible.
+. Click on *automation-portal-rhaap-portal* resource to view the details. You will find the route URL in the *Routes* section. This URL is used to access the Automation Portal web interface.
 
-1. **Check Pod status:**
-   Ensure the portal components are in the `Running` state.
-   [source,bash]
-   ----
-   oc get pods -n ansible-automation-platform -l app=automation-portal
-   ----
+. Copy the route URL and go to Ansible Automation Platform > Access Management > OAuth Applications.
 
-2. **Verify Ingress/Route:**
-   Confirm that a route has been created for the web interface.
-   [source,bash]
-   ----
-   oc get route -n ansible-automation-platform
-   ----
+. Edit the automation-portal OAuth application to include the route URL as a valid redirect URI and save the changes. This step is crucial for the OAuth authentication to work correctly.
 
-3. **Access the Web UI:**
-   Navigate to the URL identified in the route output (e.g., `https://portal.example.com`). Log in using your OpenShift/AAP credentials to verify the dashboard loads successfully.
+[source,bash,role=execute]
+----
+https://<aap-portal-hostname>/api/auth/rhaap/handler/frame
+----
+
+. Access the Web UI of the Automation portal
 
 == Task 3: Configuring Initial RBAC Navigation
 
