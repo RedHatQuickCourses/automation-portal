@@ -16,3 +16,10 @@ Duration: 1 hours
 This course assumes that you have the following prior experience:
 
 * Basic understanding of Ansible Automation Platform and OpenShift Container Platform (OCP). 
+
+== Contributors
+
+The PTL team acknowledges the valuable contributions of the following Red Hat associates:
+
+- Amrinder Singh (Content Architect)
+- Anna Swicegood (Learning Product Manager)
