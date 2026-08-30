@@ -63,3 +63,5 @@ image::6.10.png[]
 
 This is All about setting up the Automation Portal on OCP and verifying its functionality. You can now explore the features of the Automation Portal like RBAC Control and the execution of job templates and workflows via specific users. 
 
+For more Information on the Automation Portal or for RBAC hands on lab, refer to the https://catalog.demo.redhat.com/catalog/all?search=automation+portal&item=babylon-catalog-prod%2Fagd-v2.aap-multiinstance-workshop.prod[Introduction to AAP Self-Service Automation]
+
