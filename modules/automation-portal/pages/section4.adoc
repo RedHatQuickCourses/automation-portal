@@ -50,15 +50,7 @@ To restrict navigation, administrators define access policies within the Portal 
     *   Set the `Allowed Navigation Items` list to strictly include: `['Templates', 'History']`.
     *   Verify that `System Configuration` and `Builder` menus are excluded.
 
-== Practical Exercise: Validating Access Policies
-
-This activity demonstrates how to verify that the portal successfully filters UI components based on the assigned role.
-
-=== Prerequisites
-*   Ensure you have two distinct test accounts: `user-standard` and `user-admin`.
-*   Ensure `user-standard` is assigned to a restricted role in your IdP or AAP.
-
-=== Step-by-Step Verification
+=== how to do Step-by-Step Verification 
 
 . **Login as Platform Engineer:**
    Log in with the `user-admin` account. Verify that the sidebar contains the full suite of options, including *EE Definitions* and *Git Repositories*.
