@@ -4,7 +4,10 @@ In this lab, you will deploy the Automation Portal on your OpenShift Container P
 
 == Installing the Automation Portal
 
+. Login to the Openshift Cluster using `{openshift_cluster_console_url}` with Username: `{openshift_cluster_admin_username}` and Password `{openshift_cluster_admin_password}` and go to Network -> Routes to access the Ansible Automation Platform. 
+
 . Go to Ecosystem > Software Catalog in the OpenShift web console.
+
 . Search for "Automation Portal" in the catalog and select it.
 +
 image::6.1.png[]

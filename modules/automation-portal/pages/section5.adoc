@@ -20,7 +20,7 @@ The OAuth application is how the Automation Portal will authenticate users again
 
 === Step 1.1: Log in to AAP
 
-. Login to the Openshift Cluster and go to Network -> Routes to access the Ansible Automation Platform. 
+. Login to the Openshift Cluster using `{openshift_cluster_console_url}` with Username: `{openshift_cluster_admin_username}` and Password `{openshift_cluster_admin_password}` and go to Network -> Routes to access the Ansible Automation Platform. 
 
 . Select the project as *aap* and open your Ansible Automation Platform instance in a web browser. 
 +
@@ -32,12 +32,11 @@ image::5.2.png[]
 +
 image::5.3.png[]
 
-Open your Ansible Automation Platform instance in a web browser and log in as an administrator.
+Open your Ansible Automation Platform instance in a web browser using `{aap_controller_web_url}` and log is as user `{controller_username}` with the password you retrieved from the `{controller_password}` secret in the previous step.
 
 [source,bash]
 ----
-# Example AAP URL (replace with your instance from OpenShift Route)
-https://aap.example.com
+{aap_controller_web_url}
 ----
 
 === Step 1.2: Navigate to OAuth Applications
@@ -56,7 +55,7 @@ Fill in the following fields with these exact values:
 * *Organization:* Select the organization where your automation content lives (typically "Default" unless you have a multi-tenant setup)
 * *Authorization grant type:* Select **Authorization code**
 * *Client type:* Select **Confidential**
-* *Redirect URIs:* Enter a placeholder URL for now: `https://example.com/api/auth/rhaap/handler/frame` (we'll update this later with the actual portal deployment URL)
+* *Redirect URIs:* Enter a placeholder URL for now: `https://<automation-portal>/api/auth/rhaap/handler/frame` (we'll update this later with the actual portal deployment URL)
 +
 image::5.4.png[]
 
@@ -101,7 +100,7 @@ Verify that the setting now shows as **Enabled** on the Platform gateway setting
 
 The API token is used by the Automation Portal to communicate with your AAP instance on a service-to-service basis. This token is what allows the portal to synchronize job templates, manage execution environments, and perform automation tasks.
 
-. Go to the API `https://<aap-hostname>/api/gateway/v1/tokens/` and replace the <aap-hostname> with the actual hostname of the Ansible Automation Platform. 
+. Go to the API `https://{aap_controller_web_url}/api/gateway/v1/tokens/` and replace the {aap_controller_web_url} with the actual hostname of the Ansible Automation Platform. 
 +
 image::5.6.png[]
 
@@ -140,7 +139,7 @@ Now we shift focus to the OpenShift side of the setup. We need to connect to you
 +
 [source,bash,role=execute]
 ----
-oc login -u admin -p <openshift-admin-password>  https://api.cluster-kstzt.dyn.redhatworkshops.io:6443
+oc login -u admin -p {openshift_cluster_admin_password} {openshift_api_server_url}
 ----
 +
 image::5.8.png[]
@@ -219,7 +218,7 @@ OR
 
 You can also run the secret creation command, gather the values from Tasks 1 and 3:
 
-* `<aap-instance-url>` — The URL of your AAP instance (e.g., `https://aap.example.com`)
+* `<aap-instance-url>` — The URL of your AAP instance (e.g., `https://{aap_controller_web_url}`)
 * `<oauth-client-id>` — The Client ID from the previous task.
 * `<oauth-client-secret>` — The Client Secret from the previous task.
 * `<aap-token>` — The API Token from the previous task.
