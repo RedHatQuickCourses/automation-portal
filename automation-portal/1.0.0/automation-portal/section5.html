@@ -175,7 +175,7 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Login to the Openshift Cluster and go to Network &#8594; Routes to access the Ansible Automation Platform.</p>
+<p>Login to the Openshift Cluster using <code>{openshift_cluster_console_url}</code> with Username: <code>{openshift_cluster_admin_username}</code> and Password <code>{openshift_cluster_admin_password}</code> and go to Network &#8594; Routes to access the Ansible Automation Platform.</p>
 </li>
 <li>
 <p>Select the project as <strong>aap</strong> and open your Ansible Automation Platform instance in a web browser.</p>
@@ -201,12 +201,11 @@
 </ol>
 </div>
 <div class="paragraph">
-<p>Open your Ansible Automation Platform instance in a web browser and log in as an administrator.</p>
+<p>Open your Ansible Automation Platform instance in a web browser using <code>{aap_controller_web_url}</code> and log is as user <code>{controller_username}</code> with the password you retrieved from the <code>{controller_password}</code> secret in the previous step.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># Example AAP URL (replace with your instance from OpenShift Route)
-https://aap.example.com</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">{aap_controller_web_url}</code></pre>
 </div>
 </div>
 </div>
@@ -249,7 +248,7 @@ https://aap.example.com</code></pre>
 <p><strong>Client type:</strong> Select <strong>Confidential</strong></p>
 </li>
 <li>
-<p><strong>Redirect URIs:</strong> Enter a placeholder URL for now: <code><a href="https://example.com/api/auth/rhaap/handler/frame" class="bare">https://example.com/api/auth/rhaap/handler/frame</a></code> (we&#8217;ll update this later with the actual portal deployment URL)</p>
+<p><strong>Redirect URIs:</strong> Enter a placeholder URL for now: <code><a href="https://&lt;automation-portal&gt;/api/auth/rhaap/handler/frame" class="bare">https://&lt;automation-portal&gt;/api/auth/rhaap/handler/frame</a></code> (we&#8217;ll update this later with the actual portal deployment URL)</p>
 <div class="imageblock">
 <div class="content">
 <img src="_images/5.4.png" alt="5.4">
@@ -362,7 +361,7 @@ https://aap.example.com</code></pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Go to the API <code><a href="https://&lt;aap-hostname&gt;/api/gateway/v1/tokens/" class="bare">https://&lt;aap-hostname&gt;/api/gateway/v1/tokens/</a></code> and replace the &lt;aap-hostname&gt; with the actual hostname of the Ansible Automation Platform.</p>
+<p>Go to the API <code><a href="https://{aap_controller_web_url}/api/gateway/v1/tokens/" class="bare">https://{aap_controller_web_url}/api/gateway/v1/tokens/</a></code> and replace the {aap_controller_web_url} with the actual hostname of the Ansible Automation Platform.</p>
 <div class="imageblock">
 <div class="content">
 <img src="_images/5.6.png" alt="5.6">
@@ -448,7 +447,7 @@ https://aap.example.com</code></pre>
 <p>Once login to bastion host then login to OCP cli using the command shared in <strong>OpenShift CLI Commands</strong> section on the RHDP login page:</p>
 <div class="listingblock execute">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc login -u admin -p &lt;openshift-admin-password&gt;  https://api.cluster-kstzt.dyn.redhatworkshops.io:6443</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc login -u admin -p {openshift_cluster_admin_password} {openshift_api_server_url}</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -569,7 +568,7 @@ https://aap.example.com</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p><code>&lt;aap-instance-url&gt;</code> — The URL of your AAP instance (e.g., <code><a href="https://aap.example.com" class="bare">https://aap.example.com</a></code>)</p>
+<p><code>&lt;aap-instance-url&gt;</code> — The URL of your AAP instance (e.g., <code><a href="https://{aap_controller_web_url}" class="bare">https://{aap_controller_web_url}</a></code>)</p>
 </li>
 <li>
 <p><code>&lt;oauth-client-id&gt;</code> — The Client ID from the previous task.</p>
