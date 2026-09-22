@@ -20,7 +20,7 @@ The OAuth application is how the Automation Portal will authenticate users again
 
 === Step 1.1: Log in to AAP
 
-. Login to the Openshift Cluster using `{openshift_cluster_console_url}` with Username: `{openshift_cluster_admin_username}` and Password `{openshift_cluster_admin_password}` and go to Network -> Routes to access the Ansible Automation Platform. 
+. Login to the Openshift Cluster using {openshift_cluster_console_url} with Username: {openshift_cluster_admin_username} and Password {openshift_cluster_admin_password} and go to Network -> Routes to access the Ansible Automation Platform. 
 
 . Select the project as *aap* and open your Ansible Automation Platform instance in a web browser. 
 +
@@ -32,7 +32,7 @@ image::5.2.png[]
 +
 image::5.3.png[]
 
-Open your Ansible Automation Platform instance in a web browser using `{aap_controller_web_url}` and log is as user `{controller_username}` with the password you retrieved from the `{controller_password}` secret in the previous step.
+Open your Ansible Automation Platform instance in a web browser using {aap_controller_web_url} and log is as user {controller_username} with the password you retrieved from the {controller_password} secret in the previous step.
 
 [source,bash]
 ----
@@ -100,7 +100,7 @@ Verify that the setting now shows as **Enabled** on the Platform gateway setting
 
 The API token is used by the Automation Portal to communicate with your AAP instance on a service-to-service basis. This token is what allows the portal to synchronize job templates, manage execution environments, and perform automation tasks.
 
-. Go to the API `https://{aap_controller_web_url}/api/gateway/v1/tokens/` and replace the {aap_controller_web_url} with the actual hostname of the Ansible Automation Platform. 
+. Go to the API 'https://{aap_controller_web_url}/api/gateway/v1/tokens/' and replace the {aap_controller_web_url} with the actual hostname of the Ansible Automation Platform. 
 +
 image::5.6.png[]
 
@@ -141,7 +141,7 @@ Now we shift focus to the OpenShift side of the setup. We need to connect to you
 ----
 oc login -u admin -p {openshift_cluster_admin_password} {openshift_api_server_url}
 ----
-+
++ 
 image::5.8.png[]
 
 . Run the following command, replacing `portal` with your preferred project name if you want a different project name(keep it lowercase with hyphens only, no underscores):
