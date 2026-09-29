@@ -1,6 +1,6 @@
 {
-  "totalSeconds": 873,
-  "pageCount": 9,
+  "totalSeconds": 1873,
+  "pageCount": 21,
   "pages": [
     {
       "module": "ROOT",
@@ -10,7 +10,7 @@
     {
       "module": "LABENV",
       "page": "index.adoc",
-      "seconds": 47
+      "seconds": 46
     },
     {
       "module": "automation-portal",
@@ -35,12 +35,72 @@
     {
       "module": "automation-portal",
       "page": "section5.adoc",
-      "seconds": 239
+      "seconds": 244
+    },
+    {
+      "module": "automation-portal",
+      "page": "test.adoc",
+      "seconds": 41
     },
     {
       "module": "automation-portal",
       "page": "section6.adoc",
-      "seconds": 178
+      "seconds": 184
+    },
+    {
+      "module": "centralized-content-discovery",
+      "page": "section1.adoc",
+      "seconds": 30
+    },
+    {
+      "module": "centralized-content-discovery",
+      "page": "section2.adoc",
+      "seconds": 131
+    },
+    {
+      "module": "centralized-content-discovery",
+      "page": "section3.adoc",
+      "seconds": 113
+    },
+    {
+      "module": "centralized-content-discovery",
+      "page": "section4.adoc",
+      "seconds": 143
+    },
+    {
+      "module": "centralized-content-discovery",
+      "page": "section5.adoc",
+      "seconds": 156
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "section1.adoc",
+      "seconds": 41
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "section2.adoc",
+      "seconds": 71
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "section3.adoc",
+      "seconds": 92
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "section4.adoc",
+      "seconds": 46
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "section6.adoc",
+      "seconds": 26
+    },
+    {
+      "module": "visual-execution-environment-builder",
+      "page": "section7.adoc",
+      "seconds": 100
     },
     {
       "module": "appendix",

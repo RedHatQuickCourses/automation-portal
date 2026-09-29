@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
     <link rel="prev" href="section4.html">
-    <link rel="next" href="section6.html">
+    <link rel="next" href="test.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -74,7 +74,60 @@
     <a class="nav-link" href="section5.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="test.html">Chapter 4: Synchronizing Red Hat Certified Automation Content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../centralized-content-discovery/section1.html">Centralized Content Discovery</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/section3.html">Configuring Supported Sources including GitHub, GitLab, and Private Automation Hub</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/section4.html">Implementing Continuous Synchronization and Scheduling</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../centralized-content-discovery/section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#section6.adoc">section6.adoc</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../visual-execution-environment-builder/section1.html">Visual Execution Environment Builder</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section3.html">Utilizing the Step-by-Step Wizard for Custom EE Creation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Integrating Red Hat Domain-Specific Presets and Base Container Images</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section6.html">section6.adoc</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../visual-execution-environment-builder/section7.html">Hands-on Lab: Content Discovery and Visual EE Building</a>
   </li>
 </ul>
   </li>
@@ -175,7 +228,7 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Login to the Openshift Cluster using {openshift_cluster_console_url} with Username: {openshift_cluster_admin_username} and Password {openshift_cluster_admin_password} and go to Network &#8594; Routes to access the Ansible Automation Platform.</p>
+<p>From the RHDP login page access the Ansible Automation Platform.</p>
 </li>
 <li>
 <p>Select the project as <strong>aap</strong> and open your Ansible Automation Platform instance in a web browser.</p>
@@ -534,6 +587,11 @@
 </li>
 </ol>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre>Currently, we are using Helm chart to deploy the Automation Portal. In future, we will be using Operator to deploy the Automation Portal once its will be GA. Currently its in in Tech Preview.</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -615,33 +673,146 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_verify_the_secret_was_created"><a class="anchor" href="#_verify_the_secret_was_created"></a>Verify the Secret Was Created</h2>
+<h2 id="_create_a_github_token_pat_for_automation_portal_and_oauth_application_for_pushing_the_execution_environment_ee_to_github"><a class="anchor" href="#_create_a_github_token_pat_for_automation_portal_and_oauth_application_for_pushing_the_execution_environment_ee_to_github"></a>Create a Github Token (PAT) for Automation Portal and Oauth Application for pushing the Execution Environment (EE) to Github.</h2>
 <div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The Github Token (PAT) is needed to use the Content Discovery feature of the Automation Portal.</p>
+</li>
+<li>
+<p>We are going to setup the Github OAuth Application to push the Execution Environment (EE) content to your GitHub repository and then with Github Actions we will build the EE and push it to the Red Hat registry. So for this you need to use your personal Github Account.</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_step_1_generate_a_github_personal_access_token_pat"><a class="anchor" href="#_step_1_generate_a_github_personal_access_token_pat"></a>Step 1: Generate a GitHub Personal Access Token (PAT)</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to your GitHub Settings &gt; Developer Settings &gt; Personal Access Tokens.</p>
+</li>
+<li>
+<p>Click Generate new token (classic).</p>
+</li>
+<li>
+<p>Give it a descriptive note (e.g., AAP-Content-Discovery) and Create a GitHub PAT with the following scopes:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">    repo
+    read:org
+    workflow (required for the CI activity tab to display workflow run status)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Click Generate Token and immediately copy the token value.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_2_create_an_oauth_apps_in_github_for_the_ee_builder"><a class="anchor" href="#_step_2_create_an_oauth_apps_in_github_for_the_ee_builder"></a>Step 2: Create an OAuth apps in GitHub for the EE Builder.</h3>
 <div class="paragraph">
-<p>Confirm the secret exists:</p>
+<p>To configure GitHub OAuth for the automation portal, complete the following steps.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a GitHub OAuth App in your organization settings under
+<strong>Developer settings &gt; OAuth Apps</strong>.</p>
+<div class="literalblock">
+<div class="content">
+<pre>Enter the following details:</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Application name:</strong> A descriptive name, for example <code>ansible-portal-ee-builder</code>.</p>
+</li>
+<li>
+<p><strong>Homepage URL:</strong> The URL of your automation portal deployment. <code><a href="https://automation-portal" class="bare">https://automation-portal</a></code></p>
+</li>
+<li>
+<p><strong>Authorization callback URL:</strong> <code><a href="https://automation-portal/api/auth/github/handler/frame" class="bare">https://automation-portal/api/auth/github/handler/frame</a></code></p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>GitHub limits the Authorization callback URL to 100 characters and also we will replace the placeholder <code>automation-portal</code> with the actual hostname After portal deployment. If your OpenShift route URL exceeds this limit, configure a shorter route hostname for the portal before creating the OAuth App.</p>
+</div>
+<div class="paragraph">
+<p>If your OpenShift route URL exceeds this limit, configure a shorter route hostname for the portal before creating the OAuth App.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Note the <strong>Client ID</strong> and generate a <strong>Client secret</strong>.</p>
+<div class="literalblock">
+<div class="content">
+<pre>Save the client secret value immediately because you cannot view it again.</pre>
+</div>
+</div>
+</li>
+<li>
+<p>If your organization restricts OAuth App access, navigate to <strong>Organization settings &gt; Third-party access</strong> and approve the OAuth App.</p>
+</li>
+<li>
+<p>we will Enable the GitHub authentication provider in your configuration in the next steps.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_step_3_create_a_repo"><a class="anchor" href="#_step_3_create_a_repo"></a>Step 3: Create a repo:</h3>
+<div class="paragraph">
+<p>In your GitHub organization which we will be integrating in the next chapter please store the Execution Environment (EE) content. This repository will be used by the Automation Portal to push and manage EE content.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>I have created automation-portal you can create your own repo in your GitHub organization to store the Execution Environment (EE) content. This repository will be used by the Automation Portal to push and manage EE content.</p>
+</li>
+<li>
+<p>Go to settings and then go to secrets and variables and then click on actions and then click on new repository secret.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml"># For Variables
+REDHAT_REGISTRY_USERNAME: &lt;YOUR-rhn_iD-USERNAME&gt;
+REGISTRY_USERNAME : admin</code></pre>
+</div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc get secret secrets-rhaap-portal -n portal</code></pre>
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml"># For Secrets
+
+REDHAT_REGISTRY_PASSWORD: &lt;YOUR-rhn_iD-PASSWORD&gt;
+REGISTRY_PASSWORD : &lt;RHDP-AAP-Admin-Password&gt;</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>You should see output like:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                    TYPE     DATA   AGE
-secrets-rhaap-portal    Opaque   4      10s</code></pre>
-</div>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>Once the above is done. You&#8217;re now ready for the next phase: deploying the Automation Portal via Helm chart!</p>
 </div>
 </div>
 </div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="section4.html">Reducing UI Complexity through Admin-Defined Access Policies</a></span>
-  <span class="next"><a href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a></span>
+  <span class="next"><a href="test.html">Chapter 4: Synchronizing Red Hat Certified Automation Content</a></span>
 </nav>
 </article>
   </div>
