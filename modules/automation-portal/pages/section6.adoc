@@ -1,14 +1,14 @@
 = Hands-on Lab: Installing and Verifying the Automation Portal on OCP
 
-In this lab, you will deploy the Automation Portal on your OpenShift Container Platform (OCP) environment. 
+Now we are all set to do the deployment of the Automation Portal on OpenShift Container Platform (OCP) and CI/CD for the EE builder that we are going to learn in the Next Chapter. 
 
 == Installing the Automation Portal
 
-. Login to the Openshift Cluster using `{openshift_cluster_console_url}` with Username: `{openshift_cluster_admin_username}` and Password `{openshift_cluster_admin_password}` and go to Network -> Routes to access the Ansible Automation Platform. 
+. Login to the Openshift Cluster and Ansible Automation Platform (AAP) as admin user from the RHDP login page credentials. 
 
 . Go to Ecosystem > Software Catalog in the OpenShift web console.
 
-. Search for "Automation Portal" in the catalog and select it.
+. Search for "Automation Portal" with tag `Helm Chart` in the catalog and select it.
 +
 image::6.1.png[]
 

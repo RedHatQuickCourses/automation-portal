@@ -3,7 +3,7 @@
 == Instructions to Launch Your Lab on the Red Hat Demo Platform (RHDP)
 
 . **Log in** to the xref:#RHDP-Portal-Links[RHDP portal].
-. **Search** for the catalog entry: **Advanced Deployment of Ansible Automation Platform 2.7**.
+. **Search** for the catalog entry: **What's New in AAP 2.7: Automation Portal, MCP & EE Builder**.
 +
 image::1.png[]
 
@@ -27,6 +27,7 @@ image::form.png[]
 . **Select your lab** from the listings on the right-hand side of the page to view access details.
 
 [[RHDP-Portal-Links]]
+
 === RHDP Portal Links
-- RedHat associates: https://catalog.demo.redhat.com/catalog?search=advanced&item=babylon-catalog-prod%2Fpert.advanced25-aap-deployment.prod[https://demo.redhat.com/,window=_blank]
-- RedHat partners: https://catalog.partner.demo.redhat.com/catalog?search=Product+Enablement&item=babylon-catalog-prod%2Fpartner.advanced25-aap-deployment.prod[https://partner.demo.redhat.com/,window=_blank]
+- RedHat associates: [https://demo.redhat.com/,window=_blank]
+- RedHat partners: [https://partner.demo.redhat.com/,window=_blank]

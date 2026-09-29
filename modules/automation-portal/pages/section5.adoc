@@ -20,7 +20,7 @@ The OAuth application is how the Automation Portal will authenticate users again
 
 === Step 1.1: Log in to AAP
 
-. Login to the Openshift Cluster using {openshift_cluster_console_url} with Username: {openshift_cluster_admin_username} and Password {openshift_cluster_admin_password} and go to Network -> Routes to access the Ansible Automation Platform. 
+. From the RHDP login page access the Ansible Automation Platform. 
 
 . Select the project as *aap* and open your Ansible Automation Platform instance in a web browser. 
 +
@@ -204,6 +204,9 @@ oc new-app --image-stream=plugin-registry
 
 .. Go to OpenShift Web Console, navigate to the `portal` project, and Then Workloads -> Topology verify that the `plugin-registry` pod is running successfully.
 
+[Note]
+ Currently, we are using Helm chart to deploy the Automation Portal. In future, we will be using Operator to deploy the Automation Portal once its will be GA. Currently its in in Tech Preview.
+
 == Create OpenShift Secrets for AAP Authentication
 
 OpenShift Secrets are secure, encrypted storage for sensitive data. We'll create a secret that holds the OAuth credentials and API token you generated in Tasks 1 and 3. The Automation Portal Helm chart will reference this secret during deployment.
@@ -240,21 +243,75 @@ oc create secret generic secrets-rhaap-portal \
 The secret name (`secrets-rhaap-portal`) is important—the Helm chart expects this exact name. If you change it, you'll need to update your Helm values during deployment.
 ====
 
-== Verify the Secret Was Created
+== Create a Github Token (PAT) for Automation Portal and Oauth Application for pushing the Execution Environment (EE) to Github. 
 
-Confirm the secret exists:
+. The Github Token (PAT) is needed to use the Content Discovery feature of the Automation Portal. 
+. We are going to setup the Github OAuth Application to push the Execution Environment (EE) content to your GitHub repository and then with Github Actions we will build the EE and push it to the Red Hat registry. So for this you need to use your personal Github Account. 
 
-[source,bash]
+=== Step 1: Generate a GitHub Personal Access Token (PAT)
+
+. Go to your GitHub Settings > Developer Settings > Personal Access Tokens.
+. Click Generate new token (classic).
+. Give it a descriptive note (e.g., AAP-Content-Discovery) and Create a GitHub PAT with the following scopes:
++
+[source,yaml]
 ----
-oc get secret secrets-rhaap-portal -n portal
+    repo
+    read:org
+    workflow (required for the CI activity tab to display workflow run status)
 ----
 
-You should see output like:
+. Click Generate Token and immediately copy the token value.
 
-[source,bash]
+=== Step 2: Create an OAuth apps in GitHub for the EE Builder. 
+
+To configure GitHub OAuth for the automation portal, complete the following steps.
+
+. Create a GitHub OAuth App in your organization settings under
+  *Developer settings > OAuth Apps*.
+
+  Enter the following details:
+
+  * *Application name:* A descriptive name, for example `ansible-portal-ee-builder`.
+  * *Homepage URL:* The URL of your automation portal deployment. `https://automation-portal`
+  * *Authorization callback URL:* `https://automation-portal/api/auth/github/handler/frame`
++
+[NOTE]
+====
+GitHub limits the Authorization callback URL to 100 characters and also we will replace the placeholder `automation-portal` with the actual hostname After portal deployment. If your OpenShift route URL exceeds this limit, configure a shorter route hostname for the portal before creating the OAuth App.
+
+If your OpenShift route URL exceeds this limit, configure a shorter route hostname for the portal before creating the OAuth App.
+====
+
+. Note the *Client ID* and generate a *Client secret*.
+
+  Save the client secret value immediately because you cannot view it again.
+
+. If your organization restricts OAuth App access, navigate to *Organization settings > Third-party access* and approve the OAuth App.
+
+. we will Enable the GitHub authentication provider in your configuration in the next steps. 
+
+=== Step 3: Create a repo: 
+
+In your GitHub organization which we will be integrating in the next chapter please store the Execution Environment (EE) content. This repository will be used by the Automation Portal to push and manage EE content.
+
+. I have created automation-portal you can create your own repo in your GitHub organization to store the Execution Environment (EE) content. This repository will be used by the Automation Portal to push and manage EE content.
+
+. Go to settings and then go to secrets and variables and then click on actions and then click on new repository secret.
++
+[source,yaml]
 ----
-NAME                    TYPE     DATA   AGE
-secrets-rhaap-portal    Opaque   4      10s
+# For Variables 
+REDHAT_REGISTRY_USERNAME: <YOUR-rhn_iD-USERNAME>
+REGISTRY_USERNAME : admin
+----
++
+[source,yaml]
+----
+# For Secrets
+
+REDHAT_REGISTRY_PASSWORD: <YOUR-rhn_iD-PASSWORD>
+REGISTRY_PASSWORD : <RHDP-AAP-Admin-Password>
 ----
 
 Once the above is done. You're now ready for the next phase: deploying the Automation Portal via Helm chart!

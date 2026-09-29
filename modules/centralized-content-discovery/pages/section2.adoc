@@ -29,12 +29,6 @@ GL --> [Sync Engine] : Poll
 @enduml
 ....
 
-=== Key Components
-
-1.  **The Sync Engine:** A background service that periodically connects to configured remote sources. It performs a lightweight metadata crawl to identify available Collections, their versions, and documentation.
-2.  **Metadata Database:** A persistent storage layer within the portal that caches the state of discovered collections. This allows for near-instant search results without needing to reach out to external APIs during every UI query.
-3.  **Abstraction Layer:** Normalizes the data structure from diverse sources (e.g., standardizing how a GitHub-hosted collection version is represented versus an Automation Hub-hosted collection).
-
 == Benefits of Aggregation
 
 *   **Reduced Discovery Friction:** Developers can search for a module or collection without needing to know the hosting infrastructure beforehand.
