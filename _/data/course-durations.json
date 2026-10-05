@@ -1,16 +1,16 @@
 {
-  "totalSeconds": 1873,
+  "totalSeconds": 2108,
   "pageCount": 21,
   "pages": [
     {
       "module": "ROOT",
       "page": "index.adoc",
-      "seconds": 30
+      "seconds": 32
     },
     {
       "module": "LABENV",
       "page": "index.adoc",
-      "seconds": 46
+      "seconds": 45
     },
     {
       "module": "automation-portal",
@@ -20,7 +20,7 @@
     {
       "module": "automation-portal",
       "page": "section2.adoc",
-      "seconds": 156
+      "seconds": 172
     },
     {
       "module": "automation-portal",
@@ -35,12 +35,12 @@
     {
       "module": "automation-portal",
       "page": "section5.adoc",
-      "seconds": 244
+      "seconds": 417
     },
     {
       "module": "automation-portal",
       "page": "test.adoc",
-      "seconds": 41
+      "seconds": 86
     },
     {
       "module": "automation-portal",

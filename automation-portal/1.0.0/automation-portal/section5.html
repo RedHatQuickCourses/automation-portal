@@ -183,34 +183,7 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this lab, you&#8217;ll walk through the essential prerequisite steps to deploy the Ansible Automation Portal on OpenShift Container Platform. We&#8217;ll configure OAuth authentication with AAP, generate required API tokens, and prepare your OpenShift environment for the portal deployment. These steps ensure secure communication between the portal and your AAP instance.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_overview_of_what_well_do"><a class="anchor" href="#_overview_of_what_well_do"></a>Overview of What We&#8217;ll Do</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>By the end of this lab, you will have:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Created an OAuth application in AAP for portal authentication</p>
-</li>
-<li>
-<p>Generated and secured API credentials</p>
-</li>
-<li>
-<p>Authenticated with your OpenShift cluster</p>
-</li>
-<li>
-<p>Created a dedicated project for the automation portal</p>
-</li>
-<li>
-<p>Prepared all necessary credentials for the Helm chart deployment</p>
-</li>
-</ul>
+<p>In this lab, you&#8217;ll walk through the essential prerequisite steps to deploy the Ansible Automation Portal on OpenShift Container Platform. We&#8217;ll configure OAuth authentication with AAP, generate required API tokens, and prepare your OpenShift environment for the portal deployment and in addition to that github configuration to do the setup for the Execution Environments builder Ci/CD configuration to directly push the changes to the Private automation hub. These steps ensure secure communication between the automation portal and your AAP instance.</p>
 </div>
 <div class="paragraph">
 <p>This is the foundational work that must be completed <strong>before</strong> you deploy the Helm chart. Think of it as setting up the "communication channels" between the portal and your AAP instance.</p>
@@ -254,12 +227,7 @@
 </ol>
 </div>
 <div class="paragraph">
-<p>Open your Ansible Automation Platform instance in a web browser using {aap_controller_web_url} and log is as user {controller_username} with the password you retrieved from the {controller_password} secret in the previous step.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">{aap_controller_web_url}</code></pre>
-</div>
+<p>Open your Ansible Automation Platform instance in a web browser using RHDP login page and log in with the administrator credentials provided to you.</p>
 </div>
 </div>
 <div class="sect2">
@@ -301,7 +269,7 @@
 <p><strong>Client type:</strong> Select <strong>Confidential</strong></p>
 </li>
 <li>
-<p><strong>Redirect URIs:</strong> Enter a placeholder URL for now: <code><a href="https://&lt;automation-portal&gt;/api/auth/rhaap/handler/frame" class="bare">https://&lt;automation-portal&gt;/api/auth/rhaap/handler/frame</a></code> (we&#8217;ll update this later with the actual portal deployment URL)</p>
+<p><strong>Redirect URIs:</strong> Enter a placeholder URL for now: <code><a href="https://portal.example.com/api/auth/rhaap/handler/frame" class="bare">https://portal.example.com/api/auth/rhaap/handler/frame</a></code> (we&#8217;ll update this later with the actual portal deployment URL)</p>
 <div class="imageblock">
 <div class="content">
 <img src="_images/5.4.png" alt="5.4">
@@ -414,22 +382,19 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Go to the API 'https://{aap_controller_web_url}/api/gateway/v1/tokens/' and replace the {aap_controller_web_url} with the actual hostname of the Ansible Automation Platform.</p>
+<p>Go to the Access Management &#8594; API Tokens and</p>
 <div class="imageblock">
 <div class="content">
 <img src="_images/5.6.png" alt="5.6">
 </div>
 </div>
-</li>
-<li>
-<p>Configure the Token according to the screen shot and POST the Request.</p>
 <div class="paragraph">
 <p>Fill in the following fields:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Description:</strong> <code>automation-portal-api-token</code> (descriptive name for your reference)</p>
+<p><strong>Description:</strong> <code>automation-portal</code> (descriptive name for your reference)</p>
 </li>
 <li>
 <p><strong>Application:</strong> Select the <strong>automation-portal</strong> OAuth application you created in Task 1</p>
@@ -498,11 +463,6 @@
 </li>
 <li>
 <p>Once login to bastion host then login to OCP cli using the command shared in <strong>OpenShift CLI Commands</strong> section on the RHDP login page:</p>
-<div class="listingblock execute">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc login -u admin -p {openshift_cluster_admin_password} {openshift_api_server_url}</code></pre>
-</div>
-</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/5.8.png" alt="5.8">
@@ -578,9 +538,6 @@
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-app --image-stream=plugin-registry</code></pre>
 </div>
 </div>
-</li>
-<li>
-<p>Go to OpenShift Web Console, navigate to the <code>portal</code> project, and Then Workloads &#8594; Topology verify that the <code>plugin-registry</code> pod is running successfully.</p>
 </li>
 </ol>
 </div>
@@ -673,7 +630,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_create_a_github_token_pat_for_automation_portal_and_oauth_application_for_pushing_the_execution_environment_ee_to_github"><a class="anchor" href="#_create_a_github_token_pat_for_automation_portal_and_oauth_application_for_pushing_the_execution_environment_ee_to_github"></a>Create a Github Token (PAT) for Automation Portal and Oauth Application for pushing the Execution Environment (EE) to Github.</h2>
+<h2 id="_create_a_github_token_pat_and_oauth_application_for_pushing_the_execution_environment_ee_to_github"><a class="anchor" href="#_create_a_github_token_pat_and_oauth_application_for_pushing_the_execution_environment_ee_to_github"></a>Create a Github Token (PAT) and Oauth Application for pushing the Execution Environment (EE) to Github.</h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
@@ -700,13 +657,18 @@
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">    repo
-    read:org
+    admin (this can be only read:*org*)
     workflow (required for the CI activity tab to display workflow run status)</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.12.png" alt="5.12">
 </div>
 </div>
 </li>
 <li>
-<p>Click Generate Token and immediately copy the token value.</p>
+<p>Click Generate Token and immediately copy the token value as it will be used in the next section for creating secrets in the Automation Portal.</p>
 </li>
 </ol>
 </div>
@@ -736,6 +698,11 @@
 </li>
 <li>
 <p><strong>Authorization callback URL:</strong> <code><a href="https://automation-portal/api/auth/github/handler/frame" class="bare">https://automation-portal/api/auth/github/handler/frame</a></code></p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.13.png" alt="5.13">
+</div>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -785,12 +752,17 @@
 <p>I have created automation-portal you can create your own repo in your GitHub organization to store the Execution Environment (EE) content. This repository will be used by the Automation Portal to push and manage EE content.</p>
 </li>
 <li>
-<p>Go to settings and then go to secrets and variables and then click on actions and then click on new repository secret.</p>
+<p>Go to settings of the repository and then go to secrets and variables and then click on actions and then click on new repository secret.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml"># For Variables
 REDHAT_REGISTRY_USERNAME: &lt;YOUR-rhn_iD-USERNAME&gt;
 REGISTRY_USERNAME : admin</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.16.png" alt="5.16">
 </div>
 </div>
 <div class="listingblock">
@@ -799,6 +771,11 @@ REGISTRY_USERNAME : admin</code></pre>
 
 REDHAT_REGISTRY_PASSWORD: &lt;YOUR-rhn_iD-PASSWORD&gt;
 REGISTRY_PASSWORD : &lt;RHDP-AAP-Admin-Password&gt;</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.15.png" alt="5.15">
 </div>
 </div>
 </li>
