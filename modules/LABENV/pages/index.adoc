@@ -29,5 +29,5 @@ image::form.png[]
 [[RHDP-Portal-Links]]
 
 === RHDP Portal Links
-- RedHat associates: [https://demo.redhat.com/,window=_blank]
-- RedHat partners: [https://partner.demo.redhat.com/,window=_blank]
+- RedHat associates: https://demo.redhat.com/
+- RedHat partners: https://partner.demo.redhat.com/

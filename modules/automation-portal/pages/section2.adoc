@@ -6,6 +6,7 @@ The Automation Portal with Ansible Automation Platform provides a centralized in
 In previous iterations, such as AAP 2.6/7, the portal functioned primarily as an execution layer. Users navigated to the interface, identified authorized job templates, populated surveys, and triggered automation. 
 
 Automation Portal 2.7 expands this scope to support three primary pillars:
+
 *   **Visual Execution Environment (EE) Builder:** A GUI-driven workflow for container image creation.
 *   **Centralized Content Discovery:** A unified catalog that aggregates automation assets from multiple sources.
 *   **Platform-wide Governance:** Enhanced RBAC controls, administrative navigation policies, and AI-assisted operational workflows.
@@ -44,7 +45,10 @@ Before initiating the deployment, ensure your environment meets the following te
 
 == Installation Overview
 
-The official deployment method uses **Helm charts** on OpenShift Container Platform. The Helm chart automates the deployment of the Automation Portal, handling networking, storage, and integration with your AAP instance.
+The official deployment method uses **Helm charts** on OpenShift Container Platform. The Helm chart automates the deployment of the Automation Portal, handling networking, storage, and integration with your AAP instance.and the Operator based Deployment method is also available for the Automation Portal. The Operator simplifies the installation and management of the portal by providing a declarative approach to deployment, allowing for easier upgrades and configuration management.
+
+[NOTE]
+ We will be using the Helm chart method for the Automation Portal deployment in this lab. 
 
 [IMPORTANT]
 ====

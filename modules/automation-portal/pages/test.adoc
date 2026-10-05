@@ -13,6 +13,9 @@ To allow Private Automation Hub to securely pull content from Red Hat’s hosted
 . Log in with your Red Hat credentials.
 . Navigate to *Ansible Automation Platform* > *Automation Hub* > *Connect to Hub*.
 . Under the *Offline Token* / *Load Token* section, click *Get Token* (or *Load Token*).
++
+image::7.1.png[]
+
 . Copy the generated API token to your clipboard for use in the next step.
 
 == Step 2: Configure the Remote Repository in Private Automation Hub
@@ -24,6 +27,8 @@ Now that you have the API token, update the remote repository configuration on y
 . Locate the `rh-certified` remote entry in the repository list, click the *Options* menu (⋮) next to it, and select *Edit*.
 . Update the following fields:
 * *Token:* Paste the API token you copied from `cloud.redhat.com` in Step 1.
++
+image::7.2.png[]
 . Click *Save*.
 
 == Step 3: Trigger Content Synchronization
@@ -32,5 +37,7 @@ Once the token and URL are configured, pull the certified collection metadata an
 
 . On the *Remotes* page, locate the `rh-certified` repository again.
 . Click the *Options* menu (⋮) and select *Sync*.
++
+image::7.3.png[]
 . Navigate to *Task Management* (under Administration) to monitor the progress of the synchronization job.
 . Once the status displays *Completed*, navigate to *Collections* > *Red Hat Certified* in the navigation menu to verify that certified content collections are now populated and accessible locally.

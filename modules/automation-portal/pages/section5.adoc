@@ -1,16 +1,6 @@
 = Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration
 
-In this lab, you'll walk through the essential prerequisite steps to deploy the Ansible Automation Portal on OpenShift Container Platform. We'll configure OAuth authentication with AAP, generate required API tokens, and prepare your OpenShift environment for the portal deployment. These steps ensure secure communication between the portal and your AAP instance.
-
-== Overview of What We'll Do
-
-By the end of this lab, you will have:
-
-* Created an OAuth application in AAP for portal authentication
-* Generated and secured API credentials
-* Authenticated with your OpenShift cluster
-* Created a dedicated project for the automation portal
-* Prepared all necessary credentials for the Helm chart deployment
+In this lab, you'll walk through the essential prerequisite steps to deploy the Ansible Automation Portal on OpenShift Container Platform. We'll configure OAuth authentication with AAP, generate required API tokens, and prepare your OpenShift environment for the portal deployment and in addition to that github configuration to do the setup for the Execution Environments builder Ci/CD configuration to directly push the changes to the Private automation hub. These steps ensure secure communication between the automation portal and your AAP instance.
 
 This is the foundational work that must be completed *before* you deploy the Helm chart. Think of it as setting up the "communication channels" between the portal and your AAP instance.
 
@@ -32,12 +22,7 @@ image::5.2.png[]
 +
 image::5.3.png[]
 
-Open your Ansible Automation Platform instance in a web browser using {aap_controller_web_url} and log is as user {controller_username} with the password you retrieved from the {controller_password} secret in the previous step.
-
-[source,bash]
-----
-{aap_controller_web_url}
-----
+Open your Ansible Automation Platform instance in a web browser using RHDP login page and log in with the administrator credentials provided to you. 
 
 === Step 1.2: Navigate to OAuth Applications
 
@@ -55,7 +40,7 @@ Fill in the following fields with these exact values:
 * *Organization:* Select the organization where your automation content lives (typically "Default" unless you have a multi-tenant setup)
 * *Authorization grant type:* Select **Authorization code**
 * *Client type:* Select **Confidential**
-* *Redirect URIs:* Enter a placeholder URL for now: `https://<automation-portal>/api/auth/rhaap/handler/frame` (we'll update this later with the actual portal deployment URL)
+* *Redirect URIs:* Enter a placeholder URL for now: `https://portal.example.com/api/auth/rhaap/handler/frame` (we'll update this later with the actual portal deployment URL)
 +
 image::5.4.png[]
 
@@ -100,15 +85,13 @@ Verify that the setting now shows as **Enabled** on the Platform gateway setting
 
 The API token is used by the Automation Portal to communicate with your AAP instance on a service-to-service basis. This token is what allows the portal to synchronize job templates, manage execution environments, and perform automation tasks.
 
-. Go to the API 'https://{aap_controller_web_url}/api/gateway/v1/tokens/' and replace the {aap_controller_web_url} with the actual hostname of the Ansible Automation Platform. 
+. Go to the Access Management -> API Tokens and 
 +
 image::5.6.png[]
-
-.  Configure the Token according to the screen shot and POST the Request.
 +
 Fill in the following fields:
 
-* *Description:* `automation-portal-api-token` (descriptive name for your reference)
+* *Description:* `automation-portal` (descriptive name for your reference)
 * *Application:* Select the **automation-portal** OAuth application you created in Task 1
 * *Scope:* Select **read** (the portal needs read access to manage templates and execution environments)
 +
@@ -136,11 +119,6 @@ Now we shift focus to the OpenShift side of the setup. We need to connect to you
 . Login to the bastion host using the credentials from the RHDP login page. 
 
 . Once login to bastion host then login to OCP cli using the command shared in *OpenShift CLI Commands* section on the RHDP login page:
-+
-[source,bash,role=execute]
-----
-oc login -u admin -p {openshift_cluster_admin_password} {openshift_api_server_url}
-----
 + 
 image::5.8.png[]
 
@@ -202,8 +180,6 @@ oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait
 oc new-app --image-stream=plugin-registry
 ---- 
 
-.. Go to OpenShift Web Console, navigate to the `portal` project, and Then Workloads -> Topology verify that the `plugin-registry` pod is running successfully.
-
 [Note]
  Currently, we are using Helm chart to deploy the Automation Portal. In future, we will be using Operator to deploy the Automation Portal once its will be GA. Currently its in in Tech Preview.
 
@@ -243,9 +219,10 @@ oc create secret generic secrets-rhaap-portal \
 The secret name (`secrets-rhaap-portal`) is important—the Helm chart expects this exact name. If you change it, you'll need to update your Helm values during deployment.
 ====
 
-== Create a Github Token (PAT) for Automation Portal and Oauth Application for pushing the Execution Environment (EE) to Github. 
+== Create a Github Token (PAT) and Oauth Application for pushing the Execution Environment (EE) to Github. 
 
 . The Github Token (PAT) is needed to use the Content Discovery feature of the Automation Portal. 
+
 . We are going to setup the Github OAuth Application to push the Execution Environment (EE) content to your GitHub repository and then with Github Actions we will build the EE and push it to the Red Hat registry. So for this you need to use your personal Github Account. 
 
 === Step 1: Generate a GitHub Personal Access Token (PAT)
@@ -257,11 +234,13 @@ The secret name (`secrets-rhaap-portal`) is important—the Helm chart expects t
 [source,yaml]
 ----
     repo
-    read:org
+    admin (this can be only read:*org*)
     workflow (required for the CI activity tab to display workflow run status)
 ----
++
+image::5.12.png[]
 
-. Click Generate Token and immediately copy the token value.
+. Click Generate Token and immediately copy the token value as it will be used in the next section for creating secrets in the Automation Portal. 
 
 === Step 2: Create an OAuth apps in GitHub for the EE Builder. 
 
@@ -275,6 +254,8 @@ To configure GitHub OAuth for the automation portal, complete the following step
   * *Application name:* A descriptive name, for example `ansible-portal-ee-builder`.
   * *Homepage URL:* The URL of your automation portal deployment. `https://automation-portal`
   * *Authorization callback URL:* `https://automation-portal/api/auth/github/handler/frame`
++
+image::5.13.png[]
 +
 [NOTE]
 ====
@@ -297,7 +278,7 @@ In your GitHub organization which we will be integrating in the next chapter ple
 
 . I have created automation-portal you can create your own repo in your GitHub organization to store the Execution Environment (EE) content. This repository will be used by the Automation Portal to push and manage EE content.
 
-. Go to settings and then go to secrets and variables and then click on actions and then click on new repository secret.
+. Go to settings of the repository and then go to secrets and variables and then click on actions and then click on new repository secret.
 +
 [source,yaml]
 ----
@@ -306,6 +287,8 @@ REDHAT_REGISTRY_USERNAME: <YOUR-rhn_iD-USERNAME>
 REGISTRY_USERNAME : admin
 ----
 +
+image::5.16.png[]
++
 [source,yaml]
 ----
 # For Secrets
@@ -313,5 +296,7 @@ REGISTRY_USERNAME : admin
 REDHAT_REGISTRY_PASSWORD: <YOUR-rhn_iD-PASSWORD>
 REGISTRY_PASSWORD : <RHDP-AAP-Admin-Password>
 ----
++
+image::5.15.png[]
 
 Once the above is done. You're now ready for the next phase: deploying the Automation Portal via Helm chart!

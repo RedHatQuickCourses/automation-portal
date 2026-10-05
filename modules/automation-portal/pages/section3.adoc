@@ -1,6 +1,6 @@
 = Managing RBAC-based Navigation Menus for User Role Separation
 
-In modern enterprise automation, "platform sprawl" is a significant hurdle. When users are presented with a cluttered interface containing tools they don't need—such as Execution Environment (EE) builders or Git repository management—it increases cognitive load and introduces potential security risks.
+In modern enterprise automation, `platform sprawl` is a significant hurdle. When users are presented with a cluttered interface containing tools they don't need—such as Execution Environment (EE) builders or Git repository management—it increases cognitive load and introduces potential security risks.
 
 The Automation Portal addresses this by providing **RBAC-based navigation menus**, allowing platform architects to tailor the UI experience based on the user's specific role.
 

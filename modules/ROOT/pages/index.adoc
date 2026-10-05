@@ -10,6 +10,8 @@ Duration: 1 hours
 == Topics covered in this course
 
 *  Automation Portal
+* Content Lifecycle
+* Execution Environment (EE) Builder
 
 == Prerequisites
 
