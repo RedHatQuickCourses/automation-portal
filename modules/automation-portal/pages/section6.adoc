@@ -16,13 +16,26 @@ image::6.1.png[]
 +
 image::6.2.png[]
 
-.. Change the Release Name to `automation-portal` and you can change it if you want. 
+.. Change the Release Name to `ap` and you can change it if you want. 
 .. Change the *clusterRouterBase* to the correct value for your cluster. For example, if the OCP cluster url is `https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io` then the clusterRouterBase should be `apps.cluster-kstzt.dyn.redhatworkshops.io`.
 +
 image::6.4.png[]
 +
 image::6.3.png[]
 
+.. In addition to the above settings, we will configure the GIT and the PAH to enable the Automation Portal to push the Execution Environment content to the GIT repository and also to pull the certified content from the Private Automation Hub.
++
+image::6.3.1.png[]
++
+image::6.3.2.png[]
++
+image::6.3.3.png[]
+
+.. Where ever you find `nameoverride` in the configuration, you can change it to ap as a value because for github configuration we need to have the URL under 100 characters. so we are only reducing the `nameoverride` to ap to have a shorter URL.
++
+image::6.3.4.png[]
++
+image::6.3.5.png[]
 
 .. By default, it will be setting up at the Organization *Default* for the automaton portal the parameter is orgs if you wanted to change it.
 +

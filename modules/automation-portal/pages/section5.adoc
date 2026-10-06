@@ -183,41 +183,6 @@ oc new-app --image-stream=plugin-registry
 [Note]
  Currently, we are using Helm chart to deploy the Automation Portal. In future, we will be using Operator to deploy the Automation Portal once its will be GA. Currently its in in Tech Preview.
 
-== Create OpenShift Secrets for AAP Authentication
-
-OpenShift Secrets are secure, encrypted storage for sensitive data. We'll create a secret that holds the OAuth credentials and API token you generated in Tasks 1 and 3. The Automation Portal Helm chart will reference this secret during deployment.
-
-. Go to  Workloads > Secrets in the OpenShift console and make sure the project `portal` is selected. You should create the secret `secrets-rhaap-portal` with the below information. You can also create the secret using the `oc` command line tool.
-+
-image::5.10.png[]
-+
-image::5.11.png[]
-
-OR 
-
-You can also run the secret creation command, gather the values from Tasks 1 and 3:
-
-* `<aap-instance-url>` — The URL of your AAP instance (e.g., `https://{aap_controller_web_url}`)
-* `<oauth-client-id>` — The Client ID from the previous task.
-* `<oauth-client-secret>` — The Client Secret from the previous task.
-* `<aap-token>` — The API Token from the previous task.
-
-. Run the following command, replacing the placeholders with your actual values:
-+
-[source,bash]
-----
-oc create secret generic secrets-rhaap-portal \
-  --from-literal=aap-host-url="<your-aap-url>" \
-  --from-literal=oauth-client-id="your-client-id-here" \
-  --from-literal=oauth-client-secret="your-client-secret-here" \
-  --from-literal=aap-token="your-api-token-here" \
-  -n portal
-----
-
-[NOTE]
-====
-The secret name (`secrets-rhaap-portal`) is important—the Helm chart expects this exact name. If you change it, you'll need to update your Helm values during deployment.
-====
 
 == Create a Github Token (PAT) and Oauth Application for pushing the Execution Environment (EE) to Github. 
 
@@ -298,5 +263,46 @@ REGISTRY_PASSWORD : <RHDP-AAP-Admin-Password>
 ----
 +
 image::5.15.png[]
+
+== Create OpenShift Secrets for AAP Authentication
+
+OpenShift Secrets are secure, encrypted storage for sensitive data. We'll create a secret that holds the OAuth credentials and API token you generated in Tasks 1 and 3. The Automation Portal Helm chart will reference this secret during deployment.
+
+. Go to  Workloads > Secrets in the OpenShift console and make sure the project `portal` is selected. You should create the secret `secrets-rhaap-portal` with the below information. You can also create the secret using the `oc` command line tool.
++
+image::5.10.png[]
++
+image::5.11.png[]
+
+OR 
+
+You can also run the secret creation command, gather the values from Tasks 1 and 3:
+
+* `<aap-instance-url>` — The URL of your AAP instance (e.g., `https://{aap_controller_web_url}`)
+* `<oauth-client-id>` — The Client ID from the previous task.
+* `<oauth-client-secret>` — The Client Secret from the previous task.
+* `<aap-token>` — The API Token from the previous task.
+
+. Run the following command, replacing the placeholders with your actual values:
++
+[source,bash]
+----
+oc create secret generic secrets-rhaap-portal \
+  --from-literal=aap-host-url="<your-aap-url>" \
+  --from-literal=oauth-client-id="your-client-id-here" \
+  --from-literal=oauth-client-secret="your-client-secret-here" \
+  --from-literal=aap-token="your-api-token-here" \
+  -n portal
+----
+
+[NOTE]
+====
+The secret name (`secrets-rhaap-portal`) is important—the Helm chart expects this exact name. If you change it, you'll need to update your Helm values during deployment.
+====
+
+. Create a secret for GitHub OAuth and Personal Access Token (PAT) in the same way, using the values from Task 4. This secret will be used by the Automation Portal to authenticate with GitHub for pushing Execution Environment content.
++
+image::5.17.png[]
+
 
 Once the above is done. You're now ready for the next phase: deploying the Automation Portal via Helm chart!
