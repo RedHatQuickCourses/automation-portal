@@ -216,7 +216,7 @@
 </div>
 </li>
 <li>
-<p>Change the Release Name to <code>automation-portal</code> and you can change it if you want.</p>
+<p>Change the Release Name to <code>ap</code> and you can change it if you want.</p>
 </li>
 <li>
 <p>Change the <strong>clusterRouterBase</strong> to the correct value for your cluster. For example, if the OCP cluster url is <code><a href="https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io" class="bare">https://console-openshift-console.apps.cluster-kstzt.dyn.redhatworkshops.io</a></code> then the clusterRouterBase should be <code>apps.cluster-kstzt.dyn.redhatworkshops.io</code>.</p>
@@ -228,6 +228,37 @@
 <div class="imageblock">
 <div class="content">
 <img src="_images/6.3.png" alt="6.3">
+</div>
+</div>
+</li>
+<li>
+<p>In addition to the above settings, we will configure the GIT and the PAH to enable the Automation Portal to push the Execution Environment content to the GIT repository and also to pull the certified content from the Private Automation Hub.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.3.1.png" alt="6.3.1">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.3.2.png" alt="6.3.2">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.3.3.png" alt="6.3.3">
+</div>
+</div>
+</li>
+<li>
+<p>Where ever you find <code>nameoverride</code> in the configuration, you can change it to ap as a value because for github configuration we need to have the URL under 100 characters. so we are only reducing the <code>nameoverride</code> to ap to have a shorter URL.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.3.4.png" alt="6.3.4">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/6.3.5.png" alt="6.3.5">
 </div>
 </div>
 </li>

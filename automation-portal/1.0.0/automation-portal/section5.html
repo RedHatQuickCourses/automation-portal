@@ -552,84 +552,6 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_create_openshift_secrets_for_aap_authentication"><a class="anchor" href="#_create_openshift_secrets_for_aap_authentication"></a>Create OpenShift Secrets for AAP Authentication</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>OpenShift Secrets are secure, encrypted storage for sensitive data. We&#8217;ll create a secret that holds the OAuth credentials and API token you generated in Tasks 1 and 3. The Automation Portal Helm chart will reference this secret during deployment.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Go to  Workloads &gt; Secrets in the OpenShift console and make sure the project <code>portal</code> is selected. You should create the secret <code>secrets-rhaap-portal</code> with the below information. You can also create the secret using the <code>oc</code> command line tool.</p>
-<div class="imageblock">
-<div class="content">
-<img src="_images/5.10.png" alt="5.10">
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/5.11.png" alt="5.11">
-</div>
-</div>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>OR</p>
-</div>
-<div class="paragraph">
-<p>You can also run the secret creation command, gather the values from Tasks 1 and 3:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>&lt;aap-instance-url&gt;</code> — The URL of your AAP instance (e.g., <code><a href="https://{aap_controller_web_url}" class="bare">https://{aap_controller_web_url}</a></code>)</p>
-</li>
-<li>
-<p><code>&lt;oauth-client-id&gt;</code> — The Client ID from the previous task.</p>
-</li>
-<li>
-<p><code>&lt;oauth-client-secret&gt;</code> — The Client Secret from the previous task.</p>
-</li>
-<li>
-<p><code>&lt;aap-token&gt;</code> — The API Token from the previous task.</p>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Run the following command, replacing the placeholders with your actual values:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc create secret generic secrets-rhaap-portal \
-  --from-literal=aap-host-url="&lt;your-aap-url&gt;" \
-  --from-literal=oauth-client-id="your-client-id-here" \
-  --from-literal=oauth-client-secret="your-client-secret-here" \
-  --from-literal=aap-token="your-api-token-here" \
-  -n portal</code></pre>
-</div>
-</div>
-</li>
-</ol>
-</div>
-</li>
-</ul>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The secret name (<code>secrets-rhaap-portal</code>) is important—the Helm chart expects this exact name. If you change it, you&#8217;ll need to update your Helm values during deployment.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="_create_a_github_token_pat_and_oauth_application_for_pushing_the_execution_environment_ee_to_github"><a class="anchor" href="#_create_a_github_token_pat_and_oauth_application_for_pushing_the_execution_environment_ee_to_github"></a>Create a Github Token (PAT) and Oauth Application for pushing the Execution Environment (EE) to Github.</h2>
 <div class="sectionbody">
 <div class="olist arabic">
@@ -781,9 +703,99 @@ REGISTRY_PASSWORD : &lt;RHDP-AAP-Admin-Password&gt;</code></pre>
 </li>
 </ol>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_openshift_secrets_for_aap_authentication"><a class="anchor" href="#_create_openshift_secrets_for_aap_authentication"></a>Create OpenShift Secrets for AAP Authentication</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>OpenShift Secrets are secure, encrypted storage for sensitive data. We&#8217;ll create a secret that holds the OAuth credentials and API token you generated in Tasks 1 and 3. The Automation Portal Helm chart will reference this secret during deployment.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to  Workloads &gt; Secrets in the OpenShift console and make sure the project <code>portal</code> is selected. You should create the secret <code>secrets-rhaap-portal</code> with the below information. You can also create the secret using the <code>oc</code> command line tool.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.10.png" alt="5.10">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.11.png" alt="5.11">
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>OR</p>
+</div>
+<div class="paragraph">
+<p>You can also run the secret creation command, gather the values from Tasks 1 and 3:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>&lt;aap-instance-url&gt;</code> — The URL of your AAP instance (e.g., <code><a href="https://{aap_controller_web_url}" class="bare">https://{aap_controller_web_url}</a></code>)</p>
+</li>
+<li>
+<p><code>&lt;oauth-client-id&gt;</code> — The Client ID from the previous task.</p>
+</li>
+<li>
+<p><code>&lt;oauth-client-secret&gt;</code> — The Client Secret from the previous task.</p>
+</li>
+<li>
+<p><code>&lt;aap-token&gt;</code> — The API Token from the previous task.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Run the following command, replacing the placeholders with your actual values:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc create secret generic secrets-rhaap-portal \
+  --from-literal=aap-host-url="&lt;your-aap-url&gt;" \
+  --from-literal=oauth-client-id="your-client-id-here" \
+  --from-literal=oauth-client-secret="your-client-secret-here" \
+  --from-literal=aap-token="your-api-token-here" \
+  -n portal</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The secret name (<code>secrets-rhaap-portal</code>) is important—the Helm chart expects this exact name. If you change it, you&#8217;ll need to update your Helm values during deployment.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create a secret for GitHub OAuth and Personal Access Token (PAT) in the same way, using the values from Task 4. This secret will be used by the Automation Portal to authenticate with GitHub for pushing Execution Environment content.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/5.17.png" alt="5.17">
+</div>
+</div>
+</li>
+</ol>
+</div>
 <div class="paragraph">
 <p>Once the above is done. You&#8217;re now ready for the next phase: deploying the Automation Portal via Helm chart!</p>
-</div>
 </div>
 </div>
 </div>
