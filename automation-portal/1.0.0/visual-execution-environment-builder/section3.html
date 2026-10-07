@@ -79,6 +79,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../automation-portal/section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#section7.adoc">section7.adoc</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -91,18 +94,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../centralized-content-discovery/section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section3.html">Configuring Supported Sources including GitHub, GitLab, and Private Automation Hub</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section4.html">Implementing Continuous Synchronization and Scheduling</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#section6.adoc">section6.adoc</a>
   </li>
 </ul>
   </li>
@@ -121,7 +112,7 @@
     <a class="nav-link" href="section3.html">Utilizing the Step-by-Step Wizard for Custom EE Creation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section4.html">Integrating Red Hat Domain-Specific Presets and Base Container Images</a>
+    <a class="nav-link" href="section4.html">Hands-on Lab: Content Discovery and Visual EE Building</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section6.html">section6.adoc</a>
@@ -236,6 +227,17 @@
 </div>
 </div>
 <div class="sect1">
+<h2 id="_execution_environment_cicd_architecture"><a class="anchor" href="#_execution_environment_cicd_architecture"></a>Execution Environment CI/CD Architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The main idea is to treat the Execution Environment (EE) definition as code. Instead of managing EEs manually through the portal, we store the definition and its dependencies in Git. This provides <strong>version control, consistency, auditability, and reproducibility</strong>, while allowing the EE build and publishing process to be automated through a <strong>CI/CD pipeline</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Overall, this creates an automated flow from <strong>Git change → CI/CD pipeline → <code>ansible-builder</code> → container image → registry → Ansible Automation Platform</strong>, reducing manual effort while improving consistency and traceability.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_best_practices_for_wizard_usage"><a class="anchor" href="#_best_practices_for_wizard_usage"></a>Best Practices for Wizard Usage</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -255,7 +257,7 @@
 </div>
 <nav class="pagination">
   <span class="prev"><a href="section2.html">Architecture and Transition from Manual CLI Workflows to GUI-Based Building</a></span>
-  <span class="next"><a href="section4.html">Integrating Red Hat Domain-Specific Presets and Base Container Images</a></span>
+  <span class="next"><a href="section4.html">Hands-on Lab: Content Discovery and Visual EE Building</a></span>
 </nav>
 </article>
   </div>

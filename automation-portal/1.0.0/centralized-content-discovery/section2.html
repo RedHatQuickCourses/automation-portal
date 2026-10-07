@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Unified Catalog Architecture for Multi-Source Aggregation :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
     <link rel="prev" href="section1.html">
-    <link rel="next" href="section3.html">
+    <link rel="next" href="../visual-execution-environment-builder/section1.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -79,6 +79,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../automation-portal/section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#section7.adoc">section7.adoc</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -91,18 +94,6 @@
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section3.html">Configuring Supported Sources including GitHub, GitLab, and Private Automation Hub</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section4.html">Implementing Continuous Synchronization and Scheduling</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#section6.adoc">section6.adoc</a>
   </li>
 </ul>
   </li>
@@ -121,7 +112,7 @@
     <a class="nav-link" href="../visual-execution-environment-builder/section3.html">Utilizing the Step-by-Step Wizard for Custom EE Creation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Integrating Red Hat Domain-Specific Presets and Base Container Images</a>
+    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Hands-on Lab: Content Discovery and Visual EE Building</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../visual-execution-environment-builder/section6.html">section6.adoc</a>
@@ -188,37 +179,6 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="_architectural_overview"><a class="anchor" href="#_architectural_overview"></a>Architectural Overview</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The Unified Catalog operates as a middleware layer between the automation consumer and the various content repositories. Instead of forcing developers to hunt through multiple URLs, the portal acts as a metadata aggregator.</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>@startuml
-package "Content Sources" {
-  [GitHub Organization] as GH
-  [Private Automation Hub] as PAH
-  [GitLab Instance] as GL
-}
-
-package "Automation Portal" {
-  [Sync Engine]
-  [Metadata Database]
-  [Unified API/UI]
-}
-
-GH --&gt; [Sync Engine] : Poll/Webhook
-PAH --&gt; [Sync Engine] : REST API
-GL --&gt; [Sync Engine] : Poll
-[Sync Engine] --&gt; [Metadata Database]
-[Metadata Database] --&gt; [Unified API/UI]
-@enduml</pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
 <h2 id="_benefits_of_aggregation"><a class="anchor" href="#_benefits_of_aggregation"></a>Benefits of Aggregation</h2>
 <div class="sectionbody">
 <div class="ulist">
@@ -237,123 +197,123 @@ GL --&gt; [Sync Engine] : Poll
 </div>
 </div>
 <div class="sect1">
-<h2 id="_hands_on_activity_configuring_multi_source_aggregation"><a class="anchor" href="#_hands_on_activity_configuring_multi_source_aggregation"></a>Hands-on Activity: Configuring Multi-Source Aggregation</h2>
+<h2 id="_configuring_supported_sources_including_github_gitlab_and_private_automation_hub"><a class="anchor" href="#_configuring_supported_sources_including_github_gitlab_and_private_automation_hub"></a>Configuring Supported Sources including GitHub, GitLab, and Private Automation Hub</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In this activity, you will configure the Automation Portal to aggregate content from a GitHub organization and a Private Automation Hub.</p>
+<p>In the Ansible Automation Platform 2.7 architecture, Centralized Content Discovery acts as a unified catalog, aggregating automation assets from disparate locations into a single, searchable interface. By configuring external sources, administrators ensure that developers and operators have immediate access to validated collections and roles without manual intervention.</p>
 </div>
-<div class="sect2">
-<h3 id="_prerequisites"><a class="anchor" href="#_prerequisites"></a>Prerequisites</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_architectural_overview"><a class="anchor" href="#_architectural_overview"></a>Architectural Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The platform allows for the orchestration of multiple content repositories, including:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Access to an OCP cluster with Automation Portal installed.</p>
+<p><strong>Git Repositories (GitHub/GitLab):</strong> Used for custom automation content, playbooks, and roles managed under version control.</p>
 </li>
 <li>
-<p>A GitHub Personal Access Token (PAT) with <code>repo</code> scope.</p>
-</li>
-<li>
-<p>The API endpoint and token for your Private Automation Hub.</p>
+<p><strong>Private Automation Hub:</strong> The enterprise source for certified and validated Ansible Content Collections and execution environment definitions.</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Administrators maintain granular control over these integrations by defining exactly which repositories are discoverable, applying corporate filtering policies to ensure compliance and security.</p>
 </div>
-<div class="sect2">
-<h3 id="_step_1_define_content_sources"><a class="anchor" href="#_step_1_define_content_sources"></a>Step 1: Define Content Sources</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_content_sources"><a class="anchor" href="#_configuring_content_sources"></a>Configuring Content Sources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To ensure the platform has visibility into your automation ecosystem, you must register each source and configure its synchronization parameters.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_hands_on_lab_configuring_multi_source_synchronization"><a class="anchor" href="#_hands_on_lab_configuring_multi_source_synchronization"></a>Hands-on Lab: Configuring Multi-Source Synchronization</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This activity demonstrates how to aggregate content from both a GitHub organization and your enterprise Private Automation Hub.</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Navigate to <strong>Content Management &gt; Sources</strong> in the Automation Portal.</p>
+<p><strong>Navigate to Source Configuration</strong></p>
+<div class="literalblock">
+<div class="content">
+<pre>Log in to the Automation Portal as an administrator and go to the *Collections* configuration page.</pre>
+</div>
+</div>
 </li>
 <li>
-<p>Click <strong>Add Source</strong>.</p>
+<p><strong>Trigger a Manual Sync</strong>
+To populate the catalog immediately, perform a manual synchronization:</p>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p>Click the <strong>Sync now</strong> button located at the top right of the Sources dashboard.</p>
 </li>
 <li>
-<p>For the <strong>GitHub Source</strong>:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Select <code>GitHub</code> as the source type.</p>
+<p>In the selection dialog, select both:</p>
 </li>
 <li>
-<p>Input your organization URL: <code><a href="https://github.com/&lt;your-org&gt" class="bare">https://github.com/&lt;your-org&gt</a>;</code>.</p>
+<p><i class="fa fa-check-square-o"></i> GitHub Organization: <code>&lt;your-org&gt;</code></p>
 </li>
 <li>
-<p>Provide the PAT in the credential field.</p>
+<p><i class="fa fa-check-square-o"></i> Private Automation Hub</p>
+</li>
+<li>
+<p>Click <strong>Start sync</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/2.1.png" alt="2.1">
+</div>
+</div>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>For the <strong>Private Automation Hub Source</strong>:</p>
+<p><strong>Verify Completion</strong></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Select <code>Private Automation Hub</code>.</p>
+<p>Monitor the status indicators. The labels will transition from <strong>"Syncing&#8230;&#8203;"</strong> to <strong>"Synced"</strong> or <strong>"Completed"</strong>.</p>
 </li>
 <li>
-<p>Provide the <code><a href="https://automation-hub.example.com" class="bare">https://automation-hub.example.com</a></code> URL.</p>
-</li>
-<li>
-<p>Provide the API token for authentication.</p>
+<p>Once synced, navigate to the unified catalog to browse the aggregated collections.</p>
 </li>
 </ul>
 </div>
 </li>
 </ol>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_step_2_triggering_sync"><a class="anchor" href="#_step_2_triggering_sync"></a>Step 2: Triggering Sync</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Once configured, navigate to the <strong>Sync Settings</strong>.</p>
-</li>
-<li>
-<p>Set the <strong>Sync Schedule</strong> to every 6 hours (recommended for medium-sized environments).</p>
-</li>
-<li>
-<p>Click <strong>Sync Now</strong> to pull the initial metadata from both locations.</p>
-</li>
-</ol>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_step_3_verifying_the_unified_catalog"><a class="anchor" href="#_step_3_verifying_the_unified_catalog"></a>Step 3: Verifying the Unified Catalog</h3>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Navigate to the <strong>Catalog</strong> tab in the main navigation menu.</p>
-</li>
-<li>
-<p>Observe that collections from both GitHub and the Private Automation Hub are present.</p>
-</li>
-<li>
-<p><strong>Verification:</strong> Select a specific collection. In the details pane, locate the <strong>Origin</strong> field. It should clearly display the source (e.g., <code>Source: Private Automation Hub</code> or <code>Source: GitHub</code>).</p>
-</li>
-</ol>
-</div>
-<div class="admonitionblock tip">
+<div class="admonitionblock note">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
+<i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If a collection exists in both sources, the portal will surface both versions. Use the "Default Version" settings in the portal to pin the preferred version for your automation teams.</p>
+<p>Administrators can apply custom filtering to these sources to align with corporate boundaries, ensuring that only approved content enters the developer workflow. Continuous synchronization can be scheduled to ensure the catalog remains updated as new versions of collections are published.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Let 's explore how the Execution Environment (EE) builder can be used to create a custom EE that includes the aggregated content from both GitHub and Private Automation Hub. This allows developers to run automation jobs with the latest validated content without needing to manage dependencies manually.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="section1.html">Centralized Content Discovery</a></span>
-  <span class="next"><a href="section3.html">Configuring Supported Sources including GitHub, GitLab, and Private Automation Hub</a></span>
+  <span class="next"><a href="../visual-execution-environment-builder/section1.html">Visual Execution Environment Builder</a></span>
 </nav>
 </article>
   </div>

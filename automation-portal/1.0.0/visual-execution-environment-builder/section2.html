@@ -79,6 +79,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../automation-portal/section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#section7.adoc">section7.adoc</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -91,18 +94,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../centralized-content-discovery/section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section3.html">Configuring Supported Sources including GitHub, GitLab, and Private Automation Hub</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section4.html">Implementing Continuous Synchronization and Scheduling</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#section6.adoc">section6.adoc</a>
   </li>
 </ul>
   </li>
@@ -121,7 +112,7 @@
     <a class="nav-link" href="section3.html">Utilizing the Step-by-Step Wizard for Custom EE Creation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section4.html">Integrating Red Hat Domain-Specific Presets and Base Container Images</a>
+    <a class="nav-link" href="section4.html">Hands-on Lab: Content Discovery and Visual EE Building</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section6.html">section6.adoc</a>
@@ -243,6 +234,50 @@
 </td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_integrating_red_hat_domain_specific_presets_and_base_container_images"><a class="anchor" href="#_integrating_red_hat_domain_specific_presets_and_base_container_images"></a>Integrating Red Hat Domain-Specific Presets and Base Container Images</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the Ansible Automation Platform 2.7 Visual Execution Environment (EE) Builder, selecting the right foundation is an important step for achieving security, compliance, and performance. Red Hat provides domain-specific presets as curated starting points, helping architects avoid building an EE from scratch.</p>
+</div>
+<div class="sect2">
+<h3 id="_understanding_domain_specific_presets"><a class="anchor" href="#_understanding_domain_specific_presets"></a>Understanding Domain-Specific Presets</h3>
+<div class="paragraph">
+<p>These presets provide pre-configured Ansible Collections, Python dependencies, and system libraries tailored to specific operational domains. By starting with a validated foundation, we can reduce configuration effort and build EEs more consistently for the required use case.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Networking:</strong> Includes <code>ansible.netcommon</code>, <code>cisco.ios</code>, and <code>arista.eos</code> collections, alongside system-level utilities for network device communication.</p>
+</li>
+<li>
+<p><strong>Security:</strong> Focused on compliance auditing and vulnerability management, featuring <code>ansible.posix</code> and various security-hardened utility packages.</p>
+</li>
+<li>
+<p><strong>Cloud:</strong> Pre-loaded with cloud-provider-specific SDKs (AWS, Azure, GCP) and the corresponding <code>community.cloud</code> or <code>amazon.aws</code> collections.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Using these presets ensures that your EEs adhere to organizational standards for library versions and security patching, reducing the maintenance overhead of managing disparate <code>execution-environment.yml</code> files.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When operating in disconnected environments, ensure your local registry is mirrored correctly using <code>skopeo copy</code>. As noted in the platform documentation, the use of SHA256 digests is recommended to ensure that your custom EE builds remain immutable and consistent across development and production OCP clusters.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>

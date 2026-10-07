@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Hands-on Lab: Installing and Verifying the Automation Portal on OCP :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
     <link rel="prev" href="test.html">
-    <link rel="next" href="../centralized-content-discovery/section1.html">
+    <link rel="next" href="#section7.adoc">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -79,6 +79,9 @@
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#section7.adoc">section7.adoc</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -91,18 +94,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../centralized-content-discovery/section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section3.html">Configuring Supported Sources including GitHub, GitLab, and Private Automation Hub</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section4.html">Implementing Continuous Synchronization and Scheduling</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#section6.adoc">section6.adoc</a>
   </li>
 </ul>
   </li>
@@ -121,7 +112,7 @@
     <a class="nav-link" href="../visual-execution-environment-builder/section3.html">Utilizing the Step-by-Step Wizard for Custom EE Creation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Integrating Red Hat Domain-Specific Presets and Base Container Images</a>
+    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Hands-on Lab: Content Discovery and Visual EE Building</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../visual-execution-environment-builder/section6.html">section6.adoc</a>
@@ -233,14 +224,50 @@
 </li>
 <li>
 <p>In addition to the above settings, we will configure the GIT and the PAH to enable the Automation Portal to push the Execution Environment content to the GIT repository and also to pull the certified content from the Private Automation Hub.</p>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">ansibleGitContents:
+                    enabled: true  &lt;-- this needs to be true to enable the git content push to the git repository.
+                    providers:
+                      github:
+                        - name: "github-public"
+                          host: github.com  &lt;-- my github host is github.com, you can change it to your github host if you are using a private github instance.
+                          checkSSL: true
+                          orgs:
+                            - name: &lt;REPLACE_WITH_YOUR_GITHUB_ORGANIZATION&gt; &lt;-- replace this with your github organization name where you want to push the content.
+                              branches: [main, master, dev]
+                              tags: ['v*']
+                              galaxyFilePaths: []
+                              schedule:
+                                frequency: {minutes: 120}
+                                timeout: {minutes: 30}</code></pre>
+</div>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/6.3.1.png" alt="6.3.1">
 </div>
 </div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># The auth will be taking the GITHUB_OAUTH_CLIENT_ID and GITHUB_OAUTH_CLIENT_SECRET from the Secrets we created in the previous section.
+ auth:
+  providers:
+    github:
+      production:
+        clientId: ${GITHUB_OAUTH_CLIENT_ID}
+        clientSecret: ${GITHUB_OAUTH_CLIENT_SECRET}</code></pre>
+</div>
+</div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/6.3.2.png" alt="6.3.2">
+</div>
+</div>
+<div class="listingblock execute">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">pahCollections:
+  enabled: true &lt;-- make sure this is true to enable the PAH collections to be pulled from the private automation hub.</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -346,7 +373,7 @@
 </div>
 <nav class="pagination">
   <span class="prev"><a href="test.html">Chapter 4: Synchronizing Red Hat Certified Automation Content</a></span>
-  <span class="next"><a href="../centralized-content-discovery/section1.html">Centralized Content Discovery</a></span>
+  <span class="next"><a href="#section7.adoc">section7.adoc</a></span>
 </nav>
 </article>
   </div>

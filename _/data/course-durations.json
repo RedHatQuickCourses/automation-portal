@@ -1,6 +1,6 @@
 {
-  "totalSeconds": 2258,
-  "pageCount": 21,
+  "totalSeconds": 2033,
+  "pageCount": 18,
   "pages": [
     {
       "module": "ROOT",
@@ -25,7 +25,7 @@
     {
       "module": "automation-portal",
       "page": "section3.adoc",
-      "seconds": 40
+      "seconds": 75
     },
     {
       "module": "automation-portal",
@@ -45,7 +45,7 @@
     {
       "module": "automation-portal",
       "page": "section6.adoc",
-      "seconds": 259
+      "seconds": 287
     },
     {
       "module": "centralized-content-discovery",
@@ -55,22 +55,7 @@
     {
       "module": "centralized-content-discovery",
       "page": "section2.adoc",
-      "seconds": 131
-    },
-    {
-      "module": "centralized-content-discovery",
-      "page": "section3.adoc",
-      "seconds": 113
-    },
-    {
-      "module": "centralized-content-discovery",
-      "page": "section4.adoc",
-      "seconds": 143
-    },
-    {
-      "module": "centralized-content-discovery",
-      "page": "section5.adoc",
-      "seconds": 156
+      "seconds": 128
     },
     {
       "module": "visual-execution-environment-builder",
@@ -80,17 +65,17 @@
     {
       "module": "visual-execution-environment-builder",
       "page": "section2.adoc",
-      "seconds": 71
+      "seconds": 117
     },
     {
       "module": "visual-execution-environment-builder",
       "page": "section3.adoc",
-      "seconds": 92
+      "seconds": 119
     },
     {
       "module": "visual-execution-environment-builder",
       "page": "section4.adoc",
-      "seconds": 46
+      "seconds": 100
     },
     {
       "module": "visual-execution-environment-builder",

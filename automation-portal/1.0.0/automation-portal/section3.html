@@ -79,6 +79,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#section7.adoc">section7.adoc</a>
+  </li>
 </ul>
   </li>
 </ul>
@@ -91,18 +94,6 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../centralized-content-discovery/section2.html">Unified Catalog Architecture for Multi-Source Aggregation</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section3.html">Configuring Supported Sources including GitHub, GitLab, and Private Automation Hub</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section4.html">Implementing Continuous Synchronization and Scheduling</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../centralized-content-discovery/section5.html">Workflow for browse-before-build and tracing existing automation assets</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#section6.adoc">section6.adoc</a>
   </li>
 </ul>
   </li>
@@ -121,7 +112,7 @@
     <a class="nav-link" href="../visual-execution-environment-builder/section3.html">Utilizing the Step-by-Step Wizard for Custom EE Creation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Integrating Red Hat Domain-Specific Presets and Base Container Images</a>
+    <a class="nav-link" href="../visual-execution-environment-builder/section4.html">Hands-on Lab: Content Discovery and Visual EE Building</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../visual-execution-environment-builder/section6.html">section6.adoc</a>
@@ -209,17 +200,42 @@ This page focuses on controlling which menu items are visible.</p>
 <h2 id="_architectural_concept"><a class="anchor" href="#_architectural_concept"></a>Architectural Concept</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By tying navigation visibility to RBAC (Role-Based Access Control) groups, administrators can enforce a "least privilege" visual experience. This ensures that:</p>
+<p>Ansible automation portal and Ansible Automation Platform use separate but related permission systems. <a href="https://docs.redhat.com/en/documentation/red_hat_ansible_automation_platform/2.7/secure-configure_portal_rbac#configure-portal-rbac__permission-model">Understand the permission model</a></p>
 </div>
+<div class="sect2">
+<h3 id="_ansible_automation_portal_rbac"><a class="anchor" href="#_ansible_automation_portal_rbac"></a>Ansible automation portal RBAC:</h3>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>End Users:</strong> Interact only with the automation services they need (Job Templates and History), reducing complexity.</p>
+<p>Controls which users can view templates in the Ansible automation portal catalog.</p>
 </li>
 <li>
-<p><strong>Platform Engineers:</strong> Retain full visibility and administrative control over the underlying infrastructure, including EE definitions, content discovery, and synchronization settings.</p>
+<p>Controls which users can access portal templates and submit jobs.</p>
+</li>
+<li>
+<p>Controls which navigation items are visible in the sidebar.</p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ansible_automation_platform_rbac"><a class="anchor" href="#_ansible_automation_platform_rbac"></a>Ansible Automation Platform RBAC:</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Controls synchronization scope:</strong> Only Ansible Automation Platform job templates accessible by the configured API token (<code>ansible.rhaap.token</code>) are synchronized to Ansible automation portal.</p>
+</li>
+<li>
+<p><strong>Controls auto-generated template visibility:</strong> Ansible Automation Platform permissions determine whether authenticated users can view and execute auto-generated templates in Ansible automation portal. Custom templates are not filtered by Ansible Automation Platform permissions.</p>
+</li>
+<li>
+<p><strong>Validates execution permissions:</strong> When a user executes any template, Ansible Automation Platform checks that user&#8217;s execute permissions on the underlying job template before launching the job. This applies to both auto-generated and custom templates.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If a user can see a template in the catalog but lacks Ansible Automation Platform execute permissions for the associated job template, the user cannot run the job.</p>
+</div>
 </div>
 </div>
 </div>

@@ -3,9 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Chapter 4: Synchronizing Red Hat Certified Automation Content :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
-    <link rel="prev" href="section5.html">
-    <link rel="next" href="section6.html">
+    <title>Final Configuration of the Execution Environment :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -73,7 +71,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="section5.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="test.html">Chapter 4: Synchronizing Red Hat Certified Automation Content</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -160,8 +158,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="section1.html">Automation Portal</a></li>
-    <li><a href="test.html">Chapter 4: Synchronizing Red Hat Certified Automation Content</a></li>
+    <li><a href="Section7.html">Final Configuration of the Execution Environment</a></li>
   </ul>
 </nav>
 </div>
@@ -170,130 +167,25 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Chapter 4: Synchronizing Red Hat Certified Automation Content</h1>
-<div id="preamble">
-<div class="sectionbody">
+<h1 class="page">Final Configuration of the Execution Environment</h1>
 <div class="paragraph">
-<p>In this lab, you will configure your Private Automation Hub to sync Red Hat Certified Content collections directly from <code>cloud.redhat.com</code> (Console Red Hat).</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
- In most enterprise production environments, this integration is pre-configured by system administrators during deployment. In this lab environment, you will walk through obtaining the required API token and setting up the remote repository manually to understand how the synchronization mechanism works.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_step_1_obtain_the_api_token_from_red_hat_cloud"><a class="anchor" href="#_step_1_obtain_the_api_token_from_red_hat_cloud"></a>Step 1: Obtain the API Token from Red Hat Cloud</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>To allow Private Automation Hub to securely pull content from Red Hat’s hosted Automation Hub, you need an API authentication token.</p>
+<p>To enable the Execution Environment Builder to push content to the Git repository, we need to configure and fine-tune the OAuth applications created in Git.</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Open a web browser and navigate to <a href="https://console.redhat.com/ansible/automation-hub/token">cloud.redhat.com</a>.</p>
-</li>
-<li>
-<p>Log in with your Red Hat credentials.</p>
-</li>
-<li>
-<p>Navigate to <strong>Ansible Automation Platform</strong> &gt; <strong>Automation Hub</strong> &gt; <strong>Connect to Hub</strong>.</p>
-</li>
-<li>
-<p>Under the <strong>Offline Token</strong> / <strong>Load Token</strong> section, click <strong>Get Token</strong> (or <strong>Load Token</strong>).</p>
+<p>Go to the GitHub OAuth application created in the previous section and click on <strong>Edit</strong> to update the settings and  <code>Homepage URL`</code> to automation portal URL and replace the hostname with the correct hostname in "Redirect URI".</p>
 <div class="imageblock">
 <div class="content">
-<img src="_images/7.1.png" alt="7.1">
+<img src="_images/8.1.png" alt="8.1">
 </div>
 </div>
-</li>
-<li>
-<p>Copy the generated API token to your clipboard for use in the next step.</p>
 </li>
 </ol>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_step_2_configure_the_remote_repository_in_private_automation_hub"><a class="anchor" href="#_step_2_configure_the_remote_repository_in_private_automation_hub"></a>Step 2: Configure the Remote Repository in Private Automation Hub</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Now that you have the API token, update the remote repository configuration on your local Private Automation Hub instance.</p>
+<p>Now we are ready to configure the Execution Environment Builder to push content to the Git repository and pull certified content from the Private Automation Hub in chapter 3.</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Open a new browser tab and log in to your <strong>Automation Content</strong> interface as an administrator.</p>
-</li>
-<li>
-<p>In the left navigation menu, expand <strong>Repository Management</strong> and select <strong>Remote</strong>.</p>
-</li>
-<li>
-<p>Locate the <code>rh-certified</code> remote entry in the repository list, click the <strong>Options</strong> menu (⋮) next to it, and select <strong>Edit</strong>.</p>
-</li>
-<li>
-<p>Update the following fields:</p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Token:</strong> Paste the API token you copied from <code>cloud.redhat.com</code> in Step 1.</p>
-<div class="imageblock">
-<div class="content">
-<img src="_images/7.2.png" alt="7.2">
-</div>
-</div>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Click <strong>Save</strong>.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_step_3_trigger_content_synchronization"><a class="anchor" href="#_step_3_trigger_content_synchronization"></a>Step 3: Trigger Content Synchronization</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Once the token and URL are configured, pull the certified collection metadata and artifacts into your local environment.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>On the <strong>Remotes</strong> page, locate the <code>rh-certified</code> repository again.</p>
-</li>
-<li>
-<p>Click the <strong>Options</strong> menu (⋮) and select <strong>Sync</strong>.</p>
-<div class="imageblock">
-<div class="content">
-<img src="_images/7.3.png" alt="7.3">
-</div>
-</div>
-</li>
-<li>
-<p>Navigate to <strong>Task Management</strong> (under Administration) to monitor the progress of the synchronization job.</p>
-</li>
-<li>
-<p>Once the status displays <strong>Completed</strong>, navigate to <strong>Collections</strong> &gt; <strong>Red Hat Certified</strong> in the navigation menu to verify that certified content collections are now populated and accessible locally.</p>
-</li>
-</ol>
-</div>
-</div>
-</div>
-<nav class="pagination">
-  <span class="prev"><a href="section5.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a></span>
-  <span class="next"><a href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a></span>
-</nav>
 </article>
   </div>
 </main>
