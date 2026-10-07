@@ -1,19 +1,32 @@
-= Integrating Red Hat Domain-Specific Presets and Base Container Images
+= Hands-on Lab: Content Discovery and Visual EE Building
 
-In the Ansible Automation Platform 2.7 Visual Execution Environment (EE) Builder, selecting the right foundation is an important step for achieving security, compliance, and performance. Red Hat provides domain-specific presets as curated starting points, helping architects avoid building an EE from scratch.
+In this lab, you will leverage the Automation Portal to unify disparate automation sources and transition from manual image creation to a streamlined, GUI-based Execution Environment (EE) workflow.
 
-== Understanding Domain-Specific Presets
+==  Building a Custom Execution Environment
+We will now use the Visual EE Builder to generate a container definition without writing a single line of YAML or `ansible-builder` configuration files.
 
-These presets provide pre-configured Ansible Collections, Python dependencies, and system libraries tailored to specific operational domains. By starting with a validated foundation, we can reduce configuration effort and build EEs more consistently for the required use case.
+1.  **Access the Builder:** Navigate to **Execution Environments** > **Visual Builder**.
+2.  **Initialize Definition:** Click **Create New Definition**. Provide a name (e.g., `network-ops-ee`) and a base container image (e.g., `registry.redhat.io/ansible-automation-platform-27/ee-minimal-rhel9`).
+3.  **Add Collections:**
+    *   Click **Add Collection**. 
+    *   The portal will display your unified catalog from Task 1.
+    *   Search for `cisco.ios` and `arista.eos`. Select them and click **Add to Definition**.
+4.  **Inject Dependencies:** 
+    *   Click the **Dependencies** tab.
+    *   In the **Python Requirements** section, add `netmiko` and `ncclient`.
+    *   In the **System Packages** section, add `libssh-devel`.
+5.  **Define Build Steps:**
+    *   Navigate to **Custom Steps**.
+    *   Add a **Pre-build** step: Enter a shell command to verify the file system structure.
+    *   Add a **Post-build** step: Include a command to run a security scan script (e.g., `ansible-lint -v`).
+6.  **Finalize and Publish:** 
+    *   Review the generated preview.
+    *   Click **Save & Publish**. Select your GitHub repository; the builder will automatically push the `execution-environment.yml` and associated metadata to your repository.
 
-*   **Networking:** Includes `ansible.netcommon`, `cisco.ios`, and `arista.eos` collections, alongside system-level utilities for network device communication.
-*   **Security:** Focused on compliance auditing and vulnerability management, featuring `ansible.posix` and various security-hardened utility packages.
-*   **Cloud:** Pre-loaded with cloud-provider-specific SDKs (AWS, Azure, GCP) and the corresponding `community.cloud` or `amazon.aws` collections.
+== Troubleshooting Tips
+* **Sync Failures:** If sources fail to sync, check the **Activity Log** in the Portal to verify API token permissions and network connectivity to the remote source.
+* **Dependency Conflicts:** If a collection requires a specific Python version not supported by your base image, the builder will provide a validation error. Switch to a more compatible base image (e.g., `ee-supported-rhel9`).
+* **RBAC Restrictions:** If you cannot see the Visual Builder, ensure your user account is assigned the `Automation Administrator` or `EE Builder` role.
 
-Using these presets ensures that your EEs adhere to organizational standards for library versions and security patching, reducing the maintenance overhead of managing disparate `execution-environment.yml` files.
-
-[IMPORTANT]
-====
-When operating in disconnected environments, ensure your local registry is mirrored correctly using `skopeo copy`. As noted in the platform documentation, the use of SHA256 digests is recommended to ensure that your custom EE builds remain immutable and consistent across development and production OCP clusters.
-====
-
+== Verification
+Verify that the build process has been triggered by navigating to your linked GitHub repository. You should see a `build/` directory populated with your definition, confirming that the Visual Builder has successfully handed off the configuration to your CI/CD pipeline.

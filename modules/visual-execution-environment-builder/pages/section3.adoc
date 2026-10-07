@@ -25,6 +25,12 @@ The wizard leverages Red Hat domain-specific presets to ensure security and comp
 The EE definition workflow generates a reusable Backstage software template (e.g., `<ee-name>-template.yaml`). This allows organizations to move from one-off EE creation to a "Golden Image" catalog, where team members can provision standardized environments based on pre-approved templates.
 ====
 
+== Execution Environment CI/CD Architecture
+
+The main idea is to treat the Execution Environment (EE) definition as code. Instead of managing EEs manually through the portal, we store the definition and its dependencies in Git. This provides **version control, consistency, auditability, and reproducibility**, while allowing the EE build and publishing process to be automated through a **CI/CD pipeline**.
+
+Overall, this creates an automated flow from **Git change → CI/CD pipeline → `ansible-builder` → container image → registry → Ansible Automation Platform**, reducing manual effort while improving consistency and traceability.
+
 == Best Practices for Wizard Usage
 
 * **Use Version Pinning:** Always specify versions for collections and Python packages within the wizard to ensure reproducible builds.

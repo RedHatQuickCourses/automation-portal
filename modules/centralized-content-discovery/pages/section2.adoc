@@ -2,71 +2,54 @@
 
 In modern enterprise automation, content is rarely stored in a single location. Ansible Collections are often dispersed across distributed version control systems (like GitHub or GitLab) and local distribution points (like Private Automation Hub). The **Unified Catalog Architecture** in Ansible Automation Platform 2.7 solves the "siloed content" problem by abstracting the storage layer and providing a single pane of glass for discovery.
 
-== Architectural Overview
-
-The Unified Catalog operates as a middleware layer between the automation consumer and the various content repositories. Instead of forcing developers to hunt through multiple URLs, the portal acts as a metadata aggregator.
-
-[plantuml]
-....
-@startuml
-package "Content Sources" {
-  [GitHub Organization] as GH
-  [Private Automation Hub] as PAH
-  [GitLab Instance] as GL
-}
-
-package "Automation Portal" {
-  [Sync Engine]
-  [Metadata Database]
-  [Unified API/UI]
-}
-
-GH --> [Sync Engine] : Poll/Webhook
-PAH --> [Sync Engine] : REST API
-GL --> [Sync Engine] : Poll
-[Sync Engine] --> [Metadata Database]
-[Metadata Database] --> [Unified API/UI]
-@enduml
-....
-
 == Benefits of Aggregation
 
 *   **Reduced Discovery Friction:** Developers can search for a module or collection without needing to know the hosting infrastructure beforehand.
 *   **Version Visibility:** The catalog tracks metadata across sources, allowing users to compare if an internal, customized collection in the Private Automation Hub is newer or older than an upstream version in GitHub.
 *   **Policy-Driven Access:** By aggregating content, administrators can apply RBAC to the catalog, ensuring that users only see collections they are authorized to consume, regardless of the source.
 
-== Hands-on Activity: Configuring Multi-Source Aggregation
+== Configuring Supported Sources including GitHub, GitLab, and Private Automation Hub
 
-In this activity, you will configure the Automation Portal to aggregate content from a GitHub organization and a Private Automation Hub.
+In the Ansible Automation Platform 2.7 architecture, Centralized Content Discovery acts as a unified catalog, aggregating automation assets from disparate locations into a single, searchable interface. By configuring external sources, administrators ensure that developers and operators have immediate access to validated collections and roles without manual intervention.
 
-=== Prerequisites
-*   Access to an OCP cluster with Automation Portal installed.
-*   A GitHub Personal Access Token (PAT) with `repo` scope.
-*   The API endpoint and token for your Private Automation Hub.
+== Architectural Overview
 
-=== Step 1: Define Content Sources
-1. Navigate to **Content Management > Sources** in the Automation Portal.
-2. Click **Add Source**.
-3. For the **GitHub Source**:
-   *  Select `GitHub` as the source type.
-   *  Input your organization URL: `https://github.com/<your-org>`.
-   *  Provide the PAT in the credential field.
-4. For the **Private Automation Hub Source**:
-   *  Select `Private Automation Hub`.
-   *  Provide the `https://automation-hub.example.com` URL.
-   *  Provide the API token for authentication.
+The platform allows for the orchestration of multiple content repositories, including:
 
-=== Step 2: Triggering Sync
-1. Once configured, navigate to the **Sync Settings**.
-2. Set the **Sync Schedule** to every 6 hours (recommended for medium-sized environments).
-3. Click **Sync Now** to pull the initial metadata from both locations.
+*   **Git Repositories (GitHub/GitLab):** Used for custom automation content, playbooks, and roles managed under version control.
+*   **Private Automation Hub:** The enterprise source for certified and validated Ansible Content Collections and execution environment definitions.
 
-=== Step 3: Verifying the Unified Catalog
-1. Navigate to the **Catalog** tab in the main navigation menu.
-2. Observe that collections from both GitHub and the Private Automation Hub are present.
-3. **Verification:** Select a specific collection. In the details pane, locate the **Origin** field. It should clearly display the source (e.g., `Source: Private Automation Hub` or `Source: GitHub`).
+Administrators maintain granular control over these integrations by defining exactly which repositories are discoverable, applying corporate filtering policies to ensure compliance and security.
 
-[TIP]
+== Configuring Content Sources
+
+To ensure the platform has visibility into your automation ecosystem, you must register each source and configure its synchronization parameters.
+
+== Hands-on Lab: Configuring Multi-Source Synchronization
+
+This activity demonstrates how to aggregate content from both a GitHub organization and your enterprise Private Automation Hub.
+
+. **Navigate to Source Configuration**
+
+   Log in to the Automation Portal as an administrator and go to the *Collections* configuration page.
+
+. **Trigger a Manual Sync**
+   To populate the catalog immediately, perform a manual synchronization:
+   * Click the **Sync now** button located at the top right of the Sources dashboard.
+   * In the selection dialog, select both:
+     * [x] GitHub Organization: `<your-org>`
+     * [x] Private Automation Hub
+   * Click **Start sync**.
++
+image::2.1.png[]
+
+. **Verify Completion**
+   * Monitor the status indicators. The labels will transition from **"Syncing..."** to **"Synced"** or **"Completed"**.
+   * Once synced, navigate to the unified catalog to browse the aggregated collections.
+
+[NOTE]
 ====
-If a collection exists in both sources, the portal will surface both versions. Use the "Default Version" settings in the portal to pin the preferred version for your automation teams.
+Administrators can apply custom filtering to these sources to align with corporate boundaries, ensuring that only approved content enters the developer workflow. Continuous synchronization can be scheduled to ensure the catalog remains updated as new versions of collections are published.
 ====
+
+Let 's explore how the Execution Environment (EE) builder can be used to create a custom EE that includes the aggregated content from both GitHub and Private Automation Hub. This allows developers to run automation jobs with the latest validated content without needing to manage dependencies manually.

@@ -22,3 +22,22 @@ Transitioning to a GUI-based builder offers several architectural advantages:
 ====
 By centralizing EE builds in the portal, you regain control over the "What" and "How" of your automation runtime. Every GUI-based build is tracked and gated by admin-defined access policies, effectively turning your EE creation process into a governed, transparent activity.
 ====
+
+== Integrating Red Hat Domain-Specific Presets and Base Container Images
+
+In the Ansible Automation Platform 2.7 Visual Execution Environment (EE) Builder, selecting the right foundation is an important step for achieving security, compliance, and performance. Red Hat provides domain-specific presets as curated starting points, helping architects avoid building an EE from scratch.
+
+=== Understanding Domain-Specific Presets
+
+These presets provide pre-configured Ansible Collections, Python dependencies, and system libraries tailored to specific operational domains. By starting with a validated foundation, we can reduce configuration effort and build EEs more consistently for the required use case.
+
+*   **Networking:** Includes `ansible.netcommon`, `cisco.ios`, and `arista.eos` collections, alongside system-level utilities for network device communication.
+*   **Security:** Focused on compliance auditing and vulnerability management, featuring `ansible.posix` and various security-hardened utility packages.
+*   **Cloud:** Pre-loaded with cloud-provider-specific SDKs (AWS, Azure, GCP) and the corresponding `community.cloud` or `amazon.aws` collections.
+
+Using these presets ensures that your EEs adhere to organizational standards for library versions and security patching, reducing the maintenance overhead of managing disparate `execution-environment.yml` files.
+
+[IMPORTANT]
+====
+When operating in disconnected environments, ensure your local registry is mirrored correctly using `skopeo copy`. As noted in the platform documentation, the use of SHA256 digests is recommended to ensure that your custom EE builds remain immutable and consistent across development and production OCP clusters.
+====

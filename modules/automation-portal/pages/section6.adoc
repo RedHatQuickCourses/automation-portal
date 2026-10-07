@@ -25,9 +25,46 @@ image::6.3.png[]
 
 .. In addition to the above settings, we will configure the GIT and the PAH to enable the Automation Portal to push the Execution Environment content to the GIT repository and also to pull the certified content from the Private Automation Hub.
 +
+[source,bash,role=execute]
+----
+ansibleGitContents:
+                    enabled: true  <-- this needs to be true to enable the git content push to the git repository.
+                    providers:
+                      github: 
+                        - name: "github-public"  
+                          host: github.com  <-- my github host is github.com, you can change it to your github host if you are using a private github instance.
+                          checkSSL: true
+                          orgs:
+                            - name: <REPLACE_WITH_YOUR_GITHUB_ORGANIZATION> <-- replace this with your github organization name where you want to push the content.
+                              branches: [main, master, dev]
+                              tags: ['v*']
+                              galaxyFilePaths: []
+                              schedule:
+                                frequency: {minutes: 120}
+                                timeout: {minutes: 30}
+----
++
 image::6.3.1.png[]
 +
+[source,bash,role=execute]
+----
+# The auth will be taking the GITHUB_OAUTH_CLIENT_ID and GITHUB_OAUTH_CLIENT_SECRET from the Secrets we created in the previous section.
+ auth:
+  providers:
+    github:
+      production:
+        clientId: ${GITHUB_OAUTH_CLIENT_ID}
+        clientSecret: ${GITHUB_OAUTH_CLIENT_SECRET}
+----
++
 image::6.3.2.png[]
++
+[source,bash,role=execute]
+----
+pahCollections:
+  enabled: true <-- make sure this is true to enable the PAH collections to be pulled from the private automation hub.    
+ 
+----
 +
 image::6.3.3.png[]
 

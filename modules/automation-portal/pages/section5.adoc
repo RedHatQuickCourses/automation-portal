@@ -248,7 +248,7 @@ In your GitHub organization which we will be integrating in the next chapter ple
 [source,yaml]
 ----
 # For Variables 
-REDHAT_REGISTRY_USERNAME: <YOUR-rhn_iD-USERNAME>
+REDHAT_REGISTRY_USERNAME: <YOUR-RHN-ID-USERNAME>
 REGISTRY_USERNAME : admin
 ----
 +
@@ -258,7 +258,7 @@ image::5.16.png[]
 ----
 # For Secrets
 
-REDHAT_REGISTRY_PASSWORD: <YOUR-rhn_iD-PASSWORD>
+REDHAT_REGISTRY_PASSWORD: <YOUR-RHN-ID-PASSWORD>
 REGISTRY_PASSWORD : <RHDP-AAP-Admin-Password>
 ----
 +
@@ -288,21 +288,32 @@ You can also run the secret creation command, gather the values from Tasks 1 and
 [source,bash]
 ----
 oc create secret generic secrets-rhaap-portal \
+  --namespace portal \
   --from-literal=aap-host-url="<your-aap-url>" \
   --from-literal=oauth-client-id="your-client-id-here" \
   --from-literal=oauth-client-secret="your-client-secret-here" \
   --from-literal=aap-token="your-api-token-here" \
   -n portal
 ----
-
++
 [NOTE]
 ====
 The secret name (`secrets-rhaap-portal`) is important—the Helm chart expects this exact name. If you change it, you'll need to update your Helm values during deployment.
 ====
 
-. Create a secret for GitHub OAuth and Personal Access Token (PAT) in the same way, using the values from Task 4. This secret will be used by the Automation Portal to authenticate with GitHub for pushing Execution Environment content.
+. Create a secret for GitHub OAuth and Personal Access Token (PAT) in the same way, using the values from Task 4. This secret will be used by the Automation Portal to authenticate with GitHub for pushing Execution Environment content. 
+
+.. You can create using the below command or you can create it from the OpenShift console > Workloads > Secrets in the project `portal` . You should create the secret `secrets-scm` with the below information.
++
+[source,bash]
+----
+oc create secret generic secrets-scm \
+ --namespace portal \
+ --from-literal=github-token="<GITHUB-PAT-TOKEN>" \
+ --from-literal=github-oauth-client-id="<GITHUB-OAUTH-CLIENT-ID>" \
+ --from-literal=github-oauth-client-secret="<GITHUB-OAUTH-CLIENT-SECRET>" \
+----
 +
 image::5.17.png[]
-
 
 Once the above is done. You're now ready for the next phase: deploying the Automation Portal via Helm chart!
