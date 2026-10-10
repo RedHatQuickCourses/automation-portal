@@ -25,7 +25,7 @@ By centralizing EE builds in the portal, you regain control over the "What" and 
 
 == Integrating Red Hat Domain-Specific Presets and Base Container Images
 
-In the Ansible Automation Platform 2.7 Visual Execution Environment (EE) Builder, selecting the right foundation is an important step for achieving security, compliance, and performance. Red Hat provides domain-specific presets as curated starting points, helping architects avoid building an EE from scratch.
+In the Automation portal Visual Execution Environment (EE) Builder, selecting the right foundation is an important step for achieving security, compliance, and performance. Red Hat provides domain-specific presets as curated starting points, helping architects avoid building an EE from scratch.
 
 === Understanding Domain-Specific Presets
 

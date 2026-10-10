@@ -1,0 +1,10 @@
+== Troubleshooting Tips
+* **Sync Failures:** If sources fail to sync, check the **Activity Log** in the Portal to verify API token permissions and network connectivity to the remote source.
+* **Dependency Conflicts:** If a collection requires a specific Python version not supported by your base image, the builder will provide a validation error. Switch to a more compatible base image (e.g., `ee-supported-rhel9`).
+* **RBAC Restrictions:** If you cannot see the Visual Builder, ensure your user account is assigned the `Automation Administrator` or `EE Builder` role.
+
+== Verification
+
+. Verify that the build process has been triggered by navigating to your linked GitHub repository. You should see a `build/` directory populated with your definition, confirming that the Visual Builder has successfully handed off the configuration to your CI/CD pipeline.
+
+. You can always re run the workflow in the *Action* section of the github repository to trigger the build and push the image to the registry. You can also check the logs of the workflow to see if there is any error in the build process.
