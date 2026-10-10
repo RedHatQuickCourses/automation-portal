@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Hands-on Lab: Content Discovery and Visual EE Building :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
     <link rel="prev" href="section3.html">
-    <link rel="next" href="section6.html">
+    <link rel="next" href="section5.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -80,7 +80,7 @@
     <a class="nav-link" href="../automation-portal/section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#section7.adoc">section7.adoc</a>
+    <a class="nav-link" href="../automation-portal/section7.html">Final Configuration of the Execution Environment</a>
   </li>
 </ul>
   </li>
@@ -115,10 +115,7 @@
     <a class="nav-link" href="section4.html">Hands-on Lab: Content Discovery and Visual EE Building</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section6.html">section6.adoc</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="section7.html">Hands-on Lab: Content Discovery and Visual EE Building</a>
+    <a class="nav-link" href="section5.html">section5.adoc</a>
   </li>
 </ul>
   </li>
@@ -187,25 +184,27 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Access the Builder:</strong> Navigate to <strong>Execution Environments</strong> &gt; <strong>Visual Builder</strong>.</p>
+<p>Login to the Automation Portal and navigate to <strong>Execution Environments</strong> &gt; Created &gt; <strong>Start from scratch</strong> Template. This will launch the Visual EE Builder wizard.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.1.png" alt="1.1">
+</div>
+</div>
 </li>
 <li>
-<p><strong>Initialize Definition:</strong> Click <strong>Create New Definition</strong>. Provide a name (e.g., <code>network-ops-ee</code>) and a base container image (e.g., <code>registry.redhat.io/ansible-automation-platform-27/ee-minimal-rhel9</code>).</p>
+<p>Select the Execution Environment images which you wanted to use as base image. I will be using the <strong>Red Hat Ansible Minimal EE - Ansible Core 2.16 (RHEL 9)</strong> as base image for this lab:</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.2.png" alt="1.2">
+</div>
+</div>
 </li>
 <li>
-<p><strong>Add Collections:</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p>Click <strong>Add Collection</strong>.</p>
-</li>
-<li>
-<p>The portal will display your unified catalog from Task 1.</p>
-</li>
-<li>
-<p>Search for <code>cisco.ios</code> and <code>arista.eos</code>. Select them and click <strong>Add to Definition</strong>.</p>
-</li>
-</ul>
+<p>Then we can add collection you can skip and move to the next step. if you don&#8217;t have any collection to add or use community collection to add. I am adding a custom collection <strong>opentraining.mta_dev_lightspeed</strong> from my repo.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.3.png" alt="1.3">
+</div>
 </div>
 </li>
 <li>
@@ -216,10 +215,20 @@
 <p>Click the <strong>Dependencies</strong> tab.</p>
 </li>
 <li>
-<p>In the <strong>Python Requirements</strong> section, add <code>netmiko</code> and <code>ncclient</code>.</p>
+<p>In the <strong>Python Requirements</strong> section, add <code>boto3</code>.</p>
 </li>
 <li>
-<p>In the <strong>System Packages</strong> section, add <code>libssh-devel</code>.</p>
+<p>In the <strong>System Packages</strong> section, add <code>gcc</code>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.11.png" alt="1.11">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.4.png" alt="1.4">
+</div>
+</div>
 </li>
 </ul>
 </div>
@@ -240,6 +249,38 @@
 </ul>
 </div>
 </li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+ I am keeping the pre-build and post-build steps empty for this lab. You can add your own pre-build and post-build steps as per your requirement.
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>Destination and Build</strong> Step here you just have to provide the information about the EE names tag with which you wanted to create and with what names you wanted to publish this EE imaged to the registry. Please check the below screenshot on what information i am providing to create EE.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.5.png" alt="1.5">
+</div>
+</div>
+</li>
+<li>
+<p>Lets Work on the step <strong>Publish and Build</strong> which will be used to publish the EE definition to the GitHub repository and trigger the CI/CD pipeline to build the container image and push it to the registry.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.6.png" alt="1.6">
+</div>
+</div>
+</li>
 <li>
 <p><strong>Finalize and Publish:</strong></p>
 <div class="ulist">
@@ -249,43 +290,46 @@
 </li>
 <li>
 <p>Click <strong>Save &amp; Publish</strong>. Select your GitHub repository; the builder will automatically push the <code>execution-environment.yml</code> and associated metadata to your repository.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.7.png" alt="1.7">
+</div>
+</div>
 </li>
 </ul>
+</div>
+</li>
+<li>
+<p>The PR will be raised to the GitHub repository and you can see the PR in your GitHub repository. You can merge the PR to the main branch and this will trigger the CI/CD pipeline to build the container image and push it to the registry as per credentials saved in the Chapter 1.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.8.png" alt="1.8">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.9.png" alt="1.9">
+</div>
+</div>
+</li>
+<li>
+<p>Once the Builde is completed you can see the image is pushed to the registry in this case it will be on the Automation content in the ansible automation platform and you can see the image in the registry.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/1.10.png" alt="1.10">
+</div>
 </div>
 </li>
 </ol>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_troubleshooting_tips"><a class="anchor" href="#_troubleshooting_tips"></a>Troubleshooting Tips</h2>
-<div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Sync Failures:</strong> If sources fail to sync, check the <strong>Activity Log</strong> in the Portal to verify API token permissions and network connectivity to the remote source.</p>
-</li>
-<li>
-<p><strong>Dependency Conflicts:</strong> If a collection requires a specific Python version not supported by your base image, the builder will provide a validation error. Switch to a more compatible base image (e.g., <code>ee-supported-rhel9</code>).</p>
-</li>
-<li>
-<p><strong>RBAC Restrictions:</strong> If you cannot see the Visual Builder, ensure your user account is assigned the <code>Automation Administrator</code> or <code>EE Builder</code> role.</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_verification"><a class="anchor" href="#_verification"></a>Verification</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>Verify that the build process has been triggered by navigating to your linked GitHub repository. You should see a <code>build/</code> directory populated with your definition, confirming that the Visual Builder has successfully handed off the configuration to your CI/CD pipeline.</p>
+<p>Congratulations! You have successfully created a custom Execution Environment using the Visual EE Builder, integrated it with GitHub for version control, and automated the build and deployment process through CI/CD pipelines. This approach ensures that your EEs are consistent, reproducible, and compliant with organizational standards.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="section3.html">Utilizing the Step-by-Step Wizard for Custom EE Creation</a></span>
-  <span class="next"><a href="section6.html">section6.adoc</a></span>
+  <span class="next"><a href="section5.html">section5.adoc</a></span>
 </nav>
 </article>
   </div>

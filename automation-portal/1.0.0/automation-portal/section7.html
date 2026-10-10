@@ -3,7 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Lab Environment :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <title>Final Configuration of the Execution Environment :: Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</title>
+    <link rel="prev" href="section6.html">
+    <link rel="next" href="../centralized-content-discovery/section1.html">
     <meta name="generator" content="Antora 3.2.0-alpha.12">
     <link rel="stylesheet" href="../../../_/css/site.css">
     <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
@@ -49,7 +51,7 @@
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="index.html">Lab Environment</a>
+    <a class="nav-link" href="../LABENV/index.html">Lab Environment</a>
   </li>
 </ul>
   </li>
@@ -57,28 +59,28 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../automation-portal/section1.html">Automation Portal</a>
+    <a class="nav-link" href="section1.html">Automation Portal</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../automation-portal/section2.html">Automation Portal: Installation Overview with Architectural Benefits</a>
+    <a class="nav-link" href="section2.html">Automation Portal: Installation Overview with Architectural Benefits</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../automation-portal/section3.html">Managing RBAC-based Navigation Menus for User Role Separation</a>
+    <a class="nav-link" href="section3.html">Managing RBAC-based Navigation Menus for User Role Separation</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../automation-portal/section4.html">Reducing UI Complexity through Admin-Defined Access Policies</a>
+    <a class="nav-link" href="section4.html">Reducing UI Complexity through Admin-Defined Access Policies</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../automation-portal/section5.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a>
+    <a class="nav-link" href="section5.html">Hands-on Setup: Deploying Automation Portal - Prerequisites and Configuration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../automation-portal/test.html">Chapter 4: Synchronizing Red Hat Certified Automation Content</a>
+    <a class="nav-link" href="test.html">Chapter 4: Synchronizing Red Hat Certified Automation Content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../automation-portal/section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
+    <a class="nav-link" href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../automation-portal/section7.html">Final Configuration of the Execution Environment</a>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="section7.html">Final Configuration of the Execution Environment</a>
   </li>
 </ul>
   </li>
@@ -155,7 +157,8 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Ansible Automation Platform 2.7: Automation Portal and Content Lifecycle</a></li>
-    <li><a href="index-lab-other.html">Lab Environment</a></li>
+    <li><a href="section1.html">Automation Portal</a></li>
+    <li><a href="section7.html">Final Configuration of the Execution Environment</a></li>
   </ul>
 </nav>
 </div>
@@ -164,10 +167,29 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Lab Environment</h1>
+<h1 class="page">Final Configuration of the Execution Environment</h1>
 <div class="paragraph">
-<p>FIXME: Instructions for accessing the lab environment on any other platform, for this hands-on based training.</p>
+<p>To enable the Execution Environment Builder to push content to the Git repository, we need to configure and fine-tune the OAuth applications created in Git.</p>
 </div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Go to the GitHub OAuth application created in the previous section and click on <strong>Edit</strong> to update the settings and  <code>Homepage URL`</code> to automation portal URL and replace the hostname with the correct hostname in "Redirect URI".</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/8.1.png" alt="8.1">
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Now we are ready to configure the Execution Environment Builder to push content to the Git repository and pull certified content from the Private Automation Hub in chapter 3.</p>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="section6.html">Hands-on Lab: Installing and Verifying the Automation Portal on OCP</a></span>
+  <span class="next"><a href="../centralized-content-discovery/section1.html">Centralized Content Discovery</a></span>
+</nav>
 </article>
   </div>
 </main>
