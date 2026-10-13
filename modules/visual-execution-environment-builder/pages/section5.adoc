@@ -1,4 +1,4 @@
-== Troubleshooting Tips
+= Troubleshooting Tips
 * **Sync Failures:** If sources fail to sync, check the **Activity Log** in the Portal to verify API token permissions and network connectivity to the remote source.
 * **Dependency Conflicts:** If a collection requires a specific Python version not supported by your base image, the builder will provide a validation error. Switch to a more compatible base image (e.g., `ee-supported-rhel9`).
 * **RBAC Restrictions:** If you cannot see the Visual Builder, ensure your user account is assigned the `Automation Administrator` or `EE Builder` role.
